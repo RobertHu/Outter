@@ -84,8 +84,8 @@ namespace Core.TransactionServer.Agent.Interact
                 if (this.ShouldCalculateCurrencyRate(context))
                 {
                     BLL.CurrencyRateCaculator.Default.Caculate(context.Tran.CurrencyRate(context.TradeDay), context.AccountId);
+                    Logger.InfoFormat("after calculate currencyrate accountId = {0}, tranId = {1}", context.AccountId, context.TranId);
                 }
-                Logger.InfoFormat("after calculate currencyrate accountId = {0}, tranId = {1}", context.AccountId, context.TranId);
                 this.ExecuteTransaction(context);
                 if (IfDoneTransactionManager.Default.ShouldCancelDoneTransactions(context.Tran))//maybe have done orders needed to cancel
                 {

@@ -1305,6 +1305,11 @@ namespace Core.TransactionServer.Agent
         {
             try
             {
+                if (tran.ExecuteTime == null)
+                {
+                    Logger.WarnFormat("UpdateOrderPhase tranId = {0}, tran.phase = {1} execute time is null", tran.Id, tran.Phase);
+                    return;
+                }
                 foreach (var eachOrder in tran.Orders)
                 {
                     eachOrder.UpdateCloseOrderPhase(eachOrder.OrderRelations, tran.ExecuteTime.Value.Date, tran.InstrumentId, null);
