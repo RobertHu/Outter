@@ -208,6 +208,8 @@ namespace Core.TransactionServer.Agent.AccountClass
                         && ((settingAccount.RiskActionMode == RiskActionMode.WhenAlertLevelRaising && this.AlertLevelAfterCut < AlertLevel.Cut)
                             || settingAccount.RiskActionMode == RiskActionMode.LiveAlertLevel))
             {
+                Logger.InfoFormat("begin CutTransactions, isAutoCut = {0}, liveAlertLevelAfterLock = {1}, RiskActionMode  = {2}, AlertLevelAfterCut  = {3}, accountId = {4}",
+                    settingAccount.IsAutoCut, liveAlertLevelAfterLock, settingAccount.RiskActionMode, this.AlertLevelAfterCut, _account.Id);
                 this.AlertLevelAfterCut = liveAlertLevelAfterLock;
                 bool result = this.Cut(baseTime);
                 if (result)

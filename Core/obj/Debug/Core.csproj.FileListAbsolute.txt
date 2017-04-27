@@ -1,0 +1,39 @@
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Core\obj\Debug\Core.csprojResolveAssemblyReference.cache
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Core\bin\Debug\UnitTest\account.xml
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Core\bin\Debug\UnitTest\accountInitData.xml
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Core\bin\Debug\Core.dll.config
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Core\bin\Debug\Core.dll
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Core\bin\Debug\Core.pdb
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Core\bin\Debug\Dapper.dll
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Core\bin\Debug\iExchange.Common.dll
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Core\bin\Debug\log4net.dll
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Core\bin\Debug\Newtonsoft.Json.dll
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Core\bin\Debug\nunit.framework.dll
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Core\bin\Debug\Protocal.dll
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Core\bin\Debug\System.Threading.Tasks.Dataflow.dll
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Core\bin\Debug\protobuf-net.dll
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Core\bin\Debug\Framework.dll
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Core\bin\Debug\Protocal.pdb
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Core\bin\Debug\iExchange.Common.pdb
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Core\bin\Debug\nunit.framework.xml
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Core\bin\Debug\Framework.pdb
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Core\obj\Debug\Core.dll
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Core\obj\Debug\Core.pdb
+D:\work\OutterCustomerVersion\Core\bin\Debug\UnitTest\account.xml
+D:\work\OutterCustomerVersion\Core\bin\Debug\UnitTest\accountInitData.xml
+D:\work\OutterCustomerVersion\Core\bin\Debug\Core.dll.config
+D:\work\OutterCustomerVersion\Core\bin\Debug\Core.dll
+D:\work\OutterCustomerVersion\Core\bin\Debug\Core.pdb
+D:\work\OutterCustomerVersion\Core\bin\Debug\Dapper.dll
+D:\work\OutterCustomerVersion\Core\bin\Debug\Newtonsoft.Json.dll
+D:\work\OutterCustomerVersion\Core\bin\Debug\Protocal.dll
+D:\work\OutterCustomerVersion\Core\bin\Debug\System.Threading.Tasks.Dataflow.dll
+D:\work\OutterCustomerVersion\Core\bin\Debug\protobuf-net.dll
+D:\work\OutterCustomerVersion\Core\bin\Debug\Framework.dll
+D:\work\OutterCustomerVersion\Core\bin\Debug\Protocal.pdb
+D:\work\OutterCustomerVersion\Core\bin\Debug\iExchange.Common.pdb
+D:\work\OutterCustomerVersion\Core\bin\Debug\nunit.framework.xml
+D:\work\OutterCustomerVersion\Core\bin\Debug\Framework.pdb
+D:\work\OutterCustomerVersion\Core\obj\Debug\Core.csprojResolveAssemblyReference.cache
+D:\work\OutterCustomerVersion\Core\obj\Debug\Core.dll
+D:\work\OutterCustomerVersion\Core\obj\Debug\Core.pdb

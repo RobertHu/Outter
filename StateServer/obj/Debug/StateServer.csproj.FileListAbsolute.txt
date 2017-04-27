@@ -1,0 +1,41 @@
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3\StateServer\bin\Adapter\Stylesheet\AccountCurrency.xslt
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3\StateServer\bin\Adapter\Stylesheet\AlertRiskMonitor.xslt
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3\StateServer\bin\Adapter\Stylesheet\Assign.xslt
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3\StateServer\bin\Adapter\Stylesheet\Execute.xslt
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3\StateServer\bin\Adapter\Stylesheet\Place.xslt
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3\StateServer\bin\iExchange.StateServer.dll
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3\StateServer\bin\iExchange.StateServer.pdb
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3\StateServer\bin\iExchange.Common.dll
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3\StateServer\bin\log4net.dll
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3\StateServer\bin\protobuf-net.dll
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3\StateServer\bin\Protocal.dll
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3\StateServer\bin\nunit.framework.dll
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3\StateServer\bin\iExchange.Common.pdb
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3\StateServer\bin\Framework.pdb
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3\StateServer\bin\Protocal.pdb
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3\StateServer\obj\Debug\StateServer.csprojResolveAssemblyReference.cache
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3\StateServer\obj\Debug\iExchange.StateServer.Global.asax.resources
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3\StateServer\obj\Debug\iExchange.StateServer.Test.resources
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3\StateServer\obj\Debug\StateServer.csproj.GenerateResource.Cache
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3\StateServer\obj\Debug\iExchange.StateServer.dll
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3\StateServer\obj\Debug\iExchange.StateServer.pdb
+D:\work\OutterCustomerVersion\StateServer\obj\Debug\StateServer.csprojResolveAssemblyReference.cache
+D:\work\OutterCustomerVersion\StateServer\obj\Debug\iExchange.StateServer.Global.asax.resources
+D:\work\OutterCustomerVersion\StateServer\obj\Debug\iExchange.StateServer.Test.resources
+D:\work\OutterCustomerVersion\StateServer\obj\Debug\StateServer.csproj.GenerateResource.Cache
+D:\work\OutterCustomerVersion\StateServer\obj\Debug\iExchange.StateServer.dll
+D:\work\OutterCustomerVersion\StateServer\obj\Debug\iExchange.StateServer.pdb
+D:\work\OutterCustomerVersion\StateServer\bin\Adapter\Stylesheet\AccountCurrency.xslt
+D:\work\OutterCustomerVersion\StateServer\bin\Adapter\Stylesheet\AlertRiskMonitor.xslt
+D:\work\OutterCustomerVersion\StateServer\bin\Adapter\Stylesheet\Assign.xslt
+D:\work\OutterCustomerVersion\StateServer\bin\Adapter\Stylesheet\Execute.xslt
+D:\work\OutterCustomerVersion\StateServer\bin\Adapter\Stylesheet\Place.xslt
+D:\work\OutterCustomerVersion\StateServer\bin\iExchange.StateServer.dll
+D:\work\OutterCustomerVersion\StateServer\bin\iExchange.StateServer.pdb
+D:\work\OutterCustomerVersion\StateServer\bin\iExchange.Common.dll
+D:\work\OutterCustomerVersion\StateServer\bin\log4net.dll
+D:\work\OutterCustomerVersion\StateServer\bin\nunit.framework.dll
+D:\work\OutterCustomerVersion\StateServer\bin\Framework.pdb
+D:\work\OutterCustomerVersion\StateServer\bin\iExchange.Common.pdb
+D:\work\OutterCustomerVersion\StateServer\bin\iExchange.Common.dll.config
+D:\work\OutterCustomerVersion\StateServer\bin\Protocal.pdb

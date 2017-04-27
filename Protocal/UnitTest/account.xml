@@ -1,0 +1,48 @@
+﻿<Accounts>
+  <Account IsDeleted="False" AlertLevel="0" AlertTime="" CutAlertLevel="0" ID="c2675f7a-d05e-4359-90e3-36597c464104" CurrencyID="767515e7-cfcc-4ba1-9684-659588c02e3e" CustomerName="NZD098" IsMultiCurrency="False" MinUpkeepEquity="1517.85" Type="2" TotalDeposit="0" CurrencyCode="USD" Code="NZD098" TradeDay="2016-05-23 00:00:00" TotalPaidAmount="0" Balance="67773.16" FrozenFund="0" Necessary="10119.00" NetNecessary="10119.00" HedgeNecessary="0.00" MinEquityAvoidRiskLevel1="7589.25" MinEquityAvoidRiskLevel2="5059.50" MinEquityAvoidRiskLevel3="1517.85" NecessaryFillingOpenOrder="10119.00" NecessaryFillingCloseOrder="10119.00" TradePLFloat="-0.59" InterestPLFloat="0.00" StoragePLFloat="0.00" ValueAsMargin="0" TradePLNotValued="0" InterestPLNotValued="0" StoragePLNotValued="0" LockOrderTradePLFloat="0" FeeForCutting="0" RiskCredit="0.00" PartialPaymentPhysicalNecessary="0" Equity="67772.57" LastResetDay="">
+    <Funds>
+      <Fund IsDeleted="False" CurrencyID="767515e7-cfcc-4ba1-9684-659588c02e3e" CurrencyCode="sdfaf" TotalPaidAmount="0" Balance="67773.1600" FrozenFund="0.0000000000000" Necessary="10119.00" NetNecessary="10119.00000000000000000000" HedgeNecessary="0.0000" MinEquityAvoidRiskLevel1="7589.25" MinEquityAvoidRiskLevel2="5059.50" MinEquityAvoidRiskLevel3="1517.85" NecessaryFillingOpenOrder="10119.00" NecessaryFillingCloseOrder="10119.00" TradePLFloat="-0.59" InterestPLFloat="0.00" StoragePLFloat="0.00" ValueAsMargin="0" TradePLNotValued="0" InterestPLNotValued="0" StoragePLNotValued="0" LockOrderTradePLFloat="0" FeeForCutting="0" RiskCredit="0.00000000" PartialPaymentPhysicalNecessary="0" />
+    </Funds>
+    <Transactions>
+      <Transaction IsDeleted="False" PlacedByRiskMonitor="False" FreePlacingPreCheck="False" FreeLmtVariationCheck="False" ID="1da1c67e-ef0d-45ea-9350-ecf4cf03c9eb" Code="MHL160520SP00007" Type="2" AccountID="c2675f7a-d05e-4359-90e3-36597c464104" InstrumentID="cb4d7381-0b5c-40cf-80f2-46934bc84da4" SubType="1" Phase="2" OrderType="3" ContractSize="50.0000" BeginTime="2016-05-20 13:58:57" EndTime="2016-05-20 14:18:57" ExpireType="2" SubmitTime="2016-05-20 13:58:57" SubmitorID="d238dfab-3668-4a8c-ab33-50cf4d3d5804" ExecuteTime="2016-05-20 13:58:58" ApproverID="" AssigningOrderID="" SetPriceTimestamp="" InstrumentCategory="20" PlacePhase="0" PlaceDetail="" CancelReason="">
+        <Orders>
+          <Order IsDeleted="False" ID="1194d7b3-92a0-4c62-bf84-891b317d83e7" IsOpen="True" IsBuy="True" Lot="3.0000" OriginalLot="3.0000" LotBalance="3.0000" InterestPerLot="1.2000000000000" StoragePerLot="0.5000000000000" MinLot="2" MaxShow="" Code="MHL2016052000008" OriginCode="" BlotterCode="" ExecutePrice="0.6746" SetPrice="0.6736" SetPrice2="" AutoLimitPrice="" AutoStopPrice="" PriceTimestamp="" JudgePrice="" JudgePriceTimestamp="" InterestValueDate="2016-05-20 00:00:00" SetPriceMaxMovePips="2" DQMaxMove="4" PlacedByRiskMonitor="False" Phase="2" TradeOption="2" CurrencyID="767515e7-cfcc-4ba1-9684-659588c02e3e" InterestPLFloat="0.03" StoragePLFloat="0.02" TradePLFloat="-0.59" LivePrice="0.6764">
+            <Bills>
+              <Bill IsDeleted="False" ID="6ca25f3a-0b05-43ab-adab-45d9cabe4e83" AccountID="c2675f7a-d05e-4359-90e3-36597c464104" Value="0.0000000000000" Type="40" OwnerType="1" UpdateTime="0001-01-01 00:00:00" />
+              <Bill IsDeleted="False" ID="be50deac-852b-43a5-83ea-5e94302be1f1" AccountID="c2675f7a-d05e-4359-90e3-36597c464104" Value="-30000.0000000000000" Type="2" OwnerType="1" UpdateTime="0001-01-01 00:00:00" />
+              <Bill IsDeleted="False" ID="8614ae6c-d076-421e-b593-ae9cbe8984d9" AccountID="c2675f7a-d05e-4359-90e3-36597c464104" Value="-2226.8400000000000" Type="1" OwnerType="1" UpdateTime="0001-01-01 00:00:00" />
+            </Bills>
+            <OrderRelations />
+          </Order>
+        </Orders>
+      </Transaction>
+
+      <Transaction IsDeleted="False" PlacedByRiskMonitor="False" FreePlacingPreCheck="False" FreeLmtVariationCheck="False" ID="86ac2fe0-fd66-43a9-97c8-c14e36a0f5d7" Code="DEM160524SP00007" Type="0" AccountID="89d09f80-f4dd-496a-b738-af073f689e56" InstrumentID="2b3a1a49-37b8-4449-91d1-623cf01f4ca7" SubType="0" Phase="2" OrderType="0" ContractSize="100.0000" BeginTime="2016-05-24 09:01:14" EndTime="2016-05-24 09:01:32" ExpireType="3" SubmitTime="2016-05-24 09:01:14" SubmitorID="96d8527b-be52-400b-b80e-a38bfeef75bc" ExecuteTime="2016-05-24 09:01:14" InstrumentCategory="10" PlacePhase="8" PlaceDetail="">
+        <Orders>
+          <Order IsDeleted="False" ID="922d6df9-172f-450e-b721-b6240e14964f" IsOpen="False" IsBuy="False" Lot="1" OriginalLot="1" LotBalance="0" InterestPerLot="0" StoragePerLot="0" Code="DEM2016052400007" BlotterCode="" ExecutePrice="0.6725" SetPrice="0.6765" JudgePrice="0.6765" JudgePriceTimestamp="2016-05-24 08:34:56" InterestValueDate="2016-05-24 00:00:00" SetPriceMaxMovePips="0" DQMaxMove="0" PlacedByRiskMonitor="False" Phase="2" TradeOption="0" CurrencyID="767515e7-cfcc-4ba1-9684-659588c02e3e" HitCount="0" HitStatus="0">
+            <Bills>
+              <Bill IsDeleted="False" ID="96d1457c-2e60-4e71-804e-a70a789e5018" AccountID="89d09f80-f4dd-496a-b738-af073f689e56" Value="-200.00" Type="1" OwnerType="1" UpdateTime="2016-05-24 09:01:14" />
+              <Bill IsDeleted="False" ID="61cf5fbc-7fe2-44c4-9981-bc86b0e15ec7" AccountID="89d09f80-f4dd-496a-b738-af073f689e56" Value="-30.00" Type="2" OwnerType="1" UpdateTime="2016-05-24 09:01:14" />
+              <Bill IsDeleted="False" ID="97416f91-e517-477a-a81c-4343f67928e1" AccountID="89d09f80-f4dd-496a-b738-af073f689e56" Value="0" Type="40" OwnerType="1" UpdateTime="2016-05-24 09:01:14" />
+              <Bill IsDeleted="False" ID="50a4a8ba-1ee4-4d22-959f-1d3f96f8afc6" AccountID="89d09f80-f4dd-496a-b738-af073f689e56" Value="-0.60" Type="23" OwnerType="1" UpdateTime="2016-05-24 09:01:14" ValueTime="2016-05-24 09:01:14" IsValued="True" />
+            </Bills>
+            <OrderRelations>
+              <OrderRelation IsDeleted="False" ID="4deed14f-dec6-4148-a041-6987f00a611d" OpenOrderID="dd4f5eed-e4fc-458c-bd36-2ae6e1a2f058" CloseOrderID="922d6df9-172f-450e-b721-b6240e14964f" ClosedLot="1" CloseTime="2016-05-24 09:01:14" ValueTime="2016-05-24 09:01:14" TargetDecimals="2" RateIn="1" RateOut="1" Commission="200.00" Levy="30.00" OtherFee="0.5" InterestPL="0.2" StoragePL="0.3" TradePL="-0.60">
+                <Bills />
+              </OrderRelation>
+            </OrderRelations>
+          </Order>
+        </Orders>
+      </Transaction>
+
+    </Transactions>
+    <DeliveryRequests />
+    <Instruments>
+      <Instrument IsDeleted="False" LastResetDay="" ID="cb4d7381-0b5c-40cf-80f2-46934bc84da4">
+        <ResetItemHistory />
+      </Instrument>
+    </Instruments>
+    <ResetOrders />
+    <Balances />
+  </Account>
+</Accounts>

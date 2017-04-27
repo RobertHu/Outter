@@ -1,0 +1,12 @@
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Protocal\bin\Release\Protocal.dll
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Protocal\bin\Release\Protocal.pdb
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Protocal\bin\Release\iExchange.Common.dll
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Protocal\bin\Release\log4net.dll
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Protocal\bin\Release\nunit.framework.dll
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Protocal\bin\Release\protobuf-net.dll
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Protocal\bin\Release\Framework.dll
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Protocal\bin\Release\iExchange.Common.pdb
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Protocal\bin\Release\Framework.pdb
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Protocal\obj\Release\Protocal.csprojResolveAssemblyReference.cache
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Protocal\obj\Release\Protocal.dll
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Protocal\obj\Release\Protocal.pdb

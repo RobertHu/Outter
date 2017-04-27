@@ -1,0 +1,535 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6F22A990-68A4-4F7F-A1A0-E292C00090C8}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>iExchange.StateServer</RootNamespace>
+    <AssemblyName>iExchange.StateServer</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <TargetFrameworkProfile />
+    <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Framework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=48f465ede5a45863, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\DotNet\Debug\Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="iExchange.Common, Version=1.0.6319.26229, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Teams\iExchangeCollection\iExchange3 Team\iExchange3\Common\bin\Debug\iExchange.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ReferenceLibrary\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="protobuf-net, Version=2.0.0.668, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\iExchange3Promotion\Protocal\ReferenceLibrary\protobuf-net.dll</HintPath>
+    </Reference>
+    <Reference Include="Protocal, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\iExchange3Promotion\Protocal\bin\Debug\Protocal.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Messaging" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\..\Teams\iExchangeCollection\iExchange3 Team\Manager\Manager.Common\RelayEngine.cs">
+      <Link>Manager\RelayEngine.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\Teams\iExchangeCollection\iExchange3 Team\Manager\ManagerService\Exchange\IExchangeService.cs">
+      <Link>Manager\IExchangeService.cs</Link>
+    </Compile>
+    <Compile Include="Adapter\AccountBLL\AccountInstrument.cs" />
+    <Compile Include="Adapter\AccountRepository.cs" />
+    <Compile Include="Adapter\BinaryOption\BetResult.cs" />
+    <Compile Include="Adapter\Commands\BookCommandProcessor.cs" />
+    <Compile Include="Adapter\Commands\ChangedContentCommandProcessor.cs" />
+    <Compile Include="Adapter\Commands\CommandProcessor.cs" />
+    <Compile Include="Adapter\CommonTypes\TradeDay.cs" />
+    <Compile Include="Adapter\DBHelper.cs" />
+    <Compile Include="Adapter\FaxEmailServices\EmailNotifier.cs" />
+    <Compile Include="Adapter\FaxEmailServices\FaxEmailEngine.cs" />
+    <Compile Include="Adapter\Hoster.cs" />
+    <Compile Include="Adapter\KickoutServiceProxy.cs" />
+    <Compile Include="Adapter\OuterService\AccountManager.cs" />
+    <Compile Include="Adapter\OuterService\GroupNetPositionManager.cs" />
+    <Compile Include="Adapter\OuterService\OuterTransactionService.cs" />
+    <Compile Include="Adapter\OuterService\TransactionVerifier.cs" />
+    <Compile Include="Adapter\Parsers\DeliveryRequestParser.cs" />
+    <Compile Include="Adapter\Parsers\OrderDataHelper.cs" />
+    <Compile Include="Adapter\Parsers\XmlNodeExtension.cs" />
+    <Compile Include="Adapter\QuotationManager.cs" />
+    <Compile Include="Adapter\QuotationPool.cs" />
+    <Compile Include="Adapter\Settings\SettingManager.cs" />
+    <Compile Include="Adapter\TradeDayManager.cs" />
+    <Compile Include="Adapter\Util\PathHelper.cs" />
+    <Compile Include="CommandBuffer.cs" />
+    <Compile Include="FilialeTransactionSwitcher.cs" />
+    <Compile Include="FilialeTransaction.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Checker.cs" />
+    <Compile Include="LinkedAccount.cs" />
+    <Compile Include="Manager\Callback.cs" />
+    <Compile Include="Manager\DataAccessHelper.cs" />
+    <Compile Include="Manager\ManagerClient.cs" />
+    <Compile Include="Manager\ManagerHelper.cs" />
+    <Compile Include="Adapter\Mapper.cs" />
+    <Compile Include="OrderMapping\Booker.cs" />
+    <Compile Include="OrderMapping\Processor.cs" />
+    <Compile Include="Adapter\AccountBLL\Account.cs" />
+    <Compile Include="Adapter\CommandCollector.cs" />
+    <Compile Include="Adapter\CommandFactory.cs" />
+    <Compile Include="Adapter\Parsers\Converter.cs" />
+    <Compile Include="Adapter\Fund.cs" />
+    <Compile Include="Adapter\Helper.cs" />
+    <Compile Include="Adapter\Instrument.cs" />
+    <Compile Include="Adapter\Manager.cs" />
+    <Compile Include="Adapter\Order.cs" />
+    <Compile Include="Adapter\OrderRelation.cs" />
+    <Compile Include="Adapter\Transaction.cs" />
+    <Compile Include="Adapter\TransactionAdaptor.cs" />
+    <Compile Include="Adapter\XElementHelper.cs" />
+    <Compile Include="QuotationBroadcastHelper.cs" />
+    <Compile Include="SLTraderManager.cs" />
+    <Compile Include="StateServer.cs" />
+    <Compile Include="Web References\FaxEmail\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\QuotationServer.Service\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\TransactionServer.Service\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Content Include="Adapter\Stylesheet\AccountCurrency.xslt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Adapter\Stylesheet\AlertRiskMonitor.xslt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Adapter\Stylesheet\Assign.xslt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Adapter\Stylesheet\Execute.xslt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Adapter\Stylesheet\Place.xslt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Global.asax" />
+    <Content Include="ReferenceLibrary\log4net.dll" />
+    <Content Include="Service.asmx" />
+    <Content Include="Service2.asmx" />
+    <Content Include="Test.aspx" />
+    <None Include="Properties\AssemblyInfo.cs.orig" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Service.asmx.cs">
+      <DependentUpon>Service.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Service2.asmx.cs">
+      <DependentUpon>Service2.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Adapter\SystemControllerProxy.cs" />
+    <Compile Include="Test.aspx.cs">
+      <DependentUpon>Test.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Test.aspx.designer.cs">
+      <DependentUpon>Test.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\DealingConsole.Service2\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\ExchangeMapping\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\FileExchangeServer.Service\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\PolamediaServer.Authentication\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\QuotationCollector.Authentication\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\QuotationCollector.Service2\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\RiskMonitor.Service2\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\TradingConsole.Service2\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\TradingMonitor.Service2\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <None Include="Web References\FaxEmail\FaxEmailService.wsdl" />
+    <None Include="Web References\FaxEmail\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\QuotationServer.Service\OriginQuotation.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\QuotationServer.Service\OverridedQuotation.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\TransactionServer.Service\AlertLevel.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\TransactionServer.Service\AutoFillResult.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\TransactionServer.Service\PlaceExtraInfo.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\TransactionServer.Service\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\TransactionServer.Service\Service.wsdl" />
+    <None Include="Web References\TransactionServer.Service\TransactionError.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="StateServer.mdx" />
+    <None Include="Web References\DealingConsole.Service2\PlaceHolder2.wsdl" />
+    <None Include="Web References\DealingConsole.Service2\PlaceHolder2.disco" />
+    <None Include="Web References\DealingConsole.Service2\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\ExchangeMapping\iExchangeMappingService.wsdl" />
+    <None Include="Web References\ExchangeMapping\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\FileExchangeServer.Service\PlaceHolder3.disco" />
+    <None Include="Web References\FileExchangeServer.Service\PlaceHolder3.wsdl" />
+    <None Include="Web References\FileExchangeServer.Service\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\PolamediaServer.Authentication\PlaceHolder4.disco" />
+    <None Include="Web References\PolamediaServer.Authentication\PlaceHolder4.wsdl" />
+    <None Include="Web References\PolamediaServer.Authentication\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\QuotationCollector.Authentication\PlaceHolder.wsdl" />
+    <None Include="Web References\QuotationCollector.Authentication\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\QuotationCollector.Service2\PlaceHolder11.wsdl" />
+    <None Include="Web References\QuotationCollector.Service2\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\QuotationServer.Service\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\QuotationServer.Service\Service.wsdl" />
+    <None Include="Web References\RiskMonitor.Service2\PlaceHolder6.disco" />
+    <None Include="Web References\RiskMonitor.Service2\PlaceHolder6.wsdl" />
+    <None Include="Web References\RiskMonitor.Service2\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\TradingConsole.Service2\PlaceHolder7.wsdl" />
+    <None Include="Web References\TradingConsole.Service2\PlaceHolder7.disco" />
+    <None Include="Web References\TradingConsole.Service2\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\TradingMonitor.Service2\PlaceHolder8.wsdl" />
+    <None Include="Web References\TradingMonitor.Service2\PlaceHolder8.disco" />
+    <None Include="Web References\TradingMonitor.Service2\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\QuotationCollector.Service2\PlaceHolder11.disco" />
+    <None Include="Web References\QuotationCollector.Authentication\PlaceHolder.disco" />
+    <None Include="Web References\ExchangeMapping\iExchangeMappingService.disco" />
+    <None Include="Web References\QuotationServer.Service\Service.disco" />
+    <None Include="Web References\TransactionServer.Service\Service.disco" />
+    <None Include="Web References\FaxEmail\FaxEmailService.disco" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Global.asax.resx" />
+    <EmbeddedResource Include="Test.aspx.resx">
+      <DependentUpon>Test.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://localhost/iExchange%2520Team/Test/PlaceHolder/PlaceHolder.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\QuotationCollector.Authentication\</RelPath>
+      <UpdateFromURL>http://localhost/iExchange%2520Team/Test/PlaceHolder/PlaceHolder.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>iExchange_StateServer_QuotationCollector_Authentication_Service1</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://localhost/iExchange%2520Team/Test/PlaceHolder/PlaceHolder11.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\QuotationCollector.Service2\</RelPath>
+      <UpdateFromURL>http://localhost/iExchange%2520Team/Test/PlaceHolder/PlaceHolder11.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>iExchange_StateServer_QuotationCollector_Service_PlaceHolder11</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://localhost/iExchange%2520Team/Test/PlaceHolder/PlaceHolder2.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\DealingConsole.Service2\</RelPath>
+      <UpdateFromURL>http://localhost/iExchange%2520Team/Test/PlaceHolder/PlaceHolder2.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>iExchange_StateServer_DealingConsole_Service_PlaceHolder2</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://localhost/iExchange%2520Team/Test/PlaceHolder/PlaceHolder3.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\FileExchangeServer.Service\</RelPath>
+      <UpdateFromURL>http://localhost/iExchange%2520Team/Test/PlaceHolder/PlaceHolder3.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>iExchange_StateServer_FileExchangeServer_Service_PlaceHolder3</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://localhost/iExchange%2520Team/Test/PlaceHolder/PlaceHolder4.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\PolamediaServer.Authentication\</RelPath>
+      <UpdateFromURL>http://localhost/iExchange%2520Team/Test/PlaceHolder/PlaceHolder4.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>iExchange_StateServer_PolamediaServer_Service_PlaceHolder4</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://ws0301/iExchangeCollection/iExchange3%2520Team/iExchange3/TransactionServer/Service.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\TransactionServer.Service\</RelPath>
+      <UpdateFromURL>http://ws0301/iExchangeCollection/iExchange3%2520Team/iExchange3/TransactionServer/Service.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>iExchange_StateServer_TransactionServer_Service_Service</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://ws0308/iExchange/FaxAndEmailService/FaxEmailService.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\FaxEmail\</RelPath>
+      <UpdateFromURL>http://ws0308/iExchange/FaxAndEmailService/FaxEmailService.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>iExchange_StateServer_FaxEmail_FaxEmailService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://ws0308/iexchange/QuotationServer/Service.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\QuotationServer.Service\</RelPath>
+      <UpdateFromURL>http://ws0308/iexchange/QuotationServer/Service.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>iExchange_StateServer_QuotationServer_Service_PlaceHolder5</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://localhost/iExchange%2520Team/Test/PlaceHolder/PlaceHolder6.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\RiskMonitor.Service2\</RelPath>
+      <UpdateFromURL>http://localhost/iExchange%2520Team/Test/PlaceHolder/PlaceHolder6.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>iExchange_StateServer_RiskMonitor_Service_PlaceHolder6</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://localhost/iExchange%2520Team/Test/PlaceHolder/PlaceHolder7.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\TradingConsole.Service2\</RelPath>
+      <UpdateFromURL>http://localhost/iExchange%2520Team/Test/PlaceHolder/PlaceHolder7.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>iExchange_StateServer_TradingConsole_Service_PlaceHolder7</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://localhost/iExchange%2520Team/Test/PlaceHolder/PlaceHolder8.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\TradingMonitor.Service2\</RelPath>
+      <UpdateFromURL>http://localhost/iExchange%2520Team/Test/PlaceHolder/PlaceHolder8.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>iExchange_StateServer_TradingMonitor_Service_PlaceHolder8</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://localhost/Temp%2520Team/ExchangeMapping/ExchangeSwitch/iExchangeToiExchange/iExchangeMappingService.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\ExchangeMapping\</RelPath>
+      <UpdateFromURL>http://localhost/Temp%2520Team/ExchangeMapping/ExchangeSwitch/iExchangeToiExchange/iExchangeMappingService.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>iExchange_StateServer_ExchangeMapping_iExchangeMappingService</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>10295</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>http://localhost/</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

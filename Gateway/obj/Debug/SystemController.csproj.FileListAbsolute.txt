@@ -1,0 +1,46 @@
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Gateway\bin\Debug\UnitTest\account.xml
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Gateway\bin\Debug\UnitTest\accountInitData.xml
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Gateway\bin\Debug\install.bat
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Gateway\bin\Debug\uninstall.bat
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Gateway\bin\Debug\SystemController.exe.config
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Gateway\bin\Debug\SystemController.exe
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Gateway\bin\Debug\SystemController.pdb
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Gateway\bin\Debug\iExchange.Common.dll
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Gateway\bin\Debug\log4net.dll
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Gateway\bin\Debug\Newtonsoft.Json.dll
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Gateway\bin\Debug\protobuf-net.dll
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Gateway\bin\Debug\Protocal.dll
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Gateway\bin\Debug\System.Threading.Tasks.Dataflow.dll
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Gateway\bin\Debug\nunit.framework.dll
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Gateway\bin\Debug\Framework.dll
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Gateway\bin\Debug\Protocal.pdb
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Gateway\bin\Debug\iExchange.Common.pdb
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Gateway\bin\Debug\Framework.pdb
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Gateway\obj\Debug\SystemController.csprojResolveAssemblyReference.cache
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Gateway\obj\Debug\TraderService.ProjectInstaller.resources
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Gateway\obj\Debug\TraderService.ServiceInstallerEx.resources
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Gateway\obj\Debug\SystemController.csproj.GenerateResource.Cache
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Gateway\obj\Debug\SystemController.exe
+D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Gateway\obj\Debug\SystemController.pdb
+D:\work\OutterCustomerVersion\Gateway\bin\Debug\UnitTest\account.xml
+D:\work\OutterCustomerVersion\Gateway\bin\Debug\UnitTest\accountInitData.xml
+D:\work\OutterCustomerVersion\Gateway\bin\Debug\install.bat
+D:\work\OutterCustomerVersion\Gateway\bin\Debug\uninstall.bat
+D:\work\OutterCustomerVersion\Gateway\bin\Debug\SystemController.exe.config
+D:\work\OutterCustomerVersion\Gateway\bin\Debug\SystemController.exe
+D:\work\OutterCustomerVersion\Gateway\bin\Debug\SystemController.pdb
+D:\work\OutterCustomerVersion\Gateway\bin\Debug\Newtonsoft.Json.dll
+D:\work\OutterCustomerVersion\Gateway\bin\Debug\protobuf-net.dll
+D:\work\OutterCustomerVersion\Gateway\bin\Debug\Protocal.dll
+D:\work\OutterCustomerVersion\Gateway\bin\Debug\System.Threading.Tasks.Dataflow.dll
+D:\work\OutterCustomerVersion\Gateway\bin\Debug\nunit.framework.dll
+D:\work\OutterCustomerVersion\Gateway\bin\Debug\Framework.dll
+D:\work\OutterCustomerVersion\Gateway\bin\Debug\Protocal.pdb
+D:\work\OutterCustomerVersion\Gateway\bin\Debug\iExchange.Common.pdb
+D:\work\OutterCustomerVersion\Gateway\bin\Debug\Framework.pdb
+D:\work\OutterCustomerVersion\Gateway\obj\Debug\SystemController.csprojResolveAssemblyReference.cache
+D:\work\OutterCustomerVersion\Gateway\obj\Debug\TraderService.ProjectInstaller.resources
+D:\work\OutterCustomerVersion\Gateway\obj\Debug\TraderService.ServiceInstallerEx.resources
+D:\work\OutterCustomerVersion\Gateway\obj\Debug\SystemController.csproj.GenerateResource.Cache
+D:\work\OutterCustomerVersion\Gateway\obj\Debug\SystemController.exe
+D:\work\OutterCustomerVersion\Gateway\obj\Debug\SystemController.pdb

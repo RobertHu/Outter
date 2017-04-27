@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/iExchange.Common" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/iExchange.Common" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="AppType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="StateServer" />
+      <xs:enumeration value="QuotationServer" />
+      <xs:enumeration value="TransactionServer" />
+      <xs:enumeration value="DealingConsoleServer" />
+      <xs:enumeration value="QuotationCollector" />
+      <xs:enumeration value="BackOffice" />
+      <xs:enumeration value="DealingConsole" />
+      <xs:enumeration value="TradingConsole" />
+      <xs:enumeration value="RiskMonitor" />
+      <xs:enumeration value="TradingMonitor" />
+      <xs:enumeration value="Mobile" />
+      <xs:enumeration value="TradingConsoleSilverLight" />
+      <xs:enumeration value="PhysicalTerminal" />
+      <xs:enumeration value="Manager" />
+      <xs:enumeration value="SourceManager" />
+      <xs:enumeration value="ReportCenter" />
+      <xs:enumeration value="ReportCenter2" />
+      <xs:enumeration value="PerformanceMonitor" />
+      <xs:enumeration value="CppTrader" />
+      <xs:enumeration value="ResetPassword" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="AppType" nillable="true" type="tns:AppType" />
+</xs:schema>
