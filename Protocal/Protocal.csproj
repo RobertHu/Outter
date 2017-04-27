@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4F061E4E-26C3-48D6-88BF-31773A042F9A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Protocal</RootNamespace>
+    <AssemblyName>Protocal</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="iExchange.Common, Version=1.0.5988.27266, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\iExchange3\Common\bin\Debug\iExchange.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\AsynchronousSslStream\Lib\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=3.5.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NUnit.3.5.0\lib\net40\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="protobuf-net, Version=2.0.0.668, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ReferenceLibrary\protobuf-net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Discovery" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)' == 'DEBUG'">
+    <Content Include="UnitTest\account.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="UnitTest\accountInitData.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Commands\Account.cs" />
+    <Compile Include="Commands\AccountRepository.cs" />
+    <Compile Include="Commands\DeliveryRequest.cs" />
+    <Compile Include="Commands\DeliveryRequestOrderRelation.cs" />
+    <Compile Include="Commands\Fund.cs" />
+    <Compile Include="Commands\Notify\NewsNotifyCommand.cs" />
+    <Compile Include="Commands\Order.cs" />
+    <Compile Include="Commands\OrderChange.cs" />
+    <Compile Include="Commands\OrderRelation.cs" />
+    <Compile Include="Commands\TradingCommandManager.cs" />
+    <Compile Include="Commands\Trading\CancelDeliveryCommand.cs" />
+    <Compile Include="Commands\Trading\NotifyDeliveryCommand.cs" />
+    <Compile Include="Commands\Trading\TradingCommands.cs" />
+    <Compile Include="Commands\Transaction.cs" />
+    <Compile Include="Commands\TransactionMapping.cs" />
+    <Compile Include="Commands\XmlFillable.cs" />
+    <Compile Include="CommonSetting\SystemParameter.cs" />
+    <Compile Include="Common\Heap.cs" />
+    <Compile Include="Communication\ChannelFactory.cs" />
+    <Compile Include="Command.cs" />
+    <Compile Include="Communication\CommunicationService.cs" />
+    <Compile Include="Communication\HosterBase.cs" />
+    <Compile Include="Communication\ServiceAgent.cs" />
+    <Compile Include="Communication\ServiceHostExtension.cs" />
+    <Compile Include="DataBaseHelper.cs" />
+    <Compile Include="DataTypes\PayRecord.cs" />
+    <Compile Include="DataTypes\OrderData.cs" />
+    <Compile Include="DataTypes\OrderRelationData.cs" />
+    <Compile Include="DataTypes\TransactionData.cs" />
+    <Compile Include="DB\DBRetryHelper.cs" />
+    <Compile Include="Enums.cs" />
+    <Compile Include="GatewayService.cs" />
+    <Compile Include="ICommandCollectService.cs" />
+    <Compile Include="IKickoutService.cs" />
+    <Compile Include="IQuotationService.cs" />
+    <Compile Include="IStateServerWebService.cs" />
+    <Compile Include="ISystemController.cs" />
+    <Compile Include="ITransactionService.cs" />
+    <Compile Include="OrderQueryData.cs" />
+    <Compile Include="Physical\DeliveryRequestData.cs" />
+    <Compile Include="Physical\OrderInstalment.cs" />
+    <Compile Include="Physical\PhysicalOrderData.cs" />
+    <Compile Include="Physical\PhysicalType.cs" />
+    <Compile Include="Physical\TerminateData.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResetNotify.cs" />
+    <Compile Include="ServiceFinder.cs" />
+    <Compile Include="StringBuilderCache.cs" />
+    <Compile Include="Test\AccountQuotationInfo.cs" />
+    <Compile Include="Test\IServerService.cs" />
+    <Compile Include="Commands\MarketCommand.cs" />
+    <Compile Include="ThreadQueueBase.cs" />
+    <Compile Include="TradingInstrument\InstrumentStatus.cs" />
+    <Compile Include="TradingInstrument\InstrumentTradingTime.cs" />
+    <Compile Include="TypeExtensions\DataRowExtension.cs" />
+    <Compile Include="TypeExtensions\XElementExtension.cs" />
+    <Compile Include="TypeExtensions\XmlStringExtension.cs" />
+    <Compile Include="UnitTest\AccountInitTest.cs" />
+    <Compile Include="UnitTest\AccountTest.cs" />
+    <Compile Include="UnitTest\InstalmentDataTest.cs" />
+    <Compile Include="UnitTest\OCOTEST.cs" />
+    <Compile Include="UnitTest\OrderRelationTest.cs" />
+    <Compile Include="UnitTest\TradingCommandManagerTest.cs" />
+    <Compile Include="UnitTest\XmlFillableTest.cs" />
+    <Compile Include="UnitTest\XmlNodeAppendTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ReferenceLibrary\Dapper.dll" />
+    <Content Include="ReferenceLibrary\nunit.framework.dll" />
+    <Content Include="ReferenceLibrary\protobuf-net.dll" />
+    <Content Include="ReferenceLibrary\System.Threading.Tasks.Dataflow.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

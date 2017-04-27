@@ -1,0 +1,505 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{949BA399-94D5-4F0C-9D6E-ED9632CD8C09}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Core</RootNamespace>
+    <AssemblyName>Core</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Dapper, Version=1.50.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ReferenceLibrary\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="iExchange.Common">
+      <HintPath>..\..\iExchange3\Common\bin\Debug\iExchange.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\AsynchronousSslStream\Lib\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ReferenceLibrary\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=3.5.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NUnit.3.5.0\lib\net40\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Discovery" />
+    <Reference Include="System.Threading.Tasks.Dataflow, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Protocal\ReferenceLibrary\System.Threading.Tasks.Dataflow.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TransactionServer\Agent\Account.cs" />
+    <Compile Include="TransactionServer\Agent\AccountClass\AccountRisk.cs" />
+    <Compile Include="TransactionServer\Agent\AccountClass\AccountUtil\AccountCalculateExtension.cs" />
+    <Compile Include="TransactionServer\Agent\AccountClass\AccountUtil\AccountPartial.cs" />
+    <Compile Include="TransactionServer\Agent\AccountClass\AccountUtil\MaxOpenLotVerifier.cs" />
+    <Compile Include="TransactionServer\Agent\AccountClass\BusinessDataNames.cs" />
+    <Compile Include="TransactionServer\Agent\AccountClass\CuttingFee.cs" />
+    <Compile Include="TransactionServer\Agent\AccountClass\DeliveryRequestCache.cs" />
+    <Compile Include="TransactionServer\Agent\AccountClass\Fund.cs" />
+    <Compile Include="TransactionServer\Agent\AccountClass\FundContent.cs" />
+    <Compile Include="TransactionServer\Agent\AccountClass\HitService.cs" />
+    <Compile Include="TransactionServer\Agent\AccountClass\Instrument.cs" />
+    <Compile Include="TransactionServer\Agent\AccountClass\QuotationUpdater.cs" />
+    <Compile Include="TransactionServer\Agent\AccountClass\RiskRawData.cs" />
+    <Compile Include="TransactionServer\Agent\AccountClass\SubFund.cs" />
+    <Compile Include="TransactionServer\Agent\AccountClass\TransactionCache.cs" />
+    <Compile Include="TransactionServer\Agent\BillParser.cs" />
+    <Compile Include="TransactionServer\Agent\BinaryOption\BOBetType.cs" />
+    <Compile Include="TransactionServer\Agent\BinaryOption\BOBetTypeRepository.cs" />
+    <Compile Include="TransactionServer\Agent\BinaryOption\BOOrderConstructParams.cs" />
+    <Compile Include="TransactionServer\Agent\BinaryOption\BOOrderExecuteService.cs" />
+    <Compile Include="TransactionServer\Agent\BinaryOption\BOOrderRelation.cs" />
+    <Compile Include="TransactionServer\Agent\BinaryOption\BOPolicy.cs" />
+    <Compile Include="TransactionServer\Agent\BinaryOption\BOPolicyDetail.cs" />
+    <Compile Include="TransactionServer\Agent\BinaryOption\BOPolicyManager.cs" />
+    <Compile Include="TransactionServer\Agent\BinaryOption\BOTransaction.cs" />
+    <Compile Include="TransactionServer\Agent\BinaryOption\BOTransactionExecuteValidateService.cs" />
+    <Compile Include="TransactionServer\Agent\BinaryOption\BOTransactionFillService.cs" />
+    <Compile Include="TransactionServer\Agent\BinaryOption\Calculator\BOCloseOrderCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\BinaryOption\Calculator\BOFloatPLCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\BinaryOption\Calculator\BOOpenOrderCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\BinaryOption\Calculator\BOOrderFeeCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\BinaryOption\Calculator\BOValuedPLCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\BinaryOption\Factory\BOFillServiceFactory.cs" />
+    <Compile Include="TransactionServer\Agent\BinaryOption\Factory\BOOpenOrderServiceFactory.cs" />
+    <Compile Include="TransactionServer\Agent\BinaryOption\Factory\BOOrderServiceFactory.cs" />
+    <Compile Include="TransactionServer\Agent\BinaryOption\Factory\BOTransactionServiceFactory.cs" />
+    <Compile Include="TransactionServer\Agent\BinaryOption\HitResult.cs" />
+    <Compile Include="TransactionServer\Agent\BinaryOption\Order.cs" />
+    <Compile Include="TransactionServer\Agent\BinaryOption\OrderValidator.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\AccountBusiness\AccountBalance.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\AccountBusiness\AccountNecessaryCheckService.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\AccountBusiness\AccountPlaceHelper.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\AccountBusiness\Booker.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\AccountBusiness\BroadcastService.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\AccountBusiness\DeliveryHelper.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\AccountBusiness\Enum.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\AccountBusiness\HistoryService.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\AccountBusiness\InstrumentManager.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\AccountBusiness\LeverageExtension.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\AccountBusiness\MultipleCloser.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\AccountBusiness\PhysicalExtension.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\AccountBusiness\PhysicalPayer.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\AccountBusiness\ReHitter.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\AccountBusiness\RiskChecker.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\CurrencyRateCaculator.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\MissedTradePolicyDetailManager.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\OrderBusiness\Calculator\EstimateFeeCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\OrderBusiness\CurrencyExtension.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\OrderBusiness\OCOOrderHelper.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\OrderBusiness\OrderPhaseHelper.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\OrderBusiness\PriceInfoProvider.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\OrderDeletedReasonRepository.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\TransactionBusiness\PriceInfoProvider.cs" />
+    <Compile Include="TransactionServer\Agent\BroadcastBLL\ResetNotifyManager.cs" />
+    <Compile Include="TransactionServer\Agent\Caching\CacheFileManager.cs" />
+    <Compile Include="TransactionServer\Agent\Caching\RecordManager.cs" />
+    <Compile Include="TransactionServer\Agent\DB\DBMapping\AccountBalanceDayHistory.cs" />
+    <Compile Include="TransactionServer\Agent\DB\DBMapping\AccountVersion.cs" />
+    <Compile Include="TransactionServer\Agent\DB\DBMapping\InstrumentDayClosePrice.cs" />
+    <Compile Include="TransactionServer\Agent\DB\DBMapping\OrderDeletedReason.cs" />
+    <Compile Include="TransactionServer\Agent\DB\DBResetRepository.cs" />
+    <Compile Include="TransactionServer\Agent\Framework\StringBuilderPool.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\OrderBLL\Commands\AddLmtQuantiryOnMaxLotChangeOrderCommand.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\OrderBLL\Visitors\AddLmtQuantiryOnMaxLotChangeOrderCommandVisitor.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\TransactionBLL\Commands\AddLmtQuantiryOnMaxLotChangeTransactionCommand.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\TransactionBLL\Visitors\AddLmtQuantiryOnMaxLotChangeTransactionCommandVisitor.cs" />
+    <Compile Include="TransactionServer\Agent\Prices\ClosePriceManager.cs" />
+    <Compile Include="TransactionServer\Agent\Reset\AccountResetService.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\AccountBusiness\TypeExtensions\AccountExtensions.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\AccountBusiness\TypeExtensions\TransactionExtensionts.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\Exceptions.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\FeeFormula.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\InstrumentBusiness\Cache.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\InstrumentBusiness\ILotCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\InstrumentBusiness\InstrumentPriceStatusManager.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\InstrumentBusiness\TradingInstrument.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\InstrumentBusiness\InstrumentCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\InstrumentBusiness\InstrumentFacade.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\InstrumentBusiness\InstrumentNecessaryCheckService.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\InstrumentBusiness\InstrumentServiceFactory.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\InstrumentBusiness\OrderCollector.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\InstrumentBusiness\PhysicalInstrumentCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\FeeCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\MarketOrderProcessor.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\OrderBusiness\Calculator\AutoPriceCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\OrderBusiness\Calculator\CloseOrderCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\OrderBusiness\Calculator\FloatPLCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\OrderBusiness\Calculator\NotValuedPLCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\OrderBusiness\Calculator\OpenOrderCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\OrderBusiness\Calculator\NecessaryCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\OrderBusiness\Calculator\SplitOrderCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\OrderBusiness\Calculator\TradePLCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\OrderBusiness\Calculator\ValuedPLCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\OrderBusiness\Factory\OpenOrderServiceFactory.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\OrderBusiness\HitOrderSettings.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\OrderBusiness\Hit\HitCommon.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\OrderBusiness\Hit\LimitAndMarketOrderHitter.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\OrderBusiness\Hit\SpotOrderHitter.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\OrderBusiness\Calculator\CuttingOrderCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\OrderBusiness\OrderExternalSourceFieldNames.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\OrderBusiness\OrderFacade.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\OrderBusiness\OrderSettings.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\OrderBusiness\Partial\OrderPartial_Properties.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\OrderBusiness\PLCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\OrderBusiness\TradeSideVerifier.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\OrderBusiness\Validator\OrderExecuteVerifier.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\OrderBusiness\Validator\OrderNetVerifier.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\OrderBusiness\Validator\OrderPlaceVerifier.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\OrderBusiness\Validator\OrderVerifierBase.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\OrderBusiness\Validator\PlacePriceVerifier.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\OrderRelationBusiness\OpenOrderExecuteTimeComparer.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\OrderRelationBusiness\OrderRelationExecuteService.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\OrderRelationBusiness\OrderRelationFacade.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\OrderRelationBusiness\OrderRelationSettings.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\PreCheck\AccountPreCheckExtension.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\PreCheck\FilledCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\PreCheck\MarginAndQuantityResult.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\PreCheck\PreCheckNecessaryCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\PreCheck\TransactionPlacePreCheckExtension.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\PreCheck\UnfilledCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\TransactionBusiness\AutoFillService.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\TransactionBusiness\CancelService.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\TransactionBusiness\Factory\FillServiceFactory.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\TransactionBusiness\Factory\TransactionServiceFactory.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\TransactionBusiness\IfDoneService.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\TransactionBusiness\IfDoneTransactionXmlParser.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\TransactionBusiness\TransactionConstructParams.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\TransactionBusiness\TransactionExpireChecker.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\TransactionBusiness\TransactionNecessaryCheckService.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\TransactionBusiness\TransactionSettings.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\TransactionBusiness\TransactionVerifier.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\TransactionBusiness\TryExecuteService.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\Transfers\TransferHelper.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\Transfers\TransferManager.cs" />
+    <Compile Include="TransactionServer\Agent\BLL\TypeExtensions\OrderTypeHelper.cs" />
+    <Compile Include="TransactionServer\Agent\BroadcastBLL\Broadcaster.cs" />
+    <Compile Include="TransactionServer\Agent\BroadcastBLL\CommandFactory.cs" />
+    <Compile Include="TransactionServer\Agent\Caching\Assistant.cs" />
+    <Compile Include="TransactionServer\Agent\Caching\CacheCenter.cs" />
+    <Compile Include="TransactionServer\Agent\Comparers.cs" />
+    <Compile Include="TransactionServer\Agent\DB\DataHelper.cs" />
+    <Compile Include="TransactionServer\Agent\DB\DBMapping\InstalmentPolicyDetail.cs" />
+    <Compile Include="TransactionServer\Agent\DB\DBMapping\InstrumentResetResult.cs" />
+    <Compile Include="TransactionServer\Agent\DB\DBMapping\LeverageParameters.cs" />
+    <Compile Include="TransactionServer\Agent\DB\DBMapping\OrderDayHistory.cs" />
+    <Compile Include="TransactionServer\Agent\Enums.cs" />
+    <Compile Include="TransactionServer\Agent\Framework\Bill.cs" />
+    <Compile Include="TransactionServer\Agent\Framework\BusinessData.cs" />
+    <Compile Include="TransactionServer\Agent\Framework\BusinessDataConverter.cs" />
+    <Compile Include="TransactionServer\Agent\Framework\BusinessDataFactory.cs" />
+    <Compile Include="TransactionServer\Agent\Framework\BusinessItemParser.cs" />
+    <Compile Include="TransactionServer\Agent\Framework\BusinessRecordCollection.cs" />
+    <Compile Include="TransactionServer\Agent\Framework\BuySellLot.cs" />
+    <Compile Include="TransactionServer\Agent\Framework\CacheData.cs" />
+    <Compile Include="TransactionServer\Agent\Framework\Combinations.cs" />
+    <Compile Include="TransactionServer\Agent\Framework\DataParseComponents.cs" />
+    <Compile Include="TransactionServer\Agent\Framework\Interfaces.cs" />
+    <Compile Include="TransactionServer\Agent\Framework\OrderRelaitonKey.cs" />
+    <Compile Include="TransactionServer\Agent\Framework\PLValue.cs" />
+    <Compile Include="TransactionServer\Agent\Framework\XmlTag.cs" />
+    <Compile Include="TransactionServer\Agent\Initializer.cs" />
+    <Compile Include="TransactionServer\Agent\Interact\TransactionExecutor.cs" />
+    <Compile Include="TransactionServer\Agent\Interact\InteractFacade.cs" />
+    <Compile Include="TransactionServer\Agent\MarketOnCloseExecutor.cs" />
+    <Compile Include="TransactionServer\Agent\Market\Instrument.cs" />
+    <Compile Include="TransactionServer\Agent\Market\Manager.cs" />
+    
+    <Compile Include="TransactionServer\Agent\Order.cs" />
+    <Compile Include="TransactionServer\Agent\OrderFloatings.cs" />
+    <Compile Include="TransactionServer\Agent\OrderRelation.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\Command.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\Facades\CancelDeliveryWithShortSellOrderParam.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\OrderBLL\Commands\AddOrderCommand.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\OrderBLL\Commands\CommunicationCommand.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\OrderBLL\Commands\IAddOrderCommandService.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\OrderBLL\Factory\AddOrderCommandFactoryBase.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\OrderBLL\Factory\OpenOrderServiceFactory.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\OrderBLL\OrderConstructParams.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\OrderBLL\OrderFeeCalculatorBase.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\OrderBLL\Services\OrderBookService.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\OrderBLL\Services\OrderExecuteService.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\OrderBLL\Services\OrderPreCheckService.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\OrderBLL\Factory\OrderServiceFactory.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\OrderBLL\ValuedPLCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\OrderBLL\Visitors\AddBookWithNoCalculationOrderCommandVisitor.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\OrderBLL\Visitors\AddCancelDeliveryWithShortSellOrderCommandVisitor.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\OrderBLL\Visitors\AddMultipleCloseOrderCommandVisitor.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\OrderBLL\Visitors\AddPhysicalInstalmentOrderCommandVisitor.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\OrderBLL\Visitors\AddAutoCloseOrderCommandVisitor.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\OrderBLL\Visitors\AddCloseOrderCommandVisitor.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\OrderBLL\Visitors\AddCommunicationOrderCommandVisitor.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\OrderBLL\Visitors\AddCutOrderCommandVisitor .cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\OrderBLL\Visitors\AddDataRowFormatOrderCommandVisitor.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\OrderBLL\Visitors\AddDoneOrderCommandVisitor.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\OrderBLL\Visitors\AddOrderCommandVisitorBase.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\OrderBLL\Visitors\AddResetOrderCommandVisitor.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\OrderRelationBLL\Commands\AddOrderRelationCommandBase.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\OrderRelationBLL\Commands\CommunicationCommandBase.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\OrderRelationBLL\Commands\IAddOrderRelationCommandService.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\OrderRelationBLL\Factory\AddOrderRelationFactoryBase.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\OrderRelationBLL\OrderRelationConstructParams.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\OrderRelationBLL\Visitors\AddBookOrderRelationCommand.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\OrderRelationBLL\Visitors\AddCommunicationOrderRelationCommandVisitor.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\OrderRelationBLL\Visitors\AddDataRowFormatOrderRelationCommandVisitor.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\OrderRelationBLL\Visitors\AddGeneralFormatOrderRelationCommandVisitor.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\OrderRelationBLL\Visitors\AddOrderRelationCommandVisitorBase.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\OrganizationAndOrderTypeRepository.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\TransactionBLL\Commands\AddCommunicationCommand.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\TransactionBLL\Commands\IAddTranCommandService.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\TransactionBLL\Factory\ITransactionServiceFactory.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\TransactionBLL\Services\FillServiceBase.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\TransactionBLL\Services\PreCheckVerifier.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\TransactionBLL\Services\TransactionExecuteService.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\TransactionBLL\Services\TransactionPreCheckService.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\TransactionBLL\Visitors\AddAutoCloseTransactionCommandVisitor.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\TransactionBLL\Visitors\AddBookWithNoCalculationTransactionCommandVistor.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\TransactionBLL\Visitors\AddCloseTransactionCommandVisitor.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\TransactionBLL\Visitors\AddCommunicationTransactionCommandVisitor.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\TransactionBLL\Visitors\AddCutTransactionCommandVisitor.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\TransactionBLL\Visitors\AddDataRowFormatTransactionCommandVisitor.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\TransactionBLL\Visitors\AddDoneTransactionCommandVisitor.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\TransactionBLL\Visitors\AddMultipleCloseTranCommandVisitor.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\TransactionBLL\Visitors\AddPhysicalInstalmentTransactionCommandVisitor.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\TransactionBLL\Commands\AddTranCommandBase.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\TransactionBLL\Factory\AddTransactionCommandFactory.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\TransactionBLL\TransactionFacade.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\TransactionBLL\Visitors\AddTransactionCommandVisitorBase.cs" />
+    <Compile Include="TransactionServer\Agent\Periphery\TransactionBLL\Visitors\AddCancelDeliveryWithShortSellTransactionCommandVisitor.cs" />
+    <Compile Include="TransactionServer\Agent\Physical\Delivery\DeliveryManager.cs" />
+    <Compile Include="TransactionServer\Agent\Physical\InstalmentBusiness\PrePayer.cs" />
+    <Compile Include="TransactionServer\Agent\Physical\PrePaymentException.cs" />
+    <Compile Include="TransactionServer\Agent\PriceAlert\Alert.cs" />
+    <Compile Include="TransactionServer\Agent\PriceAlert\Manager.cs" />
+    <Compile Include="TransactionServer\Agent\PriceAlert\QuoteProvider.cs" />
+    <Compile Include="TransactionServer\Agent\Reset\AccountUsableNecessaryCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\Reset\Calculator\MarginCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\Reset\Exceptions\OrderDayHistoryException.cs" />
+    <Compile Include="TransactionServer\Agent\Reset\InstrumentDayOpenCloseHistory.cs" />
+    <Compile Include="TransactionServer\Agent\Reset\InstrumentResetter.cs" />
+    <Compile Include="TransactionServer\Agent\Reset\OrderRelationResetter.cs" />
+    <Compile Include="TransactionServer\Agent\Reset\OpenOrderCloser.cs" />
+    <Compile Include="TransactionServer\Agent\Reset\OrderDayHistoryRepository.cs" />
+    <Compile Include="TransactionServer\Agent\Reset\OrderDayHistorySaver.cs" />
+    <Compile Include="TransactionServer\Agent\Reset\OrderHistory.cs" />
+    <Compile Include="TransactionServer\Agent\Reset\CloseOrderPLCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\Reset\OrderUpdater.cs" />
+    <Compile Include="TransactionServer\Agent\Reset\PhysicalReset\CommonCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\Reset\PhysicalReset\FullPaymentCostCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\Reset\PhysicalReset\PledgeCostCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\Reset\OpenOrderPLCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\Reset\ResetBalance.cs" />
+    <Compile Include="TransactionServer\Agent\Reset\ResetBillType.cs" />
+    <Compile Include="TransactionServer\Agent\Reset\SystemReseter.cs" />
+    <Compile Include="TransactionServer\Agent\Reset\TradeDayCalculatorExtension.cs" />
+    <Compile Include="TransactionServer\Agent\Service\BroadcasterProxy.cs" />
+    <Compile Include="TransactionServer\Agent\Service\GatewayProxy.cs" />
+    <Compile Include="TransactionServer\Agent\Service\InstrumentTradingStateManager.cs" />
+    <Compile Include="TransactionServer\Agent\Service\TransactionAdpterService.cs" />
+    <Compile Include="TransactionServer\Agent\Settings\Blotter.cs" />
+    <Compile Include="TransactionServer\Agent\Settings\InterestPolicy.cs" />
+    <Compile Include="TransactionServer\Agent\Settings\PhysicalPaymentDiscountPolicy.cs" />
+    <Compile Include="TransactionServer\Agent\Settings\SettingInfo.cs" />
+    <Compile Include="TransactionServer\Agent\Test\ExternalInitializer.cs" />
+    <Compile Include="TransactionServer\Agent\Test\Reset\InstrumentHistorySettingData.cs" />
+    <Compile Include="TransactionServer\Agent\Util\Code\DeliveryCodeGenerator.cs" />
+    <Compile Include="TransactionServer\Agent\Util\Code\TransactionCodeGenerater.cs" />
+    <Compile Include="TransactionServer\Agent\Physical\AccountBusiness\PhysicalHelper.cs" />
+    <Compile Include="TransactionServer\Agent\Physical\Delivery\DeliveryModel.cs" />
+    <Compile Include="TransactionServer\Agent\Physical\Delivery\DeliveryRequest.cs" />
+    <Compile Include="TransactionServer\Agent\Physical\Delivery\DeliveryRequestManager.cs" />
+    <Compile Include="TransactionServer\Agent\Physical\InstalmentBusiness\InstalmentCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\Physical\InstalmentBusiness\InstalmentDetail.cs" />
+    <Compile Include="TransactionServer\Agent\Physical\InstalmentBusiness\InstalmentDetailCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\Physical\InstrumentBusiness\PhysicalInstrumentCalculator .cs" />
+    <Compile Include="TransactionServer\Agent\Physical\InstrumentBusiness\PhysicalInstrumentOrderCollector .cs" />
+    <Compile Include="TransactionServer\Agent\Physical\InstrumentBusiness\PhysicalLotCalculator .cs" />
+    <Compile Include="TransactionServer\Agent\Physical\OrderBusiness\Instalment.cs" />
+    <Compile Include="TransactionServer\Agent\Physical\OrderBusiness\MarketValueCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\Physical\OrderBusiness\PhysicalCalculateParams.cs" />
+    <Compile Include="TransactionServer\Agent\Physical\OrderBusiness\PhysicalCloseOrderCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\Physical\OrderBusiness\PhysicalFloating.cs" />
+    <Compile Include="TransactionServer\Agent\Physical\OrderBusiness\PhysicalOpenOrderCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\Physical\OrderBusiness\PhysicalOpenOrderFeeCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\Physical\OrderBusiness\PhysicalOpenOrderServiceFactory.cs" />
+    <Compile Include="TransactionServer\Agent\Physical\OrderBusiness\PhysicalOrderExecuteService.cs" />
+    <Compile Include="TransactionServer\Agent\Physical\OrderBusiness\PhysicalOrderExternalSourceFieldNames.cs" />
+    <Compile Include="TransactionServer\Agent\Physical\OrderBusiness\PhysicalOrderServiceFactory .cs" />
+    <Compile Include="TransactionServer\Agent\Physical\OrderBusiness\PhysicalOrderSettings.cs" />
+    <Compile Include="TransactionServer\Agent\Physical\OrderBusiness\PhysicalValuedPLCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\Physical\OrderRelationBusiness\PhysicalOrderRelationSettings.cs" />
+    <Compile Include="TransactionServer\Agent\Physical\PhysicalShortSellOrderCloser.cs" />
+    <Compile Include="TransactionServer\Agent\Physical\PhysicalInstrument.cs" />
+    <Compile Include="TransactionServer\Agent\Physical\PhysicalOrder.cs" />
+    <Compile Include="TransactionServer\Agent\Physical\PhysicalOrderRelation.cs" />
+    <Compile Include="TransactionServer\Agent\Physical\PhysicalTransaction.cs" />
+    <Compile Include="TransactionServer\Agent\Physical\TransactionBusiness\PhysicalFillService.cs" />
+    <Compile Include="TransactionServer\Agent\Physical\TransactionBusiness\PhysicalFillServiceFactory .cs" />
+    <Compile Include="TransactionServer\Agent\Physical\TransactionBusiness\PhysicalTransactionServiceFactory .cs" />
+    <Compile Include="TransactionServer\Agent\Physical\TransactionBusiness\PhysicalValueChecker.cs" />
+    <Compile Include="TransactionServer\Agent\Quotations\Quotation.cs" />
+    <Compile Include="TransactionServer\Agent\Quotations\QuotationPool.cs" />
+    <Compile Include="TransactionServer\Agent\Reset\FloatingCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\Reset\HistoryOrderDeleter.cs" />
+    <Compile Include="TransactionServer\Agent\Reset\HistoryOrderFactory.cs" />
+    <Compile Include="TransactionServer\Agent\Physical\InstalmentBusiness\InstalmentManager.cs" />
+    <Compile Include="TransactionServer\Agent\Reset\ResetModel.cs" />
+    <Compile Include="TransactionServer\Agent\Reset\OrderDayHistory.cs" />
+    <Compile Include="TransactionServer\Agent\Reset\ResetManager.cs" />
+    <Compile Include="TransactionServer\Agent\Reset\TradeDayCalculator.cs" />
+    <Compile Include="TransactionServer\Agent\Reset\TradeDayInfo.cs" />
+    <Compile Include="TransactionServer\Agent\Server.cs" />
+    <Compile Include="TransactionServer\Agent\ServerFacade.cs" />
+    <Compile Include="TransactionServer\Agent\Util\TypeExtension\DictionaryExtension.cs" />
+    <Compile Include="TransactionServer\CommandCollectService.cs" />
+    <Compile Include="TransactionServer\Agent\Service\Hoster.cs" />
+    <Compile Include="TransactionServer\Agent\Service\ServerServce.cs" />
+    <Compile Include="TransactionServer\Agent\Service\TransactionServerService.cs" />
+    <Compile Include="TransactionServer\Agent\Settings\Account.cs" />
+    <Compile Include="TransactionServer\Agent\Settings\Currency.cs" />
+    <Compile Include="TransactionServer\Agent\Settings\CurrencyRate.cs" />
+    <Compile Include="TransactionServer\Agent\Settings\Customer.cs" />
+    <Compile Include="TransactionServer\Agent\Settings\DayQuotation.cs" />
+    <Compile Include="TransactionServer\Agent\Settings\DealingPolicy.cs" />
+    <Compile Include="TransactionServer\Agent\Settings\ExternalSettings.cs" />
+    <Compile Include="TransactionServer\Agent\Settings\GuidPair.cs" />
+    <Compile Include="TransactionServer\Agent\Settings\InstalmentPolicy.cs" />
+    <Compile Include="TransactionServer\Agent\Settings\Instrument.cs" />
+    <Compile Include="TransactionServer\Agent\Settings\QuotationParameter.cs" />
+    <Compile Include="TransactionServer\Agent\Settings\QuotePolicy.cs" />
+    <Compile Include="TransactionServer\Agent\Settings\Setting.cs" />
+    <Compile Include="TransactionServer\Agent\Settings\SettingInitializer.cs" />
+    <Compile Include="TransactionServer\Agent\Settings\SpecialTradePolicy.cs" />
+    <Compile Include="TransactionServer\Agent\Settings\SystemParameter.cs" />
+    <Compile Include="TransactionServer\Agent\Settings\TradeDay.cs" />
+    <Compile Include="TransactionServer\Agent\Settings\TradePolicy.cs" />
+    <Compile Include="TransactionServer\Agent\Settings\TradingTime.cs" />
+    <Compile Include="TransactionServer\Agent\Settings\VolumeNecessary.cs" />
+    <Compile Include="TransactionServer\Agent\TradingSetting.cs" />
+    <Compile Include="TransactionServer\Agent\Transaction.cs" />
+    <Compile Include="TransactionServer\Agent\UnclearDeposit.cs" />
+    <Compile Include="TransactionServer\Agent\Util\HashCodeGenerator.cs" />
+    <Compile Include="TransactionServer\Agent\Util\OrderHelper.cs" />
+    <Compile Include="TransactionServer\Agent\Util\PriceHelper.cs" />
+    <Compile Include="TransactionServer\Agent\Util\TypeExtension\DataRowExtension.cs" />
+    <Compile Include="TransactionServer\Agent\Util\TypeExtension\DateTimeExtension.cs" />
+    <Compile Include="TransactionServer\Agent\Util\TypeExtension\DecimalExtension.cs" />
+    <Compile Include="TransactionServer\Agent\Reset\ResetExtension.cs" />
+    <Compile Include="TransactionServer\Agent\Util\TypeExtension\XElementExtention.cs" />
+    <Compile Include="TransactionServer\Agent\Util\TypeExtension\XmlStringExtension.cs" />
+    <Compile Include="TransactionServer\Agent\DB\DBRepository.cs" />
+    <Compile Include="TransactionServer\Engine\EngineService.cs" />
+    <Compile Include="TransactionServer\Agent\BinaryOption\BOEngine.cs" />
+    <Compile Include="TransactionServer\Engine\iExchange\BLL\AccountInspecter.cs" />
+    <Compile Include="TransactionServer\Engine\iExchange\BLL\AutoFillExecutorAndCanceler.cs" />
+    
+    <Compile Include="TransactionServer\Engine\iExchange\BLL\DeferredAutoFillManager.cs" />
+    <Compile Include="TransactionServer\Engine\iExchange\BLL\OrderBLL\AccountAutoCloser.cs" />
+    <Compile Include="TransactionServer\Engine\iExchange\BLL\OrderBLL\OrderHitManager.cs" />
+    <Compile Include="TransactionServer\Engine\iExchange\BLL\Physical\MaketValueBusiness.cs" />
+    <Compile Include="TransactionServer\Engine\iExchange\BLL\Physical\ShortSellBusiness.cs" />
+    <Compile Include="TransactionServer\Engine\iExchange\BLL\Setting.cs" />
+    <Compile Include="TransactionServer\Engine\iExchange\BLL\TransactionExtension.cs" />
+    <Compile Include="TransactionServer\Engine\iExchange\Common\CommandFactory.cs" />
+    <Compile Include="TransactionServer\Engine\iExchange\Common\CommandNodeTransferFactory.cs" />
+    <Compile Include="TransactionServer\Engine\iExchange\Common\CommandSequenceManager.cs" />
+    <Compile Include="TransactionServer\Engine\iExchange\DealingConsoleService.cs" />
+    <Compile Include="TransactionServer\Engine\iExchange\iExchangeEngine.cs" />
+    <Compile Include="TransactionServer\Engine\iExchange\PlaceService.cs" />
+    <Compile Include="TransactionServer\Engine\iExchange\PriceVerifier.cs" />
+    <Compile Include="TransactionServer\Engine\iExchange\Util\BroadcastHelper.cs" />
+    <Compile Include="TransactionServer\Engine\iExchange\Util\FileUtil.cs" />
+    <Compile Include="TransactionServer\Engine\TradingEngine.cs" />
+    <Compile Include="TransactionServer\Layout\LayoutPolicy.cs" />
+    <Compile Include="TransactionServer\UnitTest\BunessDataTest\AccountFake.cs" />
+    <Compile Include="TransactionServer\UnitTest\BunessDataTest\PlaceOrderTest.cs" />
+    <Compile Include="TransactionServer\UnitTest\BunessDataTest\TransactionBusinessItemTest.cs" />
+    <Compile Include="TransactionServer\UnitTest\CacheFileTest.cs" />
+    <Compile Include="TransactionServer\UnitTest\DateTimeTest.cs" />
+    <Compile Include="TransactionServer\UnitTest\GetResetTimeTest.cs" />
+    <Compile Include="TransactionServer\UnitTest\InstrumentDayClosePriceTest.cs" />
+    <Compile Include="TransactionServer\UnitTest\ListTest.cs" />
+    <Compile Include="TransactionServer\UnitTest\OrderDeletedReasonTest.cs" />
+    <Compile Include="TransactionServer\UnitTest\Reset\InterestStoragePLTest.cs" />
+    <Compile Include="TransactionServer\UnitTest\SystemResetterTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ReferenceLibrary\Dapper.dll" />
+    <Content Include="ReferenceLibrary\Newtonsoft.Json.dll" />
+    <Content Include="ReferenceLibrary\Ninject.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="TransactionServer\Agent\Util\Config\" />
+    <Folder Include="TransactionServer\Engine\iExchange\BinaryOption\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Protocal\Protocal.csproj">
+      <Project>{4f061e4e-26c3-48d6-88bf-31773a042f9a}</Project>
+      <Name>Protocal</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
