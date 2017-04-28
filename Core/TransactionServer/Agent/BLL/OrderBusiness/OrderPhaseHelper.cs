@@ -54,7 +54,6 @@ namespace Core.TransactionServer.Agent.BLL.OrderBusiness
                 var closeOrder = eachOrderRelation.CloseOrder;
                 if (closeOrder == originalCloseOrder)
                 {
-                    Logger.InfoFormat("ChangeAllCloseOrdersToCompleted can't be happened, openOrderId = {0}, closeOrderId = {1}", openOrder.Id, closeOrder.Id);
                     continue;
                 }
                 closeOrder.UpdateCloseOrderPhase(tradeDay, instrumentId, resetTime);

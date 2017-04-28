@@ -6,3 +6,4 @@
 *.svcmap
 bin/
 Outter/.vs/Outter/v15/.suo
+*.cache

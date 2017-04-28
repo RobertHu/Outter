@@ -955,6 +955,8 @@ namespace Core.TransactionServer.Agent
                     Logger.InfoFormat(" begin delete order, orderId = {0}", orderId);
                     deleter.Delete();
                     Logger.InfoFormat(" end delete order, orderId = {0}", orderId);
+                    this.InvalidateInstrumentCache(order.Owner);
+                    this.CalculateRiskData();
                     return TransactionError.OK;
                 }
                 catch (TransactionServerException tse)
