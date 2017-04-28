@@ -151,7 +151,7 @@ namespace Core.TransactionServer.Agent
                 }
                 else
                 {
-                    return _openOrderCalculator.Value.GetAllOrderRelations();
+                    return this.GetAllOrderRelations();
                 }
             }
         }

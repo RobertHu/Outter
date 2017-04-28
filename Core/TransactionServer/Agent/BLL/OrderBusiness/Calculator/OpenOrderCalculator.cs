@@ -81,11 +81,17 @@ namespace Core.TransactionServer.Agent.BLL.OrderBusiness.Calculator
             return result;
         }
 
-        public List<OrderRelation> GetAllOrderRelations()
+
+
+    }
+
+    internal static class OpenOrderHelper
+    {
+        public static List<OrderRelation> GetAllOrderRelations(this Order openOrder)
         {
-            Debug.Assert(_order.IsOpen);
+            Debug.Assert(openOrder.IsOpen);
             List<OrderRelation> result = new List<OrderRelation>();
-            var account = _order.Owner.Owner;
+            var account = openOrder.Owner.Owner;
             foreach (Transaction eachTran in account.Transactions)
             {
                 foreach (Order eachOrder in eachTran.Orders)
@@ -93,7 +99,7 @@ namespace Core.TransactionServer.Agent.BLL.OrderBusiness.Calculator
                     if (eachOrder.IsOpen) continue;
                     foreach (OrderRelation eachOrderRelation in eachOrder.OrderRelations)
                     {
-                        if (eachOrderRelation.OpenOrder == _order)
+                        if (eachOrderRelation.OpenOrder == openOrder)
                         {
                             result.Add(eachOrderRelation);
                         }
@@ -102,8 +108,9 @@ namespace Core.TransactionServer.Agent.BLL.OrderBusiness.Calculator
             }
             return result;
         }
-
     }
+
+
 
     internal sealed class OpenOrderCalculator : OpenOrderCalculatorBase
     {
@@ -119,3 +126,4 @@ namespace Core.TransactionServer.Agent.BLL.OrderBusiness.Calculator
         }
     }
 }
+

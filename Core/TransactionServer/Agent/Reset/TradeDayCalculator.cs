@@ -640,7 +640,7 @@ namespace Core.TransactionServer.Agent.Reset
         {
             foreach (var eachOrder in _orders)
             {
-                eachOrder.UpdateCloseOrderPhase(eachOrder.OrderRelations, _tradeDay, _instrumentId, _resetTime);
+                eachOrder.UpdateCloseOrderPhase( _tradeDay, _instrumentId, _resetTime);
             }
         }
 

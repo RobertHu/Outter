@@ -1233,7 +1233,7 @@ namespace Core.TransactionServer.Agent
                     var tran = this.GetTran(context.TranId);
                     TransactionExecutor.Default.Execute(context);
                     this.InvalidateInstrumentCacheAndBroadcastChanges(tran);
-                    this.UpdateOrderPhase(tran);
+                    this.UpdateOrderPhase(tran, context.TradeDay);
                     _accountRisk.CheckRisk(MarketManager.Now, CalculateType.CheckRisk);
                 }
                 catch (TransactionServerException tse)
@@ -1259,7 +1259,7 @@ namespace Core.TransactionServer.Agent
                     var tran = context.Tran;
                     tran.ExecuteDirectly(context);
                     this.InvalidateInstrumentCacheAndBroadcastChanges(tran);
-                    this.UpdateOrderPhase(tran);
+                    this.UpdateOrderPhase(tran,context.TradeDay);
                     _accountRisk.CheckRisk(MarketManager.Now, CalculateType.CheckRisk);
                 }
                 catch (TransactionServerException tse)
@@ -1283,7 +1283,7 @@ namespace Core.TransactionServer.Agent
                 {
                     tran.ExecuteDirectly(ExecuteContext.CreateExecuteDirectly(this.Id, tran.Id, ExecuteStatus.Filled));
                     this.InvalidateInstrumentCacheAndBroadcastChanges(tran);
-                    this.UpdateOrderPhase(tran);
+                    this.UpdateOrderPhase(tran,null);
                     return true;
                 }
                 catch (TransactionServerException tse)
@@ -1301,7 +1301,7 @@ namespace Core.TransactionServer.Agent
             }
         }
 
-        private void UpdateOrderPhase(Transaction tran)
+        private void UpdateOrderPhase(Transaction tran, DateTime? tradeDay)
         {
             try
             {
@@ -1312,7 +1312,7 @@ namespace Core.TransactionServer.Agent
                 }
                 foreach (var eachOrder in tran.Orders)
                 {
-                    eachOrder.UpdateCloseOrderPhase(eachOrder.OrderRelations, tran.ExecuteTime.Value.Date, tran.InstrumentId, null);
+                    eachOrder.UpdateCloseOrderPhase(tradeDay ?? Settings.Setting.Default.GetTradeDay().Day, tran.InstrumentId, null);
                 }
                 this.InvalidateInstrumentCacheAndBroadcastChanges(tran);
             }

@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Core.TransactionServer.Agent.BLL.OrderBusiness.Calculator;
 
 namespace Core.TransactionServer.Agent.BLL.OrderBusiness
 {
@@ -15,26 +16,52 @@ namespace Core.TransactionServer.Agent.BLL.OrderBusiness
     {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(OrderPhaseHelper));
 
-        internal static void UpdateCloseOrderPhase(this Order order, IEnumerable<OrderRelation> orderRelations, DateTime tradeDay, Guid instrumentId, DateTime? resetTime)
+        internal static void UpdateCloseOrderPhase(this Order order, DateTime tradeDay, Guid instrumentId, DateTime? resetTime)
         {
             if (order.ShouldUpdateCloseOrder(order.OrderRelations, resetTime) &&
                         OrderPhaseHelper.IsAllOpenOrdersShouldChangePhaseToCompleted(order.OrderRelations, tradeDay, instrumentId, resetTime))
             {
                 Logger.InfoFormat("UpdateCloseOrderPhase orderId = {0}, tradeDay = {1}", order.Id, tradeDay);
                 var account = order.Account;
-                order.ChangeToCompleted();
-                account.RemoveOrderFromCache(order);
+                order.ChangeToCompletedAndRemove();
                 foreach (var eachOrderRelation in order.OrderRelations)
                 {
                     var openOrder = eachOrderRelation.OpenOrder;
-                    if (openOrder.Phase != OrderPhase.Completed)
-                    {
-                        openOrder.ChangeToCompleted();
-                        account.RemoveOrderFromCache(openOrder);
-                    }
+                    openOrder.ChangeToCompletedAndRemove();
+                    ChangeAllCloseOrdersToCompleted(openOrder, order, resetTime, tradeDay, instrumentId);
                 }
             }
         }
+
+
+        private static void ChangeToCompletedAndRemove(this Order order)
+        {
+            if (order.Phase != OrderPhase.Completed)
+            {
+                order.ChangeToCompleted();
+                order.Account.RemoveOrderFromCache(order);
+            }
+        }
+
+
+
+        private static void ChangeAllCloseOrdersToCompleted(Order openOrder, Order originalCloseOrder, DateTime? resetTime, DateTime tradeDay, Guid instrumentId)
+        {
+            var orderRelations = openOrder.GetAllOrderRelations();
+            if (orderRelations.Count == 0) return;
+            foreach (var eachOrderRelation in orderRelations)
+            {
+                var closeOrder = eachOrderRelation.CloseOrder;
+                if (closeOrder == originalCloseOrder)
+                {
+                    Logger.InfoFormat("ChangeAllCloseOrdersToCompleted can't be happened, openOrderId = {0}, closeOrderId = {1}", openOrder.Id, closeOrder.Id);
+                    continue;
+                }
+                closeOrder.UpdateCloseOrderPhase(tradeDay, instrumentId, resetTime);
+            }
+        }
+
+
 
         private static bool IsAllOpenOrdersShouldChangePhaseToCompleted(IEnumerable<OrderRelation> orderRelations, DateTime tradeDay, Guid instrumentId, DateTime? resetTime)
         {
@@ -52,7 +79,7 @@ namespace Core.TransactionServer.Agent.BLL.OrderBusiness
         private static bool ShouldUpdateOpenOrder(this Order order, IEnumerable<OrderRelation> orderRelations, DateTime tradeDay, Guid instrumentId, DateTime? resetTime = null)
         {
 
-            return (order.Phase == OrderPhase.Executed || order.Phase ==  OrderPhase.Completed)&& order.IsOpen && order.LotBalance == 0 && order.IsExecuteTimeAfterResetTime(resetTime) && !order.ExistNotValuedOrderDayHistory(tradeDay, instrumentId)
+            return (order.Phase == OrderPhase.Executed || order.Phase == OrderPhase.Completed) && order.IsOpen && order.LotBalance == 0 && order.IsExecuteTimeAfterResetTime(resetTime) && !order.ExistNotValuedOrderDayHistory(tradeDay, instrumentId)
                     && order.IsInstalmentPayOff() && !order.ExistNotMaturePhysicalValue(orderRelations) && order.IsDeliveryRequestCompleted(orderRelations);
         }
 
