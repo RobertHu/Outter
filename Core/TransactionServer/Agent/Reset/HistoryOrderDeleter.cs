@@ -191,9 +191,6 @@ namespace Core.TransactionServer.Agent.Reset
                 {
                     Order openOrder = eachOrderRelation.OpenOrder;
                     openOrder.LotBalance += eachOrderRelation.ClosedLot;
-                    var context = Engine.ExecuteContext.CreateExecuteDirectly(order.AccountId, openOrder.Id, Engine.ExecuteStatus.None);
-                    context.BookInfo = new Engine.BookInfo(tradeDay, tradeDay);
-                    openOrder.RecalculateEstimateFee(context);
                     if (order.Owner.IsPhysical)
                     {
                         PhysicalOrderRelation physicalOrderRelation = (PhysicalOrderRelation)eachOrderRelation;

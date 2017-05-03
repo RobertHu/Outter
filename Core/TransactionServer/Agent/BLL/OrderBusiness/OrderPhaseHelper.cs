@@ -18,19 +18,49 @@ namespace Core.TransactionServer.Agent.BLL.OrderBusiness
 
         internal static void UpdateCloseOrderPhase(this Order order, DateTime tradeDay, Guid instrumentId, DateTime? resetTime)
         {
+            if (order.ShouldUpdateOrderPhase(tradeDay, instrumentId, resetTime))
+            {
+                order.InnerUpdateCloseOrderPhase(tradeDay, instrumentId, resetTime);
+            }
+        }
+
+        private static void InnerUpdateCloseOrderPhase(this Order order, DateTime tradeDay, Guid instrumentId, DateTime? resetTime)
+        {
+            Logger.InfoFormat("UpdateCloseOrderPhase orderId = {0}, tradeDay = {1}", order.Id, tradeDay);
+            var account = order.Account;
+            order.ChangeToCompletedAndRemove();
+            foreach (var eachOrderRelation in order.OrderRelations)
+            {
+                var openOrder = eachOrderRelation.OpenOrder;
+                openOrder.ChangeToCompletedAndRemove();
+                ChangeAllCloseOrdersToCompleted(openOrder, order, resetTime, tradeDay, instrumentId);
+            }
+        }
+
+
+        private static bool ShouldUpdateOrderPhase(this Order order, DateTime tradeDay, Guid instrumentId, DateTime? resetTime)
+        {
             if (order.ShouldUpdateCloseOrder(order.OrderRelations, resetTime) &&
                         OrderPhaseHelper.IsAllOpenOrdersShouldChangePhaseToCompleted(order.OrderRelations, tradeDay, instrumentId, resetTime))
             {
-                Logger.InfoFormat("UpdateCloseOrderPhase orderId = {0}, tradeDay = {1}", order.Id, tradeDay);
-                var account = order.Account;
-                order.ChangeToCompletedAndRemove();
                 foreach (var eachOrderRelation in order.OrderRelations)
                 {
                     var openOrder = eachOrderRelation.OpenOrder;
-                    openOrder.ChangeToCompletedAndRemove();
-                    ChangeAllCloseOrdersToCompleted(openOrder, order, resetTime, tradeDay, instrumentId);
+                    foreach (var eachOrderRelationForOpenOrder in openOrder.GetAllOrderRelations())
+                    {
+                        if (eachOrderRelationForOpenOrder != eachOrderRelation)
+                        {
+                            var closeOrder = eachOrderRelationForOpenOrder.CloseOrder;
+                            if (closeOrder != order)
+                            {
+                                return closeOrder.ShouldUpdateOrderPhase(tradeDay, instrumentId, resetTime);
+                            }
+                        }
+                    }
                 }
+                return true;
             }
+            return false;
         }
 
 
@@ -56,7 +86,7 @@ namespace Core.TransactionServer.Agent.BLL.OrderBusiness
                 {
                     continue;
                 }
-                closeOrder.UpdateCloseOrderPhase(tradeDay, instrumentId, resetTime);
+                closeOrder.InnerUpdateCloseOrderPhase(tradeDay, instrumentId, resetTime);
             }
         }
 

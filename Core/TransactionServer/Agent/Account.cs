@@ -601,7 +601,6 @@ namespace Core.TransactionServer.Agent
             {
                 try
                 {
-                    if (this.TransactionCount == 0) return;
                     this.EstimateCloseCommission = 0m;
                     this.EstimateCloseLevy = 0m;
 
@@ -956,6 +955,7 @@ namespace Core.TransactionServer.Agent
                     deleter.Delete();
                     Logger.InfoFormat(" end delete order, orderId = {0}", orderId);
                     this.InvalidateInstrumentCache(order.Owner);
+                    this.RecalculateEstimateFee();
                     this.CalculateRiskData();
                     return TransactionError.OK;
                 }
