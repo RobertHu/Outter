@@ -590,7 +590,7 @@ namespace Core.TransactionServer.Agent
             lock (_mutex)
             {
                 this.CalculateEstimateFee();
-                _accountRisk.CheckRisk(MarketManager.Now, CalculateType.CheckRiskForInit);
+                this.CalculateRiskData();
                 this.AcceptChanges();
             }
         }
@@ -998,6 +998,13 @@ namespace Core.TransactionServer.Agent
                 Logger.InfoFormat("ShouldLoadCompletedOrders  order id = {0} is null ", orderId);
                 return true;
             }
+
+            if (order.Phase == OrderPhase.Completed)
+            {
+                Logger.ErrorFormat("ShouldLoadCompletedOrders orderId = {0} phase = 3, in an error state", orderId);
+                throw new ArgumentException(string.Format("order id = {0}", orderId));
+            }
+
             if (!order.IsOpen)
             {
                 foreach (var eachOrderRelation in order.OrderRelations)
