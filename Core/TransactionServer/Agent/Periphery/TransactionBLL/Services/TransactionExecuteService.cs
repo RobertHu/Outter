@@ -49,10 +49,16 @@ namespace Core.TransactionServer.Agent.Periphery.TransactionBLL.Services
 
         private void ExecuteOrdersAndVerify(Transaction tran, ExecuteContext context, BuySellLot oldLots)
         {
+            decimal deltaBalance = 0m;
             foreach (var order in tran.Orders)
             {
                 if (order.Phase != OrderPhase.Executed) continue;
                 order.Execute(context);
+                deltaBalance += order.CalculateBalance(context);
+            }
+            if (deltaBalance != 0)
+            {
+                tran.Owner.AddBalance(tran.CurrencyId, deltaBalance, context.ExecuteTime);
             }
             tran.Owner.InvalidateInstrumentCache(tran);
             this.VerifyAlertLevelAndNecessary(tran, oldLots);
@@ -73,7 +79,7 @@ namespace Core.TransactionServer.Agent.Periphery.TransactionBLL.Services
                 throw new TransactionServerException(TransactionError.NecessaryIsNotWithinThreshold);
             }
             string errorDetail;
-            if (!tran.ExecuteNecessaryCheckService.IsMarginEnoughToExecute(tran, lots, lastEquity,out errorDetail))
+            if (!tran.ExecuteNecessaryCheckService.IsMarginEnoughToExecute(tran, lots, lastEquity, out errorDetail))
             {
                 throw new TransactionServerException(TransactionError.MarginIsNotEnough, errorDetail);
             }

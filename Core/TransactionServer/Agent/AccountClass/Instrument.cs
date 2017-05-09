@@ -147,7 +147,7 @@ namespace Core.TransactionServer.Agent.AccountClass
                 }
                 if (minExecuteTime < DateTime.MaxValue)
                 {
-                    return minExecuteTime.Date.AddDays(-1);
+                    return DB.DBRepository.Default.GetTradeDay(minExecuteTime).AddDays(-1);
                 }
                 else
                 {

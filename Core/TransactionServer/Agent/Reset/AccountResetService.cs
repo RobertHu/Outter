@@ -110,7 +110,7 @@ namespace Core.TransactionServer.Agent.Reset
             return true;
         }
 
-        internal DateTime GetPositionDay()
+        internal DateTime? GetPositionDay()
         {
             DateTime lastTradeDay = DateTime.MaxValue;
             foreach (var eachInstrument in _instrumentManager.Instruments)
@@ -121,7 +121,7 @@ namespace Core.TransactionServer.Agent.Reset
                     lastTradeDay = positionDay;
                 }
             }
-            return lastTradeDay;
+            return lastTradeDay == DateTime.MaxValue ? (DateTime?)null : lastTradeDay;
         }
 
     }

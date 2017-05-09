@@ -1011,7 +1011,7 @@ namespace Core.TransactionServer.Agent
                 {
                     if (eachOrderRelation.OpenOrder == null)
                     {
-                        Logger.InfoFormat("ShouldLoadCompletedOrders close order id = {0} openOrder is null");
+                        Logger.InfoFormat("ShouldLoadCompletedOrders close order id = {0} openOrder is null", orderId);
                         return true;
                     }
                 }
@@ -2034,7 +2034,7 @@ namespace Core.TransactionServer.Agent
         }
 
 
-        internal DateTime GetPositionDay()
+        internal DateTime? GetPositionDay()
         {
             lock (_mutex)
             {

@@ -71,7 +71,6 @@ namespace Core.TransactionServer.Agent.Periphery.OrderBLL.Services
             {
                 this.CalculateForCloseOrder(context);
             }
-            this.CalculateBalance(context);
         }
 
         private void CalculateEstimateFee(ExecuteContext context)
@@ -158,16 +157,6 @@ namespace Core.TransactionServer.Agent.Periphery.OrderBLL.Services
             int interestValueDay = _order.IsBuy ? tradePolicyDetail.BuyInterestValueDay : tradePolicyDetail.SellInterestValueDay;
             var accountId = _order.Owner.Owner.Id;
             _settings.InterestValueDate = tradeDay.Day.AddDays(interestValueDay);
-        }
-
-        private void CalculateBalance(ExecuteContext context)
-        {
-            Debug.Assert(_order.IsExecuted);
-            if (context.IsBook) return;
-            var deltaBalance = _order.SumBillsForBalance();
-            var account = _order.Owner.Owner;
-            var currencyId = _order.Owner.CurrencyId;
-            _order.Account.AddBalance(_order.Owner.CurrencyId, deltaBalance, context.ExecuteTime);
         }
     }
 

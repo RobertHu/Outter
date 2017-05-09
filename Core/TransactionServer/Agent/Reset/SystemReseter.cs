@@ -108,10 +108,11 @@ namespace Core.TransactionServer.Agent.Reset
 
         private void ProcessWhenAccountBalanceDayHistoryNotExists(DateTime tradeDay)
         {
-            DateTime lastTradeDay = _account.GetPositionDay();
-            if (lastTradeDay < DateTime.MaxValue)
+            DateTime? lastTradeDay = _account.GetPositionDay();
+            Logger.InfoFormat("ProcessWhenAccountBalanceDayHistoryNotExists accountId = {0}, lastTradeDay = {1}, tradeDay = {2}", _account.Id, lastTradeDay, tradeDay);
+            if (lastTradeDay != null && lastTradeDay.Value < tradeDay)
             {
-                this.DoContinuousReset(lastTradeDay, tradeDay);
+                this.DoContinuousReset(lastTradeDay.Value, tradeDay);
             }
             else
             {
