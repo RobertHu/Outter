@@ -1033,7 +1033,8 @@ namespace Core.TransactionServer.Agent
                     ResetManager.Default.RemoveHistroySetting(tranData.TradeDay);
                     if (Booker.Book(this, token, tranData))
                     {
-                        this.SaveAndBroadcastChanges();
+                        var changeContent = this.SaveTradingContent();
+                        Broadcaster.Default.Add(CommandFactory.CreateBookCommand(this.Id, changeContent));
                         HistoryOrderFactory.Process(this.GetTran(tranData.Id), Settings.Setting.Default, tranData.TradeDay); // recover interest and strage
                         this.CheckRisk();
                         return TransactionError.OK;
@@ -1063,6 +1064,14 @@ namespace Core.TransactionServer.Agent
                     ResetManager.Default.RemoveHistroySetting(tranData.TradeDay);
                 }
             }
+        }
+
+        private string SaveTradingContent()
+        {
+            this.Version++;
+            string result = _broadcastService.Value.SaveCommon(Caching.CacheType.Transaciton);
+            this.AcceptChanges();
+            return result;
         }
 
 

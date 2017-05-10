@@ -58,7 +58,7 @@ namespace Core.TransactionServer.Agent.BLL.AccountBusiness
         }
 
 
-        internal bool SaveResetContent(CacheType cacheType,out string content)
+        internal bool SaveResetContent(CacheType cacheType, out string content)
         {
             content = string.Empty;
             try
@@ -79,7 +79,7 @@ namespace Core.TransactionServer.Agent.BLL.AccountBusiness
             }
         }
 
-        private string SaveCommon(Caching.CacheType cacheType)
+        internal string SaveCommon(Caching.CacheType cacheType)
         {
             if (_account.Status == Framework.ChangeStatus.None) return string.Empty;
             var changeContent = this.GenerateChangeContent();
