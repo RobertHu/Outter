@@ -112,7 +112,7 @@ namespace Core.TransactionServer.Agent.BLL.AccountBusiness
             var orderPriceInfos = tranData.CreateOrderPriceInfo(tran);
             ExecuteContext context = new ExecuteContext(account.Id, tran.Id, null, true, tranData.CheckMargin, ExecuteStatus.Filled, orderPriceInfos)
             {
-                BookInfo = new BookInfo(tranData.ExecuteTime, tranData.TradeDay)
+                BookInfo = new BookInfo(tranData.ExecuteTime, tranData.TradeDay, tranData.CheckMargin)
             };
             return TransactionExecutor.Default.Execute(context);
         }

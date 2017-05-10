@@ -444,6 +444,7 @@ namespace Core.TransactionServer.Agent.AccountClass
                     return true;
                 }
             }
+            Logger.InfoFormat("IsFreeOfFillMarginCheck, netLots = {0}, oldLots = {1}, accountId = {2}", newLots.ToString(), oldLots.ToString(), _owner.Id);
             return false;
         }
 

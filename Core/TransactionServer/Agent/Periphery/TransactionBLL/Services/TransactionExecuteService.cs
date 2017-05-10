@@ -60,18 +60,25 @@ namespace Core.TransactionServer.Agent.Periphery.TransactionBLL.Services
              });
 
             tran.Owner.InvalidateInstrumentCache(tran);
-            this.VerifyAlertLevelAndNecessary(tran, oldLots);
+            this.VerifyAlertLevelAndNecessary(tran, oldLots, context);
             if (context.IsBook)
             {
                 tran.Owner.AddBalance(tran.CurrencyId, -deltaBalance, context.ExecuteTime);
             }
         }
 
-        private void VerifyAlertLevelAndNecessary(Transaction tran, BuySellLot lots)
+        private void VerifyAlertLevelAndNecessary(Transaction tran, BuySellLot lots, ExecuteContext context)
         {
             var account = tran.Owner;
             decimal lastEquity = account.Equity;
             account.CalculateRiskData(tran.SubmitorQuotePolicyProvider);
+
+            string errorDetail;
+            if (context.CheckMargin != null && context.CheckMargin.Value && !tran.ExecuteNecessaryCheckService.IsMarginEnoughToExecute(tran, lots, lastEquity, out errorDetail))
+            {
+                throw new TransactionServerException(TransactionError.MarginIsNotEnough, errorDetail);
+            }
+
             if (account.IsInAlerting(tran.AccountInstrument, lots))
             {
                 throw new TransactionServerException(TransactionError.AccountIsInAlerting);
@@ -81,7 +88,6 @@ namespace Core.TransactionServer.Agent.Periphery.TransactionBLL.Services
             {
                 throw new TransactionServerException(TransactionError.NecessaryIsNotWithinThreshold);
             }
-            string errorDetail;
             if (!tran.ExecuteNecessaryCheckService.IsMarginEnoughToExecute(tran, lots, lastEquity, out errorDetail))
             {
                 throw new TransactionServerException(TransactionError.MarginIsNotEnough, errorDetail);

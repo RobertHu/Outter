@@ -159,6 +159,12 @@ namespace Core.TransactionServer.Engine
             get { return this.BookInfo != null; }
         }
 
+        public bool? CheckMargin
+        {
+            get { return this.BookInfo != null ? this.BookInfo.Value.CheckMargin : (bool?)null; }
+        }
+
+
         public bool ShouldUseHistorySettings
         {
             get
@@ -217,11 +223,21 @@ namespace Core.TransactionServer.Engine
     {
         private DateTime _executeTime;
         private DateTime _tradeDay;
+        private bool _checkMargin;
 
-        public BookInfo(DateTime executeTime, DateTime tradeDay)
+        public BookInfo(DateTime executeTime, DateTime tradeDay, bool checkMargin)
         {
             _executeTime = executeTime;
             _tradeDay = tradeDay;
+            _checkMargin = checkMargin;
+        }
+
+        public bool CheckMargin
+        {
+            get
+            {
+                return _checkMargin;
+            }
         }
 
         public DateTime ExecuteTime
