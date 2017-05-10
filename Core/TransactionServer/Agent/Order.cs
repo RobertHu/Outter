@@ -509,7 +509,6 @@ namespace Core.TransactionServer.Agent
 
         internal decimal CalculateBalance(ExecuteContext context)
         {
-            if (context.IsBook) return 0m;
            return this.SumBillsForBalance();
         }
 

@@ -49,19 +49,22 @@ namespace Core.TransactionServer.Agent.Periphery.TransactionBLL.Services
 
         private void ExecuteOrdersAndVerify(Transaction tran, ExecuteContext context, BuySellLot oldLots)
         {
-            decimal deltaBalance = 0m;
-            foreach (var order in tran.Orders)
-            {
-                if (order.Phase != OrderPhase.Executed) continue;
-                order.Execute(context);
-                deltaBalance += order.CalculateBalance(context);
-            }
-            if (deltaBalance != 0)
-            {
-                tran.Owner.AddBalance(tran.CurrencyId, deltaBalance, context.ExecuteTime);
-            }
+            decimal deltaBalance = tran.ExecuteOrders(context, order =>
+             {
+                 if (order.Phase != OrderPhase.Executed)
+                 {
+                     Logger.WarnFormat("ExecuteOrders orderId = {0} phase = {1} not equal executed", order.Id, order.Phase);
+                     return false;
+                 }
+                 return true;
+             });
+
             tran.Owner.InvalidateInstrumentCache(tran);
             this.VerifyAlertLevelAndNecessary(tran, oldLots);
+            if (context.IsBook)
+            {
+                tran.Owner.AddBalance(tran.CurrencyId, -deltaBalance, context.ExecuteTime);
+            }
         }
 
         private void VerifyAlertLevelAndNecessary(Transaction tran, BuySellLot lots)

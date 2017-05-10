@@ -529,16 +529,23 @@ namespace Core.TransactionServer.Agent
 
         internal virtual void ExecuteDirectly(ExecuteContext context)
         {
-            decimal deltaBalance = 0m;
+            this.ExecuteOrders(context, o => true);
+        }
+
+        internal decimal ExecuteOrders(ExecuteContext context, Predicate<Order> verify)
+        {
+            decimal result = 0m;
             foreach (var order in this.Orders)
             {
+                if (!verify(order)) continue;
                 order.Execute(context);
-                deltaBalance += order.CalculateBalance(context);
+                result += order.CalculateBalance(context);
             }
-            if (deltaBalance != 0)
+            if (result != 0)
             {
-                this.Owner.AddBalance(this.CurrencyId, deltaBalance, context.ExecuteTime);
+                this.Owner.AddBalance(this.CurrencyId, result, context.ExecuteTime);
             }
+            return result;
         }
 
 
