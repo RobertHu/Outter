@@ -239,7 +239,6 @@ namespace Core.TransactionServer.Agent.Reset
         private PhysicalOrder _physicalOrder;
         private AffectedAmountManager _affectedAmountManager = new AffectedAmountManager();
         private AffectedAmountManager _deletedOrderAffectedAmountManager = new AffectedAmountManager();
-        private AffectedAmountManager _deletedOrderAmountManager = new AffectedAmountManager();
         private bool _isPayForInstalmentDebitInterest;
         private Guid _currencyId;
 
@@ -272,13 +271,13 @@ namespace Core.TransactionServer.Agent.Reset
             Dictionary<DateTime, decimal> resetAmountPerTradeDayDict = _affectedAmountManager.CalculateAffectedAmountPerTradeDay();
             Dictionary<DateTime, decimal> deletedOrderAmountPerTradeDayDict = _deletedOrderAffectedAmountManager.CalculateAffectedAmountPerTradeDay();
             this.RecoveBalanceHistory(tradeDay,resetAmountPerTradeDayDict, deletedOrderAmountPerTradeDayDict);
-            this.RecoveBalance(resetAmountPerTradeDayDict, _deletedOrderAmountManager.CalculateAffectedAmountPerTradeDay());
+            this.RecoveBalance(resetAmountPerTradeDayDict);
         }
 
-        private void RecoveBalance(Dictionary<DateTime, decimal> resetAmountPerTradeDayDict, Dictionary<DateTime, decimal> deletedOrderAmountPerTradeDayDict)
+        private void RecoveBalance(Dictionary<DateTime, decimal> resetAmountPerTradeDayDict)
         {
             decimal deltaBalance = resetAmountPerTradeDayDict.Sum(m => m.Value);
-            decimal deletedOrderCost = deletedOrderAmountPerTradeDayDict.Sum(m => m.Value);
+            decimal deletedOrderCost = -_order.SumBillsForBalance();
             this.Account.AddBalance(_currencyId, deltaBalance + deletedOrderCost, null);
         }
 
@@ -416,16 +415,6 @@ namespace Core.TransactionServer.Agent.Reset
                 if (eachBill.Type != BillType.PayBackPledge && this.ShouldRecoverBill(eachBill))
                 {
                     _deletedOrderAffectedAmountManager.Add(-eachBill);
-                }
-            }
-
-            foreach (var eachBill in order.Bills)
-            {
-                if (this.ShouldPassPaidPledge(order, eachBill.Type)) continue;
-
-                if (this.ShouldRecoverBill(eachBill))
-                {
-                    _deletedOrderAmountManager.Add(-eachBill);
                 }
             }
         }

@@ -1002,7 +1002,12 @@ namespace Core.TransactionServer.Agent
             if (order.Phase == OrderPhase.Completed)
             {
                 Logger.ErrorFormat("ShouldLoadCompletedOrders orderId = {0} phase = 3, in an error state", orderId);
-                throw new ArgumentException(string.Format("order id = {0}", orderId));
+                this.RemoveOrder(order);
+                if (order.Owner != null)
+                {
+                    this.RemoveTransaction(order.Owner);
+                }
+                return true;
             }
 
             if (!order.IsOpen)

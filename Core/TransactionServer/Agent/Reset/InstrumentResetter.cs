@@ -79,6 +79,7 @@ namespace Core.TransactionServer.Agent.Reset
             {
                 _instrumentManager.UpdateLastResetDay(instrumentId, tradeDay);
             }
+            instrument.InvalidateCache();
         }
 
 
@@ -88,6 +89,7 @@ namespace Core.TransactionServer.Agent.Reset
             foreach (var eachInstrument in _instrumentManager.Instruments)
             {
                 this.ProcessIndividualInstrument(eachInstrument, tradeDay);
+                eachInstrument.InvalidateCache();
             }
         }
 

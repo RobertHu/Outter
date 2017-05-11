@@ -274,7 +274,7 @@ namespace Core.TransactionServer.Agent.Reset
             decimal result = 0m;
             foreach (var eachOrderDayHistory in orderDayHistorys)
             {
-                result += eachOrderDayHistory.InterestPLValued + eachOrderDayHistory.StoragePLValued + eachOrderDayHistory.TradePLValued;
+                result += eachOrderDayHistory.InterestPLValued + eachOrderDayHistory.StoragePLValued;
             }
             return result;
         }
