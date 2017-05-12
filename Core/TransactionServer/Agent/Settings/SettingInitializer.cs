@@ -117,6 +117,19 @@ namespace Core.TransactionServer.Agent.Settings
             }
         }
 
+        internal static void InitializeWithException(DataSet ds, string tableName, Action<DataRow> action)
+        {
+            if (ds.Tables.Contains(tableName))
+            {
+                var dataRows = ds.Tables[tableName].Rows;
+                foreach (DataRow dr in dataRows)
+                {
+                    action(dr);
+                }
+            }
+        }
+
+
         internal static void Initialize(DataSet ds, string tableName, Action<DataRow> action)
         {
             if (ds.Tables.Contains(tableName))

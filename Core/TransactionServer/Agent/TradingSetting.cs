@@ -774,7 +774,7 @@ namespace Core.TransactionServer.Agent
         internal Dictionary<Guid, Transaction> Parse(DataSet ds, out Dictionary<Guid, Order> orderDict)
         {
             var trans = new Dictionary<Guid, Transaction>(CAPACITY);
-            SettingInitializer.Initialize(ds, "Transaction", dr =>
+            SettingInitializer.InitializeWithException(ds, "Transaction", dr =>
                 {
                     Guid accountId = (Guid)dr["AccountID"];
                     Account account = _tradingSetting.GetAccount(accountId);
@@ -797,7 +797,7 @@ namespace Core.TransactionServer.Agent
             var orders = this.ParseOrders(ds, trans);
             orderDict = orders;
 
-            SettingInitializer.Initialize(ds, "OrderRelation", dr =>
+            SettingInitializer.InitializeWithException(ds, "OrderRelation", dr =>
                 {
                     var closeOrderId = (Guid)dr["CloseOrderID"];
                     if (!orders.ContainsKey(closeOrderId)) return;
@@ -815,7 +815,7 @@ namespace Core.TransactionServer.Agent
         private Dictionary<Guid, Order> ParseOrders(DataSet ds, Dictionary<Guid, Transaction> trans)
         {
             var orders = new Dictionary<Guid, Order>(CAPACITY);
-            SettingInitializer.Initialize(ds, "Order", dr =>
+            SettingInitializer.InitializeWithException(ds, "Order", dr =>
             {
                 Guid transactionID = (Guid)dr["TransactionID"];
                 if (!trans.ContainsKey(transactionID)) return;
