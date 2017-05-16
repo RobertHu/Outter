@@ -1255,6 +1255,7 @@ namespace Core.TransactionServer.Agent
                 {
                     var tran = this.GetTran(context.TranId);
                     TransactionExecutor.Default.Execute(context);
+                    this.ChangeFieldsToModifedWhenExecuted(tran);
                     this.InvalidateInstrumentCacheAndBroadcastChanges(tran);
                     this.UpdateOrderPhase(tran, context.TradeDay);
                     _accountRisk.CheckRisk(MarketManager.Now, CalculateType.CheckRisk);
@@ -1262,12 +1263,12 @@ namespace Core.TransactionServer.Agent
                 catch (TransactionServerException tse)
                 {
                     Logger.Error(tse);
-                    this.CancelExecute(context.Tran, tse.ErrorCode);
+                    this.CancelExecute(context, tse.ErrorCode);
                 }
                 catch (Exception ex)
                 {
                     Logger.Error(ex);
-                    this.CancelExecute(context.Tran, TransactionError.RuntimeError);
+                    this.CancelExecute(context, TransactionError.RuntimeError);
                 }
             }
         }
@@ -1281,19 +1282,20 @@ namespace Core.TransactionServer.Agent
                 {
                     var tran = context.Tran;
                     tran.ExecuteDirectly(context);
+                    this.ChangeFieldsToModifedWhenExecuted(tran);
                     this.InvalidateInstrumentCacheAndBroadcastChanges(tran);
-                    this.UpdateOrderPhase(tran,context.TradeDay);
+                    this.UpdateOrderPhase(tran, context.TradeDay);
                     _accountRisk.CheckRisk(MarketManager.Now, CalculateType.CheckRisk);
                 }
                 catch (TransactionServerException tse)
                 {
                     Logger.Error(tse);
-                    this.CancelExecute(context.Tran, tse.ErrorCode);
+                    this.CancelExecute(context, tse.ErrorCode);
                 }
                 catch (Exception ex)
                 {
                     Logger.Error(ex);
-                    this.CancelExecute(context.Tran, TransactionError.RuntimeError);
+                    this.CancelExecute(context, TransactionError.RuntimeError);
                 }
             }
         }
@@ -1302,26 +1304,33 @@ namespace Core.TransactionServer.Agent
         {
             lock (_mutex)
             {
+                var context = ExecuteContext.CreateExecuteDirectly(this.Id, tran.Id, ExecuteStatus.Filled);
                 try
                 {
-                    tran.ExecuteDirectly(ExecuteContext.CreateExecuteDirectly(this.Id, tran.Id, ExecuteStatus.Filled));
+                    tran.ExecuteDirectly(context);
+                    this.ChangeFieldsToModifedWhenExecuted(tran);
                     this.InvalidateInstrumentCacheAndBroadcastChanges(tran);
-                    this.UpdateOrderPhase(tran,null);
+                    this.UpdateOrderPhase(tran, null);
                     return true;
                 }
                 catch (TransactionServerException tse)
                 {
                     Logger.Error(tse);
-                    this.CancelExecute(tran, tse.ErrorCode);
+                    this.CancelExecute(context, tse.ErrorCode);
                     return false;
                 }
                 catch (Exception ex)
                 {
                     Logger.Error(ex);
-                    this.CancelExecute(tran, TransactionError.RuntimeError);
+                    this.CancelExecute(context, TransactionError.RuntimeError);
                     return false;
                 }
             }
+        }
+
+        private void ChangeFieldsToModifedWhenExecuted(Transaction tran)
+        {
+            this.SumFund.ChangeSomeFieldsToModifiedWhenExecuted(tran);
         }
 
         private void UpdateOrderPhase(Transaction tran, DateTime? tradeDay)
@@ -1471,9 +1480,10 @@ namespace Core.TransactionServer.Agent
         }
 
 
-        internal void CancelExecute(Transaction tran, TransactionError error)
+        internal void CancelExecute(ExecuteContext context, TransactionError error)
         {
-            this.CancelExecute(tran, error.ToCancelReason());
+            var tran = context.Tran;
+            this.CancelExecute(context, error.ToCancelReason());
             if (tran == null) return;
             if (tran.SubType == TransactionSubType.IfDone)
             {
@@ -1483,17 +1493,18 @@ namespace Core.TransactionServer.Agent
 
 
 
-        internal void CancelExecute(Transaction tran, CancelReason cancelReason)
+        internal void CancelExecute(ExecuteContext context, CancelReason cancelReason)
         {
             lock (_mutex)
             {
+                var tran = context.Tran;
                 this.RejectChanges();
                 if (tran == null)
                 {
                     Logger.InfoFormat("CancelExecute accountId = {0}, cancelReason = {1}  tran is null", this.Id, cancelReason);
                     return;
                 }
-                tran.Cancel(cancelReason);
+                tran.Cancel(cancelReason, context);
                 this.InvalidateInstrumentCacheAndBroadcastChanges(tran);
             }
         }

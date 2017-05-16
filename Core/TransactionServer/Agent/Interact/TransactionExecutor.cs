@@ -64,12 +64,12 @@ namespace Core.TransactionServer.Agent.Interact
             {
                 if (context.Tran.Phase == TransactionPhase.Executed)
                 {
-                    Logger.Warn("Execute passed, transaction has already executed");
-                    return true;
+                    Logger.ErrorFormat("Execute passed, accountId = {0}, tranId = {1}, transaction has already executed", context.AccountId, context.TranId);
+                    return false;
                 }
                 else
                 {
-                    Logger.WarnFormat("Execute faild , reason = {0}", TransactionError.TransactionCannotBeExecuted);
+                    Logger.ErrorFormat("Execute faild , accountId = {0}, tranId = {1}, reason = {2}", context.AccountId, context.TranId,TransactionError.TransactionCannotBeExecuted);
                     return false;
                 }
             }

@@ -55,7 +55,7 @@ namespace Core.TransactionServer.Agent
             }
             if (error != TransactionError.OK)
             {
-                account.CancelExecute(tran, error);
+                account.CancelExecute(context, error);
             }
             return error;
 

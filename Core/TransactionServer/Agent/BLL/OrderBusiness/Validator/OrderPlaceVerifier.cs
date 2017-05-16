@@ -222,7 +222,7 @@ namespace Core.TransactionServer.Agent.BLL.OrderBusiness.Validator
             Price buy, sell, comparePrice;
             DateTime priceTimestamp;
             IQuotePolicyProvider quotePolicyProvider = order.Owner.SubmitorQuotePolicyProvider;
-            Logger.InfoFormat("quotePolicyId = {0}, accountId = {1}, submitorId = {2}, accountQuotePolicyId = {3}, customerQuotePolicyId = {4}", quotePolicyProvider.PrivateQuotePolicyId , order.AccountId, order.Owner.SubmitorId, order.Account.Setting().QuotePolicyID, order.Account.Customer.PrivateQuotePolicyId);
+            Logger.InfoFormat("quotePolicyId = {0}, accountId = {1}, submitorId = {2}, accountQuotePolicyId = {3}, customerQuotePolicyId = {4}", quotePolicyProvider.PrivateQuotePolicyId, order.AccountId, order.Owner.SubmitorId, order.Account.Setting().QuotePolicyID, order.Account.Customer.PrivateQuotePolicyId);
             var quotation = tran.AccountInstrument.GetQuotation(quotePolicyProvider);
             buy = quotation.BuyPrice;
             sell = quotation.SellPrice;
@@ -404,6 +404,8 @@ namespace Core.TransactionServer.Agent.BLL.OrderBusiness.Validator
 
     internal sealed class CloseOrderVerifier
     {
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(CloseOrderVerifier));
+
         public static readonly CloseOrderVerifier Default = new CloseOrderVerifier();
         private CloseOrderVerifier() { }
         static CloseOrderVerifier() { }
@@ -434,7 +436,8 @@ namespace Core.TransactionServer.Agent.BLL.OrderBusiness.Validator
                 Order openOrder = orderRelation.OpenOrder;
                 if (openOrder == null)
                 {
-                    throw new TransactionServerException(TransactionError.OpenOrderNotExists);
+                    string errorInfo = string.Format("accountId = {0}, closeOrderId ={1}, openOrderId = {2}", order.AccountId, order.Id, orderRelation.OpenOrderId);
+                    throw new TransactionServerException(TransactionError.OpenOrderNotExists, errorInfo);
                 }
                 this.ValidOpenOrderCanBeClosedLot(order, openOrder, orderRelation.ClosedLot);
             }
@@ -449,7 +452,9 @@ namespace Core.TransactionServer.Agent.BLL.OrderBusiness.Validator
             }
             if (closedLot > canBeClosedLot)
             {
-                throw new TransactionServerException(TransactionError.ExceedOpenLotBalance);
+                string errorInfo = string.Format("accountId = {0}, openOrderId = {1}, closeOrderId = {2}, openOrder.lotBalance = {3}, closedLot= {4}, canBeClosedLot = {5}",
+                  openOrder.AccountId, openOrder.Id, originCloseOrder.Id, openOrder.LotBalance, closedLot, canBeClosedLot);
+                throw new TransactionServerException(TransactionError.ExceedOpenLotBalance, errorInfo);
             }
         }
 

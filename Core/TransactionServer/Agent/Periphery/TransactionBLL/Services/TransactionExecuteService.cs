@@ -49,6 +49,7 @@ namespace Core.TransactionServer.Agent.Periphery.TransactionBLL.Services
 
         private void ExecuteOrdersAndVerify(Transaction tran, ExecuteContext context, BuySellLot oldLots)
         {
+            decimal lastEquity = tran.Owner.Equity;
             decimal deltaBalance = tran.ExecuteOrders(context, order =>
              {
                  if (order.Phase != OrderPhase.Executed)
@@ -60,19 +61,18 @@ namespace Core.TransactionServer.Agent.Periphery.TransactionBLL.Services
              });
 
             tran.Owner.InvalidateInstrumentCache(tran);
-            this.VerifyAlertLevelAndNecessary(tran, oldLots, context);
+            this.VerifyAlertLevelAndNecessary(tran, oldLots, context,lastEquity);
             if (context.IsBook)
             {
                 tran.Owner.AddBalance(tran.CurrencyId, -deltaBalance, context.ExecuteTime);
             }
         }
 
-        private void VerifyAlertLevelAndNecessary(Transaction tran, BuySellLot lots, ExecuteContext context)
+        private void VerifyAlertLevelAndNecessary(Transaction tran, BuySellLot lots, ExecuteContext context, decimal lastEquity)
         {
             var account = tran.Owner;
-            decimal lastEquity = account.Equity;
             account.CalculateRiskData(tran.SubmitorQuotePolicyProvider);
-
+            context.ExecutedInfo = new ExecutedInfo(account.Balance, account.Necessary, lastEquity);
             string errorDetail;
             if (context.CheckMargin != null && context.CheckMargin.Value && !tran.ExecuteNecessaryCheckService.IsMarginEnoughToExecute(tran, lots, lastEquity, out errorDetail))
             {

@@ -209,6 +209,8 @@ namespace Core.TransactionServer.Engine
         public bool IsFreeFee { get; set; }
         public bool ShouldCancelExecute { get; set; }
 
+        public ExecutedInfo ExecutedInfo { get; set; }
+
         internal ExecuteContext ReplaceTran(Transaction tran, Guid executeOrderId, bool isCheckMaxPhysicalValue)
         {
             var result = new ExecuteContext(tran.Owner.Id, tran.Id, executeOrderId, this.IsFreeValidation, CheckMaxPhysicalValue, this.Status, this.OrderInfos);
@@ -216,6 +218,7 @@ namespace Core.TransactionServer.Engine
             result.ShouldCancelExecute = this.ShouldCancelExecute;
             return result;
         }
+
     }
 
 
@@ -250,6 +253,21 @@ namespace Core.TransactionServer.Engine
             get { return _tradeDay; }
         }
     }
+
+    public sealed class ExecutedInfo
+    {
+        public ExecutedInfo(decimal balance, decimal necessary, decimal equity)
+        {
+            this.Balance = balance;
+            this.Necessary = necessary;
+            this.Equity = equity;
+        }
+
+        public decimal Balance { get; private set; }
+        public decimal Necessary { get; private set; }
+        public decimal Equity { get; private set; }
+    }
+
 
 
     public sealed class OrderPriceInfo

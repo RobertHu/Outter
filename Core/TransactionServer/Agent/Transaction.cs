@@ -612,13 +612,13 @@ namespace Core.TransactionServer.Agent
             }
         }
 
-        internal void Cancel(CancelReason cancelType)
+        internal void Cancel(CancelReason cancelType,ExecuteContext context = null)
         {
             this.Phase = TransactionPhase.Canceled;
             this.ChangeToDeleted();
             foreach (var order in this.Orders)
             {
-                order.Cancel(cancelType);
+                order.Cancel(cancelType,context);
             }
             if (this.DoneCondition)
             {

@@ -66,6 +66,12 @@ namespace Core.TransactionServer.Agent.AccountClass
                 + _riskRawData.ValueAsMargin + _riskRawData.TotalPaidAmount + _riskRawData.InterestPLFloat + _riskRawData.StoragePLFloat + _riskRawData.TradePLFloat;
         }
 
+        internal void ChangeSomeFieldsToModifiedWhenExecuted(Transaction tran)
+        {
+            _balance.Status = ChangeStatus.Modified;
+            _riskRawData.ChangeSomeFieldsToModifiedWhenExecuted(tran);
+        }
+
 
         internal void ResetBalance(decimal balance)
         {

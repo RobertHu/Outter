@@ -53,7 +53,7 @@ namespace Core.TransactionServer.Agent.Interact
                 }
                 else
                 {
-                    e.Context.Account.CancelExecute(e.Context.Tran, CancelReason.OtherReason);
+                    e.Context.Account.CancelExecute(e.Context, CancelReason.OtherReason);
                 }
                 TransactionExpireChecker.Default.Remove(e.Context.TranId);
             }

@@ -282,7 +282,7 @@ namespace Core.TransactionServer.Agent
             this.IsHitReseted = true;
         }
 
-        internal void Cancel(CancelReason cancelReason)
+        internal void Cancel(CancelReason cancelReason, ExecuteContext context = null)
         {
             if (this.Owner.OrderType == iExchange.Common.OrderType.Limit)
             {
@@ -297,7 +297,14 @@ namespace Core.TransactionServer.Agent
                 this.CancelReasonId = model.ID;
                 if (cancelReason == iExchange.Common.CancelReason.MarginIsNotEnough)
                 {
-                    this.CancelReasonDesc = string.Format("balance:{0},necessary:{1},equity:{2}", this.Account.Balance, this.Account.Necessary, this.Account.Equity);
+                    if (context == null)
+                    {
+                        this.CancelReasonDesc = string.Format("balance:{0},necessary:{1},equity:{2}", this.Account.Balance, this.Account.Necessary, this.Account.Equity);
+                    }
+                    else
+                    {
+                        this.CancelReasonDesc = string.Format("balance:{0},necessary:{1},equity:{2}", context.ExecutedInfo.Balance, context.ExecutedInfo.Necessary, context.ExecutedInfo.Equity);
+                    }
                 }
                 else
                 {
@@ -509,7 +516,7 @@ namespace Core.TransactionServer.Agent
 
         internal decimal CalculateBalance(ExecuteContext context)
         {
-           return this.SumBillsForBalance();
+            return this.SumBillsForBalance();
         }
 
 

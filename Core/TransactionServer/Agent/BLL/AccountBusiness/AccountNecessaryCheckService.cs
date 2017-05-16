@@ -37,11 +37,11 @@ namespace Core.TransactionServer.Agent.BLL.AccountBusiness
             errorInfo = string.Empty;
             bool isBalanceEnough = this.CheckBalanceIsEnough(instrument.IsPhysical, marginCheckOption, unclearBalance, fillCheckNecessary, out errorInfo);
             bool isEquityEnough = this.CheckEquityIsEnough(instrument.IsPhysical, marginCheckOption, unclearBalance, fillCheckNecessary, fee, isForPayoff, riskCredit, isNecessaryFreeOrder, lastEquity, out errorInfo);
-            Logger.Warn(this.BuildLoggerInfo(existsCloseOrder, riskCredit, unclearBalance, marginCheckOption, instrument.Id, instrument.Owner));
+            Logger.Warn(this.BuildLoggerInfo(existsCloseOrder, riskCredit, unclearBalance, marginCheckOption, instrument.Id, instrument.Owner,lastEquity));
             return isBalanceEnough && isEquityEnough;
         }
 
-        private string BuildLoggerInfo(bool existsCloseOrder, decimal riskCredit, decimal unclearBalance, MarginCheckOption marginCheckOption, Guid instrumentId, Account account)
+        private string BuildLoggerInfo(bool existsCloseOrder, decimal riskCredit, decimal unclearBalance, MarginCheckOption marginCheckOption, Guid instrumentId, Account account, decimal lastEquity)
         {
             var fund = account.SumFund;
             StringBuilder sb = Protocal.StringBuilderCache.Acquire(200);
@@ -61,6 +61,8 @@ namespace Core.TransactionServer.Agent.BLL.AccountBusiness
             sb.Append(account.Setting().ShortMargin);
             sb.Append(", equity = ");
             sb.Append(account.SumFund.Equity);
+            sb.Append(", lastEquity = ");
+            sb.Append(lastEquity);
             sb.Append(", instrumentId = ");
             sb.Append(instrumentId);
             sb.Append(", accountId = ");
@@ -113,7 +115,7 @@ namespace Core.TransactionServer.Agent.BLL.AccountBusiness
                 bool result = equityForCheck >= fillCheckNecessary;
                 if (!result)
                 {
-                    errorInfo = string.Format("CheckEquityIsEnough failed, equityForCheck = {0}, comparedEquity = {1}, equity = {2}, fee = {3}, lastEquity = {4}, isNecessaryFreeOrder = {5}", equityForCheck, fillCheckNecessary, equity, fee, lastEquity, isNecessaryFreeOrder);
+                    errorInfo = string.Format("CheckEquityIsEnough failed, equityForCheck = {0}, comparedEquity = {1}, equity = {2}, fee = {3}, lastEquity = {4}, isNecessaryFreeOrder = {5}, balance = {6}, necessary = {7}, accountId = {8}", equityForCheck, fillCheckNecessary, equity, fee, lastEquity, isNecessaryFreeOrder, _owner.Balance, _owner.Necessary, _owner.Id);
                 }
                 return result;
             }

@@ -151,6 +151,11 @@ namespace Core.TransactionServer.Agent.AccountClass
             _content.FrozenFund = 0m;
             _content.TotalDeposit = 0;
         }
+
+        internal void ChangeSomeFieldsToModifiedWhenExecuted(Transaction tran)
+        {
+            _content.ChangeSomeFieldsToModifiedWhenExecuted(tran);
+        }
     }
 
 

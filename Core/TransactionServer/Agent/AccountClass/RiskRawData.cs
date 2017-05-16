@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Core.TransactionServer.Agent.AccountClass.AccountUtil;
 
 namespace Core.TransactionServer.Agent.AccountClass
 {
@@ -39,6 +40,8 @@ namespace Core.TransactionServer.Agent.AccountClass
         private BusinessItem<decimal> _partialPaymentPhysicalNecessary;
 
         private BusinessItem<decimal> _totalPaidAmount;
+        private BusinessItem<decimal> _credit;
+        private BusinessItem<decimal> _shortMargin;
 
         public decimal Necessary
         {
@@ -193,6 +196,8 @@ namespace Core.TransactionServer.Agent.AccountClass
             this._riskCredit = BusinessItemFactory.Create("RiskCredit", 0m, PermissionFeature.Dumb, parent);
             _partialPaymentPhysicalNecessary = BusinessItemFactory.Create("PartialPaymentPhysicalNecessary", 0m, PermissionFeature.Dumb, parent);
             _totalPaidAmount = BusinessItemFactory.Create("TotalPaidAmount", 0m, PermissionFeature.Dumb, parent);
+            _credit = BusinessItemFactory.Create("Credit", 0m, PermissionFeature.Dumb, parent);
+            _shortMargin = BusinessItemFactory.Create("ShortMargin", 0m, PermissionFeature.Dumb, parent);
         }
 
         internal void Reset(FundData other)
@@ -222,6 +227,22 @@ namespace Core.TransactionServer.Agent.AccountClass
             this.PartialPaymentPhysicalNecessary = other.RiskData.PartialPaymentPhysicalNecessary;
             this.TotalPaidAmount = other.RiskData.TotalPaidAmount;
         }
+
+        internal void ChangeSomeFieldsToModifiedWhenExecuted(Transaction tran)
+        {
+            _tradePLFloat.Status = ChangeStatus.Modified;
+            _interestPLFloat.Status = ChangeStatus.Modified;
+            _storagePLFloat.Status = ChangeStatus.Modified;
+            _interestPLNotValued.Status = ChangeStatus.Modified;
+            _storagePLNotValued.Status = ChangeStatus.Modified;
+            _tradePLNotValued.Status = ChangeStatus.Modified;
+            var account = tran.Owner;
+            _credit.SetValue(account.CalculateCredit(tran.AccountInstrument));
+            _credit.Status = ChangeStatus.Modified;
+            _shortMargin.SetValue(account.ShortMargin);
+            _shortMargin.Status = ChangeStatus.Modified;
+        }
+
 
         internal void Clear()
         {

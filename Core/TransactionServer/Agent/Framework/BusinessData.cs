@@ -420,8 +420,10 @@ namespace Core.TransactionServer.Agent.Framework
     }
 
 
-    internal sealed class DumpBusinessItem<T> : SoundBusinessItemBase<T>
+    internal sealed class DumpBusinessItem<T> : BusinessItem<T>
     {
+        private T _oldValue;
+
         internal DumpBusinessItem(string name, T value, BusinessData parent)
             : base(name, value, parent, PermissionFeature.Dumb)
         {
@@ -430,15 +432,14 @@ namespace Core.TransactionServer.Agent.Framework
 
         public override void SetValue(T value)
         {
-            if (!EqualCache<T>.Equal(_value, value))
-            {
-                this.InnerSetValue(value);
-            }
+            _oldValue = _value;
+            _value = value;
         }
 
-        protected override bool ShouldChangeStatus()
+        public override void RejectChanges()
         {
-            return false;
+            _value = _oldValue;
+            _oldValue = default(T);
         }
     }
 
@@ -472,19 +473,11 @@ namespace Core.TransactionServer.Agent.Framework
             }
         }
 
-        protected virtual bool ShouldChangeStatus()
-        {
-            return true;
-        }
-
         protected void InnerSetValue(T value)
         {
             this._oldValue = this.Value;
             _value = value;
-            if (this.ShouldChangeStatus())
-            {
-                this.Status = ChangeStatus.Modified;
-            }
+            this.Status = ChangeStatus.Modified;
         }
 
     }
