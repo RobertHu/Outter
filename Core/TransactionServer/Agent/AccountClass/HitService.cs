@@ -4,6 +4,7 @@ using Core.TransactionServer.Agent.Quotations;
 using Core.TransactionServer.Engine;
 using Core.TransactionServer.Engine.iExchange;
 using iExchange.Common;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace Core.TransactionServer.Agent.AccountClass
     internal sealed class HitService
     {
         private Account _account;
+        internal static readonly Guid TEST_ACCOUNT = Guid.Parse("9135343B-1AAB-494F-B822-A45FB66F01E4");
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(HitService));
 
         internal HitService(Account account)
         {
@@ -24,6 +27,11 @@ namespace Core.TransactionServer.Agent.AccountClass
         {
             foreach (var eachOrder in instrument.WaitingForHitOrders)
             {
+                if (_account.Id == TEST_ACCOUNT)
+                {
+                    Logger.InfoFormat("HitOrders, accountId = {0}, orderId = {1}, order.hitStatus = {2}, order.phase = {3}, order.hitCount = {4}",
+                        _account.Id, eachOrder.Id, eachOrder.HitStatus, eachOrder.Phase, eachOrder.HitCount);
+                }
                 Quotation quotation;
                 if (bulk.TryGetQuotation(instrument.Id, eachOrder.Owner.SubmitorQuotePolicyProvider, out quotation))
                 {

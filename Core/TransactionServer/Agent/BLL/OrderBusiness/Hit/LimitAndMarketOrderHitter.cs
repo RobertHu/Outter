@@ -1,5 +1,6 @@
 ﻿using Core.TransactionServer.Agent.Quotations;
 using iExchange.Common;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace Core.TransactionServer.Agent.BLL.OrderBusiness.Hit
 {
     internal static class LimitAndMarketOrderHitter
     {
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(LimitAndMarketOrderHitter));
+
         internal static OrderHitStatus HitMarketAndLimitOrder(Order order, HitOrderSettings hitOrderSettings, Quotation newQuotation, DateTime baseTime, bool ignoreHitTimes, out Price bestPrice)
         {
             bestPrice = null;
@@ -40,6 +43,11 @@ namespace Core.TransactionServer.Agent.BLL.OrderBusiness.Hit
             }
 
             PriceCompareResult result = newQuotation.Compare(order.SetPrice, order.IsBuy);
+            if (order.AccountId == AccountClass.HitService.TEST_ACCOUNT)
+            {
+                Logger.InfoFormat("IsHitPrice accountId = {0}, orderId = {1}, compareResult = {2}, marketPrice = {3}",
+                    order.AccountId, order.Id, result, marketPrice);
+            }
             return order.OrderType == OrderType.Market || (order.OrderType == OrderType.Limit && (marketPrice == order.SetPrice
                 || (order.TradeOption == TradeOption.Better ? result == PriceCompareResult.Better : result == PriceCompareResult.Worse)));
         }

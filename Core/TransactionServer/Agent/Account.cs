@@ -2041,9 +2041,17 @@ namespace Core.TransactionServer.Agent
         {
             lock (_mutex)
             {
+                if (this.Id == HitService.TEST_ACCOUNT)
+                {
+                    Logger.InfoFormat("Hit accountId = {0}, instrumentCount = {1}", this.Id, _instrumentManager.Count);
+                }
                 if (_instrumentManager.Count == 0) return;
                 foreach (var eachInstrument in _instrumentManager.Instruments)
                 {
+                    if (this.Id == HitService.TEST_ACCOUNT)
+                    {
+                        Logger.InfoFormat("Hit accountId = {0}, hit instrument = {1}, waitingForHitOrderCount = {2}", this.Id, eachInstrument.Id, eachInstrument.WaitingForHitOrders.Count);
+                    }
                     _hitService.Value.HitOrders(eachInstrument, quotationBulk);
                 }
             }
