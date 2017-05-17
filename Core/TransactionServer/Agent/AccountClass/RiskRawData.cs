@@ -230,6 +230,7 @@ namespace Core.TransactionServer.Agent.AccountClass
 
         internal void ChangeSomeFieldsToModifiedWhenExecuted(Transaction tran)
         {
+            _necessary.Status = ChangeStatus.Modified;
             _tradePLFloat.Status = ChangeStatus.Modified;
             _interestPLFloat.Status = ChangeStatus.Modified;
             _storagePLFloat.Status = ChangeStatus.Modified;
