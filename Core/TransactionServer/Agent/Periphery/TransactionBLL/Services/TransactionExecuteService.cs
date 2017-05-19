@@ -36,13 +36,6 @@ namespace Core.TransactionServer.Agent.Periphery.TransactionBLL.Services
             var oldLots = tran.AccountInstrument.GetBuySellLotBalance();
             tran.FillService.Fill(context);
             this.ExecuteOrdersAndVerify(tran, context, oldLots);
-            foreach (var eachOrder in tran.Orders)
-            {
-                if (eachOrder.Phase == OrderPhase.Executed)
-                {
-                    eachOrder.CalculateFloatPLForcely(tran.AccountInstrument.GetQuotation(tran.SubmitorQuotePolicyProvider));
-                }
-            }
             if (context.IsFreeValidation) return;
             TransactionVerifier.VerifyForExecuting(tran, false, AppType.TradingConsole, PlaceContext.Empty);
         }
@@ -71,6 +64,7 @@ namespace Core.TransactionServer.Agent.Periphery.TransactionBLL.Services
         private void VerifyAlertLevelAndNecessary(Transaction tran, BuySellLot lots, ExecuteContext context, decimal lastEquity)
         {
             var account = tran.Owner;
+            this.CalculateOrderFloatPLForcely(tran);
             account.CalculateRiskData(tran.SubmitorQuotePolicyProvider);
             context.ExecutedInfo = new ExecutedInfo(account.Balance, account.Necessary, lastEquity);
             string errorDetail;
@@ -93,6 +87,18 @@ namespace Core.TransactionServer.Agent.Periphery.TransactionBLL.Services
                 throw new TransactionServerException(TransactionError.MarginIsNotEnough, errorDetail);
             }
         }
+
+        private void CalculateOrderFloatPLForcely(Transaction tran)
+        {
+            foreach (var eachOrder in tran.Orders)
+            {
+                if (eachOrder.Phase == OrderPhase.Executed)
+                {
+                    eachOrder.CalculateFloatPLForcely(tran.AccountInstrument.GetQuotation(tran.SubmitorQuotePolicyProvider));
+                }
+            }
+        }
+
 
         private void FixMaxMovePercentForOrderPrice(Transaction tran, Price buyPrice, Price sellPrice)
         {

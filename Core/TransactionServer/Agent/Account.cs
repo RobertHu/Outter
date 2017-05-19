@@ -1032,15 +1032,15 @@ namespace Core.TransactionServer.Agent
                 {
                     Logger.InfoFormat("Book  tranId= {0}", tranData.Id);
                     this.CheckState();
-                    var tran = this.GetTran(tranData.Id);
-                    if (tran != null) return TransactionError.TransactionAlreadyExists;
+                    if (this.GetTran(tranData.Id) != null) return TransactionError.TransactionAlreadyExists;
                     tranData.TradeDay = DB.DBRepository.Default.GetTradeDay(tranData.ExecuteTime);
                     ResetManager.Default.RemoveHistroySetting(tranData.TradeDay);
                     if (Booker.Book(this, token, tranData))
                     {
-                        var changeContent = this.SaveTradingContent();
-                        Broadcaster.Default.Add(CommandFactory.CreateBookCommand(this.Id, changeContent));
                         HistoryOrderFactory.Process(this.GetTran(tranData.Id), Settings.Setting.Default, tranData.TradeDay); // recover interest and strage
+                        this.ChangeFieldsToModifedWhenExecuted(this.GetTran(tranData.Id));
+                        var changeContent = this.SaveHistoryOrderContent();
+                        Broadcaster.Default.Add(CommandFactory.CreateBookCommand(this.Id, changeContent));
                         this.CheckRisk();
                         return TransactionError.OK;
                     }
@@ -1071,10 +1071,10 @@ namespace Core.TransactionServer.Agent
             }
         }
 
-        private string SaveTradingContent()
+        private string SaveHistoryOrderContent()
         {
             this.Version++;
-            string result = _broadcastService.Value.SaveCommon(Caching.CacheType.Transaciton);
+            string result = _broadcastService.Value.SaveCommon(Caching.CacheType.HistoryOrder);
             this.AcceptChanges();
             return result;
         }
@@ -2041,17 +2041,9 @@ namespace Core.TransactionServer.Agent
         {
             lock (_mutex)
             {
-                if (this.Id == HitService.TEST_ACCOUNT)
-                {
-                    Logger.InfoFormat("Hit accountId = {0}, instrumentCount = {1}", this.Id, _instrumentManager.Count);
-                }
                 if (_instrumentManager.Count == 0) return;
                 foreach (var eachInstrument in _instrumentManager.Instruments)
                 {
-                    if (this.Id == HitService.TEST_ACCOUNT)
-                    {
-                        Logger.InfoFormat("Hit accountId = {0}, hit instrument = {1}, waitingForHitOrderCount = {2}", this.Id, eachInstrument.Id, eachInstrument.WaitingForHitOrders.Count);
-                    }
                     _hitService.Value.HitOrders(eachInstrument, quotationBulk);
                 }
             }

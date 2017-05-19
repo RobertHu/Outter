@@ -38,13 +38,6 @@ namespace Core.TransactionServer.Agent.BLL.InstrumentBusiness
                     bool isOk = eachOrder.Phase == OrderPhase.Placed && eachOrder.HitStatus.IsPending()
                         && ((eachOrder.Owner.OrderType == OrderType.SpotTrade && (eachOrder.ShouldSportOrderDelayFill || eachOrder.DQMaxMove > 0))
                         || eachOrder.Owner.OrderType == OrderType.Limit || eachOrder.Owner.OrderType == OrderType.Market);
-
-                    if (_owner.Owner.Id == HitService.TEST_ACCOUNT)
-                    {
-                        Logger.InfoFormat("orderId = {0}, order.phase = {1}, order.hitStatus = {2}, order.OrderType = {3}, isOk = {4}",
-                            eachOrder.Id, eachOrder.Phase, eachOrder.HitStatus, eachOrder.Owner.OrderType, isOk);
-                    }
-
                     if (isOk)
                     {
                         result.Add(eachOrder);

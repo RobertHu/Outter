@@ -35,9 +35,6 @@ namespace Core.TransactionServer.Agent.Reset
                 OrderUpdater.Default.UpdateOrderInterestPerLotAndStoragePerLot(tran, lastResetTradeDay.Value);
             }
             RemoveCompletedOrdersFromCache(tran);
-            string content;
-            account.SaveAndBroadcastResetContent(Agent.Caching.CacheType.HistoryOrder, out content);
-            Logger.InfoFormat("HistoryOrderFactory, save Content = {0}", content);
         }
 
         private static void RemoveCompletedOrdersFromCache(Transaction tran)

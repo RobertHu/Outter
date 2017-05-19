@@ -41,13 +41,7 @@ namespace Core.TransactionServer.Agent.BLL.OrderBusiness.Hit
             {
                 return false;
             }
-
             PriceCompareResult result = newQuotation.Compare(order.SetPrice, order.IsBuy);
-            if (order.AccountId == AccountClass.HitService.TEST_ACCOUNT)
-            {
-                Logger.InfoFormat("IsHitPrice accountId = {0}, orderId = {1}, compareResult = {2}, marketPrice = {3}",
-                    order.AccountId, order.Id, result, marketPrice);
-            }
             return order.OrderType == OrderType.Market || (order.OrderType == OrderType.Limit && (marketPrice == order.SetPrice
                 || (order.TradeOption == TradeOption.Better ? result == PriceCompareResult.Better : result == PriceCompareResult.Worse)));
         }
