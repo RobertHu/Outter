@@ -186,7 +186,7 @@ namespace Core.TransactionServer.Agent.Interact
             foreach (var eachOrderRelation in openOrder.OrderRelations)
             {
                 var closeOrder = eachOrderRelation.CloseOrder;
-                if (closeOrder != originCloseOrder && closeOrder.Phase == OrderPhase.Placed)
+                if (closeOrder != originCloseOrder && (closeOrder.Phase == OrderPhase.Placed || closeOrder.Phase == OrderPhase.Placing))
                 {
                     closeOrder.Cancel(CancelReason.OtherReason);
                 }

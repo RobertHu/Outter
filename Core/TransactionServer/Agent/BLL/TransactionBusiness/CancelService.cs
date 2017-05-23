@@ -58,7 +58,7 @@ namespace Core.TransactionServer.Agent.BLL.TransactionBusiness
                 var quotation = _tran.AccountInstrument.GetQuotation();
                 foreach (Order order in _tran.Orders)
                 {
-                    Price marketPrice = (order.IsBuy ? quotation.BuyPrice : quotation.SellPrice);
+                    Price marketPrice = (order.IsBuy ? quotation.SellPrice : quotation.BuyPrice);
                     if (order.HitCount >= 1 || marketPrice == null || Math.Abs(order.SetPrice - marketPrice) < _tran.DealingPolicyPayload().CancelLmtVariation)
                     {
                         Logger.WarnFormat("orderId= {0}, hitCount= {1}, abs(setPrice - marketPrice) = {2}, CancelLmtVariation ={3}", order.Id, order.HitCount, Math.Abs(order.SetPrice - marketPrice), _tran.DealingPolicyPayload().CancelLmtVariation);
