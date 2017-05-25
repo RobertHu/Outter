@@ -96,6 +96,7 @@ namespace Core.TransactionServer.Agent.BLL.TransactionBusiness
 
         private void CanceAmendedDoneTransactions(CancelReason cancelType)
         {
+            if (_tran.SubType != TransactionSubType.Amend) return;
             var doneTrans = this.GetAmendedDoneTrans();
             Logger.InfoFormat("CanceAmendedlDoneTransactions tranId = {0} cancelType = {1}, doneTransCount = {2}, account.id = {3}", _tran.Id, cancelType, doneTrans.Count, _tran.AccountId);
             foreach (var eachDoneTran in doneTrans)
@@ -110,7 +111,7 @@ namespace Core.TransactionServer.Agent.BLL.TransactionBusiness
         private void CancelAmendedIfTransaction(CancelReason cancelType)
         {
             Order amendedOrder = _tran.AmendedOrder;
-            if (amendedOrder == null) return;
+            if (amendedOrder == null || _tran.SubType != TransactionSubType.Amend) return;
             var amendedTran = amendedOrder.Owner;
             amendedTran.ChangePhaseToCancel();
             amendedOrder.Cancel(cancelType);
