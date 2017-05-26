@@ -308,6 +308,7 @@ namespace Core.TransactionServer.Agent.Interact
         {
             isCanceledForInvalidPrice = false;
             Order executedOrder = executeOrderId == null ? null : tran.GetExecuteOrder(executeOrderId.Value);
+            if (executedOrder == null) return;
             if (this.ShouldCanceledForInvalidPrice(doneTran, executedOrder))
             {
                 InteractFacade.Default.TradingEngine.Cancel(doneTran, CancelReason.InvalidPrice);
