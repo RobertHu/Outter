@@ -193,6 +193,10 @@ namespace Core.TransactionServer.Agent
             }
         }
 
+        internal bool CanCancel
+        {
+            get { return this.Phase == OrderPhase.Placed || this.Phase == OrderPhase.Placing; }
+        }
 
         internal Price GetMarketPrice(out DateTime priceTimeStamp)
         {

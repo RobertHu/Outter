@@ -499,6 +499,15 @@ namespace Core.TransactionServer.Agent
             _orders.RemoveItem(order);
         }
 
+        internal bool ExistsPlacingOrPlacedOrder()
+        {
+            foreach (var eachOrder in this.Orders)
+            {
+                if (eachOrder.CanCancel) return true;
+            }
+            return false;
+        }
+
         internal virtual bool CanBeClosedBySplit(Transaction targetTran)
         {
             return this != targetTran && this.Phase == TransactionPhase.Executed && this.ExecuteTime.Value <= targetTran.ExecuteTime.Value;
@@ -612,17 +621,24 @@ namespace Core.TransactionServer.Agent
             }
         }
 
-        internal void Cancel(CancelReason cancelType,ExecuteContext context = null)
+        internal void Cancel(CancelReason cancelType, ExecuteContext context = null)
         {
-            this.Phase = TransactionPhase.Canceled;
-            this.ChangeToDeleted();
-            foreach (var order in this.Orders)
-            {
-                order.Cancel(cancelType,context);
-            }
+            this.CancelOrders(cancelType, context);
             if (this.DoneCondition)
+
             {
                 this.CancelService.CancelDoneTrans(cancelType);
+            }
+        }
+
+        private void CancelOrders(CancelReason cancelType, ExecuteContext context)
+        {
+            foreach (var order in this.Orders)
+            {
+                if (order.CanCancel)
+                {
+                    order.Cancel(cancelType, context);
+                }
             }
         }
 

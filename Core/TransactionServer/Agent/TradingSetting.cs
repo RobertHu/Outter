@@ -260,7 +260,7 @@ namespace Core.TransactionServer.Agent
                 {
                     foreach (var eachTran in eachAccount.Transactions)
                     {
-                        if (eachTran.Phase == TransactionPhase.Placing || eachTran.Phase == TransactionPhase.Placed)
+                        if (eachTran.ExistsPlacingOrPlacedOrder())
                         {
                             TransactionExpireChecker.Default.Add(eachTran);
                         }

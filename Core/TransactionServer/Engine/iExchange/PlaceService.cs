@@ -76,7 +76,7 @@ namespace Core.TransactionServer.Engine.iExchange
                     this.DoAutoFill(tran);
                 }
             }
-            else if (tran.EndTime <= tran.SettingInstrument().DayCloseTime || tran.SettingInstrument().DayCloseTime == default(DateTime))
+            else 
             {
                 TransactionExpireChecker.Default.Add(tran);
                 if (tran.ShouldTryHit)

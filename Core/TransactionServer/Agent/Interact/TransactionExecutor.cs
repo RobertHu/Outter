@@ -87,11 +87,7 @@ namespace Core.TransactionServer.Agent.Interact
                     Logger.InfoFormat("after calculate currencyrate accountId = {0}, tranId = {1}", context.AccountId, context.TranId);
                 }
                 this.ExecuteTransaction(context);
-                if (IfDoneTransactionManager.Default.ShouldCancelDoneTransactions(context.Tran))//maybe have done orders needed to cancel
-                {
-                    Debug.Assert(context.ExecuteOrderId != null);
-                    IfDoneTransactionManager.Default.CancelDoneTransactions(context.Tran, context.ExecuteOrderId.Value);
-                }
+                this.CancelOCODoneTransactions(context);
                 this.ProcessAfterExecuteSuccess(context.Tran, context.ExecuteOrderId);
             }
             catch (ShouldBeExecuteWithMaxOtherLotException ex)
@@ -99,6 +95,15 @@ namespace Core.TransactionServer.Agent.Interact
                 context.Account.RejectChanges();
                 context.Tran.Cancel(CancelReason.OtherReason);
                 this.ExecuteExecuteWithMaxOtherLotTransaction(ex.ExceedMaxOtherLotOrder, ex.MaxOtherLot, context);
+            }
+        }
+
+        private void CancelOCODoneTransactions(ExecuteContext context)
+        {
+            if (context.Tran.Type == TransactionType.OneCancelOther && context.ExecuteOrderId != null)//maybe have done orders needed to cancel
+            {
+                Logger.InfoFormat("CancelOCODoneTransactions tranId = {0}, executeOrderId = {1}, accountId ={2}", context.TranId, context.ExecuteOrderId, context.AccountId);
+                IfDoneTransactionManager.Default.CancelDoneTransactionsForOCO(context.Tran, context.ExecuteOrderId.Value);
             }
         }
 
@@ -204,12 +209,7 @@ namespace Core.TransactionServer.Agent.Interact
         static IfDoneTransactionManager() { }
         private IfDoneTransactionManager() { }
 
-        internal bool ShouldCancelDoneTransactions(Transaction tran)
-        {
-            return tran.Type == TransactionType.OneCancelOther && tran.FirstOrder.IsOpen;
-        }
-
-        internal void CancelDoneTransactions(Transaction tran, Guid executeOrderId)
+        internal void CancelDoneTransactionsForOCO(Transaction tran, Guid executeOrderId)
         {
             foreach (var doneTran in tran.GetDoneTransactionsForOCO(executeOrderId))
             {
@@ -289,6 +289,7 @@ namespace Core.TransactionServer.Agent.Interact
                 if (!isCanceledForInvalidPrice)
                 {
                     doneTran.ChangePhaseToPlaced();
+                    TransactionExpireChecker.Default.Add(doneTran);
                     if (doneTran.OrderCount == 2)
                     {
                         doneTran.Type = TransactionType.OneCancelOther;

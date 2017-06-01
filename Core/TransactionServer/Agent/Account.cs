@@ -1793,6 +1793,11 @@ namespace Core.TransactionServer.Agent
                         this.SaveAndBroadcastChanges();
                     }
                 }
+                catch (AccountExpiredException ex)
+                {
+                    Logger.WarnFormat("account id = {0} is expired", ex.AccountId);
+                    this.RejectChanges();
+                }
                 catch (Exception ex)
                 {
                     this.HanderError(ex);
@@ -1810,6 +1815,11 @@ namespace Core.TransactionServer.Agent
                     this.CheckAccountIsExpired();
                     _accountRisk.CheckRisk(MarketManager.Now, CalculateType.CheckRisk);
                     this.SaveAndBroadcastChanges();
+                }
+                catch (AccountExpiredException ex)
+                {
+                    Logger.WarnFormat("account id = {0} is expired", ex.AccountId);
+                    this.RejectChanges();
                 }
                 catch (Exception ex)
                 {

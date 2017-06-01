@@ -40,7 +40,7 @@ namespace Core.TransactionServer.Agent.Periphery.TransactionBLL.Services
             this.FillProperties(context);
             if (this.ShouldCloseReverseDirectionOrders())
             {
-                this.AutoCloseReverseDirectionOrders();
+                this.AutoCloseReverseDirectionOrders(context.ExecuteOrderId);
             }
             // this.CheckIsAllowNewMOOMOC();
         }
@@ -228,11 +228,13 @@ namespace Core.TransactionServer.Agent.Periphery.TransactionBLL.Services
             return new BuySellLot(buyLot, sellLot);
         }
 
-        private void AutoCloseReverseDirectionOrders()
+        private void AutoCloseReverseDirectionOrders(Guid? executeOrderId)
         {
             Dictionary<Guid, decimal> openOrderPerClosedLotDict = new Dictionary<Guid, decimal>();
             foreach (var eachOrder in _owner.Orders)
             {
+                Logger.InfoFormat("AutoCloseReverseDirectionOrders executeOrderId = {0}, eachOrder.Id = {1}, tranId = {2}, accountId = {3}", executeOrderId, eachOrder.Id, _owner.Id, _owner.AccountId);
+                if (executeOrderId != null && executeOrderId.Value != eachOrder.Id) continue;
                 if (eachOrder.LotBalance > 0)
                 {
                     eachOrder.SplitOrder(openOrderPerClosedLotDict);

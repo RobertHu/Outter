@@ -32,7 +32,7 @@ namespace Core.TransactionServer.Agent.BLL.TransactionBusiness
         {
             get
             {
-                return _tran.Phase == TransactionPhase.Placing || _tran.Phase == TransactionPhase.Placed;
+                return _tran.ExistsPlacingOrPlacedOrder();
             }
         }
 
