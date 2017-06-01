@@ -182,7 +182,7 @@ namespace Core.TransactionServer.Agent
         {
             get
             {
-                return this.Phase == TransactionPhase.Placed;
+                return this.Phase == TransactionPhase.Placed && !_owner.ExistsPendingConfirmLimitOrder(this);
             }
         }
 

@@ -871,6 +871,19 @@ namespace Core.TransactionServer.Agent
             }
         }
 
+        internal bool ExistsPendingConfirmLimitOrder(Transaction tran)
+        {
+            lock (_mutex)
+            {
+                foreach (var eachOrder in tran.Orders)
+                {
+                    if (_pendingConfirmLimitOrders.Contains(eachOrder)) return true;
+                }
+                return false;
+            }
+        }
+
+
         internal void RemovePendingConfirmLimitOrder(Order order)
         {
             lock (_mutex)
