@@ -10,9 +10,8 @@ namespace Core.TransactionServer.Agent.BLL.OrderBusiness.Hit
 {
     internal static class SpotOrderHitter
     {
-        internal static OrderHitStatus HitSpotOrder(Order order, HitOrderSettings hitOrderSettings, Quotation quotation, DateTime baseTime, out Price bestPrice)
+        internal static OrderHitStatus HitSpotOrder(Order order, HitOrderSettings hitOrderSettings, Quotation quotation, DateTime baseTime)
         {
-            bestPrice = null;
             if (!order.ShouldSportOrderDelayFill && order.HitStatus.IsFinal()) return OrderHitStatus.None;
             Price marketPrice = HitCommon.CalculateMarketPrice(order.IsBuy, quotation);
             if (ShouldCancelSpotOrder(order, marketPrice, quotation.IsNormal))
@@ -21,7 +20,12 @@ namespace Core.TransactionServer.Agent.BLL.OrderBusiness.Hit
             }
             if (order.DQMaxMove <= 0) return OrderHitStatus.None;
             if (!hitOrderSettings.IncreaseHitCount()) return OrderHitStatus.None;
-            bestPrice = CalculateBestPriceForSportOrder(order, marketPrice);
+            Price bestPrice = CalculateBestPriceForSportOrder(order, marketPrice);
+            if (bestPrice != null)
+            {
+                order.BestPrice = bestPrice;
+                order.BestTime = baseTime;
+            }
             if (order.ShouldAutoFill && !order.ShouldSportOrderDelayFill && Math.Abs(order.HitCount) >= order.Instrument().HitTimes)
             {
                 return OrderHitStatus.ToAutoFill;

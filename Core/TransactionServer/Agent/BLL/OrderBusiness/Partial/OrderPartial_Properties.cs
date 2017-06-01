@@ -216,7 +216,7 @@ namespace Core.TransactionServer.Agent
         public Price BestPrice
         {
             get { return this.HitSettings.BestPrice; }
-            protected set { this.HitSettings.BestPrice = value; }
+            set { this.HitSettings.BestPrice = value; }
         }
 
         public int HitCount
@@ -228,7 +228,7 @@ namespace Core.TransactionServer.Agent
         public DateTime? BestTime
         {
             get { return this.HitSettings.BestTime; }
-            protected set { this.HitSettings.BestTime = value; }
+            set { this.HitSettings.BestTime = value; }
         }
 
         public OrderHitStatus HitStatus

@@ -73,30 +73,16 @@ namespace Core.TransactionServer.Agent.BLL.OrderBusiness
             return false;
         }
 
-
-        public OrderHitStatus HitSetPrice(Quotation newQuotation, DateTime baseTime, bool ignoreHitTimes)
+        public OrderHitStatus HitSetPrice(Quotation quotation, DateTime baseTime, bool ignoreHitTimes)
         {
-            Price bestPrice = null;
-            this.HitStatus = this.HitSetPrice(newQuotation, baseTime, ignoreHitTimes, out bestPrice);
-            if (bestPrice != null)
-            {
-                this.BestPrice = bestPrice;
-                this.BestTime = baseTime;
-            }
-            return this._hitStatus.Value;
-        }
-
-        private OrderHitStatus HitSetPrice(Quotation quotation, DateTime baseTime, bool ignoreHitTimes, out Price bestPrice)
-        {
-            bestPrice = null;
             OrderHitStatus status;
             if (_owner.OrderType == OrderType.SpotTrade)
             {
-                status = Hit.SpotOrderHitter.HitSpotOrder(_owner, this, quotation, baseTime, out bestPrice);
+                status = Hit.SpotOrderHitter.HitSpotOrder(_owner, this, quotation, baseTime);
             }
             else
             {
-                status = Hit.LimitAndMarketOrderHitter.HitMarketAndLimitOrder(_owner, this, quotation, baseTime, ignoreHitTimes, out bestPrice);
+                status = Hit.LimitAndMarketOrderHitter.HitMarketAndLimitOrder(_owner, this, quotation, baseTime, ignoreHitTimes);
             }
             return status;
         }

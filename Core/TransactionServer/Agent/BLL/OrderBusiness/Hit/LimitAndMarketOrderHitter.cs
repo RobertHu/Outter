@@ -13,9 +13,8 @@ namespace Core.TransactionServer.Agent.BLL.OrderBusiness.Hit
     {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(LimitAndMarketOrderHitter));
 
-        internal static OrderHitStatus HitMarketAndLimitOrder(Order order, HitOrderSettings hitOrderSettings, Quotation newQuotation, DateTime baseTime, bool ignoreHitTimes, out Price bestPrice)
+        internal static OrderHitStatus HitMarketAndLimitOrder(Order order, HitOrderSettings hitOrderSettings, Quotation newQuotation, DateTime baseTime, bool ignoreHitTimes)
         {
-            bestPrice = null;
             Price marketPrice = HitCommon.CalculateMarketPrice(order.IsBuy, newQuotation);
             if (!IsHitPrice(order, newQuotation, marketPrice))
             {
@@ -24,7 +23,8 @@ namespace Core.TransactionServer.Agent.BLL.OrderBusiness.Hit
             if (!hitOrderSettings.IncreaseHitCount()) return OrderHitStatus.None;
             if (ShouldUseNewHitPrice(order, newQuotation))
             {
-                bestPrice = marketPrice;
+                order.BestPrice = marketPrice;
+                order.BestTime = baseTime;
             }
             else
             {
