@@ -356,5 +356,10 @@ namespace SystemController.Services
         {
             return this.Call( () => this.Service.GetAccountsProfitWithin(minProfit, includeMinProfit, maxProfit, includeMaxProfit));
         }
+
+        public string GetAllAccountsInitData()
+        {
+            return this.Call(() => this.Service.GetAllAccountsInitData());
+        }
     }
 }

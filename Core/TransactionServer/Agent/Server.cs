@@ -215,6 +215,18 @@ namespace Core.TransactionServer.Agent
                 () => string.Empty);
         }
 
+        public string GetAllAccountsInitData()
+        {
+            return this.CallByRead(() =>
+            {
+                StringBuilder sb = Protocal.StringBuilderCache.Acquire(100000);
+                sb.Append("<Accounts>");
+                TradingSetting.Default.DoWorkForAccounts(m => m.GetInitializeData(sb));
+                sb.Append("</Accounts>");
+                return Protocal.StringBuilderCache.GetStringAndRelease(sb);
+            }, () => string.Empty);
+        }
+
         private void CheckAccountRisk(IEnumerable<Protocal.InstrumentStatusInfo> instruments)
         {
             foreach (var eachInstrumentInfo in instruments)

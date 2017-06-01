@@ -129,6 +129,8 @@ namespace Protocal
 
         [OperationContract]
         string GetAccountsProfitWithin(decimal? minProfit, bool includeMinProfit, decimal? maxProfit, bool includeMaxProfit);
+        [OperationContract]
+        string GetAllAccountsInitData();
     }
 
 

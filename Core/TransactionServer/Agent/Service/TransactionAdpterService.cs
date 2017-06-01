@@ -221,5 +221,10 @@ namespace Core.TransactionServer.Agent.Service
         {
             return this.Server.GetAccountsProfitWithin(minProfit, includeMinProfit, maxProfit, includeMaxProfit);
         }
+
+        public string GetAllAccountsInitData()
+        {
+            return this.Server.GetAllAccountsInitData();
+        }
     }
 }
