@@ -48,6 +48,7 @@ namespace Core.TransactionServer.Agent.BLL.AccountBusiness
             if (!tran.CanAutoAcceptPlace())
             {
                 tran.ChangePhaseToPlacing();
+                TransactionExpireChecker.Default.Add(tran);
                 tran.Owner.InvalidateInstrumentCacheAndBroadcastChanges(tran);
                 return;
             }
