@@ -103,7 +103,7 @@ namespace Core.TransactionServer.Agent.Reset
 
         private bool CanInstrumentBeginReset(Guid instrumentId, DateTime tradeDayDate)
         {
-
+            if (!_account.CanDoReset(tradeDayDate)) return false;
             if (this.IsAlreadyReseted(instrumentId, tradeDayDate)) return false;
             DateTime baseTime = Market.MarketManager.Now;
             DateTime resetTime = this.GetResetTime(tradeDayDate, instrumentId).Value;
@@ -236,7 +236,7 @@ namespace Core.TransactionServer.Agent.Reset
                     quotationPerQuotePolicy.Add(eachQuotation.QuotePolicyId, eachQuotation);
                 }
             }
-            InstrumentCloseQuotation result = ((IQuotePolicyProvider)_account).Get<InstrumentCloseQuotation>(delegate(Guid id, out InstrumentCloseQuotation q)
+            InstrumentCloseQuotation result = ((IQuotePolicyProvider)_account).Get<InstrumentCloseQuotation>(delegate (Guid id, out InstrumentCloseQuotation q)
             {
                 return quotationPerQuotePolicy.TryGetValue(id, out q);
             });

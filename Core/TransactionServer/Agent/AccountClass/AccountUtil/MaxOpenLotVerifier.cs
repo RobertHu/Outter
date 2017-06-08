@@ -16,10 +16,10 @@ namespace Core.TransactionServer.Agent.AccountClass.AccountUtil
     {
         private static ILog _Logger = LogManager.GetLogger(typeof(MaxOpenLotVerifier));
 
-        internal static bool IsExceedMaxOpenLot(Transaction tran, PlaceContext context)
+        internal static bool IsExceedMaxOpenLot(Transaction tran, PlaceContext context, out string errorInfo)
         {
+            errorInfo = string.Empty;
             if (!tran.ShouldCheckIsExceedMaxOpenLot) return false;
-
             TradePolicyDetail tradePolicyDetail = tran.TradePolicyDetail(context.TradeDay);
             var settingAccount = tran.Owner.Setting(context.TradeDay);
             if (settingAccount.MaxOpenLot == null && tradePolicyDetail.AccountMaxOpenLot == null) return false;
@@ -45,9 +45,8 @@ namespace Core.TransactionServer.Agent.AccountClass.AccountUtil
                 || (tradePolicyDetail.AccountMaxOpenLot != null && totalPlacingOpenLotOfTheInstrument > tradePolicyDetail.AccountMaxOpenLot))
             {
 
-                string info = string.Format("Placing {0}, totalPlacingOpenLot={1}, totalPlacingOpenLotOfTheInstrument={2}, account.MaxOpenLot={3}, tradePolicyDetail.AccountMaxOpenLot={4}{5}{6}",
-                    TransactionError.ExceedMaxOpenLot, totalPlacingOpenLot, totalPlacingOpenLotOfTheInstrument, accountMaxOpenLot, tradePolicyDetail.AccountMaxOpenLot, Environment.NewLine, string.Empty);
-                _Logger.Warn(info);
+                errorInfo = string.Format("totalPlacingOpenLot={0}, totalPlacingOpenLotOfTheInstrument={1}, account.MaxOpenLot={2}, tradePolicyDetail.AccountMaxOpenLot={3}, tranID = {4}, accountID = {5}",
+                    totalPlacingOpenLot, totalPlacingOpenLotOfTheInstrument, accountMaxOpenLot, tradePolicyDetail.AccountMaxOpenLot, tran.Id, tran.AccountId);
                 return true;
             }
             return false;

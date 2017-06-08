@@ -48,7 +48,7 @@ namespace Core.TransactionServer.Agent.AccountClass
         {
             QuotationBulk bulk = new QuotationBulk(item);
             TradingSetting.Default.DoParallelForAccounts(a => a.UpdateQuotation(bulk));
-            Engine.EngineService.Default.SetQuotation(bulk);
+            TradingSetting.Default.DoParallelForAccounts(a => a.Hit(bulk));
             MarketManager.Default.UpdateQuotation(bulk);
             PriceAlert.Manager.Default.SetQuotation(item);
         }

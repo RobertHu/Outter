@@ -104,8 +104,7 @@ namespace Core.TransactionServer.Agent.AccountClass
             this.GetBuyAndSellPrice(order, out buy, out sell);
             var tran = order.Owner;
             Guid? executedOrderId = this.GetExecutedOrderId(order);
-            OrderExecuteEventArgs eventArgs = new OrderExecuteEventArgs(new ExecuteContext(tran.Owner.Id, tran.Id, executedOrderId, ExecuteStatus.Filled, new List<OrderPriceInfo> { new OrderPriceInfo(order.Id, buy, sell) }));
-            iExchangeEngine.Default.Execute(eventArgs);
+            tran.Owner.Execute(new ExecuteContext(tran.Owner.Id, tran.Id, executedOrderId, ExecuteStatus.Filled, new List<OrderPriceInfo> { new OrderPriceInfo(order.Id, buy, sell) }));
         }
 
         private Guid? GetExecutedOrderId(Order order)

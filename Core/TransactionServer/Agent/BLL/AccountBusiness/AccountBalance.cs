@@ -106,7 +106,7 @@ namespace Core.TransactionServer.Agent.BLL.AccountBusiness
             _accountBalance = new AccountBalance(account, resetBalances);
         }
 
-        internal void AddDeposit(Guid currencyId, DateTime effectiveDateTime, decimal balance, bool isDeposit)
+        internal void AddDeposit(Guid currencyId,  decimal balance, bool isDeposit)
         {
             if (balance == 0) return;
             _accountBalance.AddNormalBalanceOnly(currencyId, balance);
@@ -114,24 +114,7 @@ namespace Core.TransactionServer.Agent.BLL.AccountBusiness
             {
                 _accountDeposit.AddDeposit(currencyId, balance);
             }
-            this.RecoverHistoryBalance(currencyId, effectiveDateTime, balance);
         }
-
-        private void RecoverHistoryBalance(Guid currencyId, DateTime effectiveDateTime, decimal balance)
-        {
-            DateTime currentTradeDay = Settings.Setting.Default.GetTradeDay().Day;
-            if (effectiveDateTime.Date < currentTradeDay)
-            {
-                var historyBalancePerTradeDay = DBRepository.Default.GetAccountBalanceDayHistory(_account.Id, currencyId, effectiveDateTime.Date, currentTradeDay);
-                for (DateTime tradeDay = effectiveDateTime.Date; tradeDay < currentTradeDay; tradeDay = tradeDay.AddDays(1))
-                {
-                    decimal historyBalance = 0m;
-                    historyBalancePerTradeDay.TryGetValue(tradeDay, out historyBalance);
-                    this.AddHistoryBalance(currencyId, tradeDay, historyBalance + balance);
-                }
-            }
-        }
-
 
         internal void AddBalance(Guid currencyId, decimal balance, DateTime? updateTime)
         {

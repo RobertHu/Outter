@@ -46,6 +46,14 @@ namespace Core.TransactionServer.Agent.Reset
             }
         }
 
+        internal bool CanDoReset(DateTime tradeDay)
+        {
+            if (this.LastResetDay != null) return true;
+            DateTime beginTradeDay = DB.DBRepository.Default.GetTradeDay(_account.Setting().BeginTime);
+            return beginTradeDay <= tradeDay;
+        }
+
+
         internal DateTime? GetInstrumentLastResetDay(Guid instrumentId)
         {
             return _instrumentManager.GetLastResetDay(instrumentId);
@@ -79,7 +87,6 @@ namespace Core.TransactionServer.Agent.Reset
                 }
             }
         }
-
 
         internal void DoSystemReset(DateTime tradeDay)
         {

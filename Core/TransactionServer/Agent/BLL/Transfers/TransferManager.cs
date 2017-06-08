@@ -69,7 +69,7 @@ namespace Core.TransactionServer.Agent.BLL.Transfers
 
             if (result == TransactionError.OK)
             {
-                sourceAccount.AddDeposit(sourceCurrencyID, DateTime.Now, sourceAmount, true);
+                sourceAccount.AddDeposit(sourceCurrencyID,  sourceAmount, true);
                 Broadcaster.Default.Add(BroadcastBLL.CommandFactory.CreateUpdateBalanceCommand(sourceAccount.Id, sourceCurrencyID, sourceAmount, Protocal.ModifyType.Add));
                 Guid remitterId = sourceAccount.Customer.Id;
                 Guid payeeId = TradingSetting.Default.GetAccount(targetAccountID).Customer.Id;

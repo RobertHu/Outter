@@ -16,11 +16,6 @@ namespace Core.TransactionServer.Engine
         static EngineService() { }
         private EngineService() { }
 
-        public void SetQuotation(QuotationBulk quotationBulk)
-        {
-            OrderHitManager.Default.Add(quotationBulk);
-        }
-
         public void UpdateInstrumentStatus(Dictionary<Protocal.TradingInstrument.InstrumentStatus, List<Protocal.InstrumentStatusInfo>> status)
         {
             iExchange.iExchangeEngine.Default.UpdateInstrumentStatus(status);

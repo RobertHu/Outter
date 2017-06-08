@@ -650,22 +650,21 @@ namespace Core.TransactionServer.Agent
                 {
                     settledOrderId = row.AttrToGuid("OrderID");
                 }
-                DateTime effectiveDateTime = row.AttrToDateTime("UpdateTime");
-                this.ProcessAccountBalance(accountID, currencyID, balance, isDeposit, effectiveDateTime, settledOrderId);
+                this.ProcessAccountBalance(accountID, currencyID, balance, isDeposit, settledOrderId);
             }
             account.SaveAndBroadcastChanges();
             account.CheckRisk();
         }
 
         private void ProcessAccountBalance(Guid accountID, Guid currencyID, decimal balance,
-            bool isDeposit, DateTime effectiveDateTime, Guid? settledOrderId = null)
+            bool isDeposit, Guid? settledOrderId = null)
         {
             var account = this.GetAccount(accountID);
             if (account == null)
             {
                 throw new NullReferenceException(string.Format("AccountId = {0}, account not exists", accountID));
             }
-            account.AddDeposit(currencyID, effectiveDateTime, balance, isDeposit);
+            account.AddDeposit(currencyID, balance, isDeposit);
             if (settledOrderId != null)
             {
                 Order settleOrder = account.GetOrder(settledOrderId.Value);

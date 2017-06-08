@@ -519,7 +519,7 @@ namespace Core.TransactionServer.Agent
             decimal amount;
             TransactionError error = TransferManager.AcceptTransfer(userId, transferID, action, out accountId, out currencyId, out amount);
             var account = GetAccount(accountId);
-            account.AddDeposit(currencyId, DateTime.Now, amount, true);
+            account.AddDeposit(currencyId,  amount, true);
             account.SaveAndBroadcastChanges();
             Broadcaster.Default.Add(BroadcastBLL.CommandFactory.CreateUpdateBalanceCommand(accountId, currencyId, amount, ModifyType.Add));
             return error;

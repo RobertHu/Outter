@@ -40,15 +40,12 @@ namespace Core.TransactionServer.Agent.Reset
 
         private bool CanSystemResetBegin(DateTime tradeDate)
         {
-#if ACCOUNTRESET
-            return true;
-#else
+            if (!_account.CanDoReset(tradeDate)) return false;
             if (_account.LastResetDay >= tradeDate) return false;
             ResetManager.Default.LoadHistorySetting(tradeDate, "CanSystemResetBegin");
             var tradeDay = Settings.Setting.Default.GetTradeDay(tradeDate);
             Debug.Assert(tradeDate != null);
             return tradeDay.EndTime <= Market.MarketManager.Now;
-#endif
         }
 
         internal void DoSystemReset(DateTime tradeDay)

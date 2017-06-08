@@ -13,6 +13,7 @@ using Protocal;
 using Protocal.Physical;
 using Core.TransactionServer.Agent.BLL.TransactionBusiness;
 using Core.TransactionServer.Agent.BinaryOption;
+using System.Security;
 
 namespace Core.TransactionServer.Agent.Framework
 {
@@ -389,7 +390,7 @@ namespace Core.TransactionServer.Agent.Framework
         {
             if (this.Value != null)
             {
-                xmlTag.AppendFormat(@" {0} = ""{1}""", _name, this.ToXmlString());
+                xmlTag.AppendFormat(@" {0} = ""{1}""", _name, SecurityElement.Escape(this.ToXmlString()));
             }
         }
 

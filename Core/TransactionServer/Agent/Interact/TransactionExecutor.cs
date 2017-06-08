@@ -229,6 +229,7 @@ namespace Core.TransactionServer.Agent.Interact
 
         internal void ProcessAfterIfDoneTranExecuted(Transaction tran, Guid? executeOrderId)
         {
+            if (!this.IsTransactionExecuted(tran, executeOrderId)) return;
             List<Transaction> doneTrans = new List<Transaction>();
             if (executeOrderId == null)
             {
@@ -251,6 +252,18 @@ namespace Core.TransactionServer.Agent.Interact
                 this.ProcessDoneTran(tran, eachDoneTran, executeOrderId);
             }
         }
+
+        private bool IsTransactionExecuted(Transaction tran, Guid? executeOrderId)
+        {
+            if (tran.Phase == TransactionPhase.Executed) return true;
+            if (executeOrderId != null)
+            {
+                var order = tran.Owner.GetOrder(executeOrderId.Value);
+                return order.Phase == OrderPhase.Executed;
+            }
+            return false;
+        }
+
 
         private void ProcessDoneTran(Transaction tran, Transaction doneTran, Guid? executeOrderId)
         {

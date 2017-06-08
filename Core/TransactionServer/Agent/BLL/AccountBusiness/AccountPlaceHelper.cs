@@ -101,9 +101,10 @@ namespace Core.TransactionServer.Agent.BLL.AccountBusiness
         internal void Verify(Account account, Transaction tran, bool placeByRiskMonitor, AppType appType, PlaceContext context)
         {
             TransactionVerifier.VerifyForPlacing(tran, placeByRiskMonitor, appType, context);
-            if (!placeByRiskMonitor && MaxOpenLotVerifier.IsExceedMaxOpenLot(tran, context))
+            string errorDetail;
+            if (!placeByRiskMonitor && MaxOpenLotVerifier.IsExceedMaxOpenLot(tran, context, out errorDetail))
             {
-                throw new TransactionServerException(TransactionError.ExceedMaxOpenLot);
+                throw new TransactionServerException(TransactionError.ExceedMaxOpenLot, errorDetail);
             }
             tran.PlacePhase = PlacePhase.VerifySuccess;
         }

@@ -34,7 +34,8 @@ namespace Core.TransactionServer.Agent.Periphery.OrderRelationBLL.Visitors
             var openOrder = command.Account.GetOrder(command.OrderRelationData.OpenOrderId);
             if (openOrder == null)
             {
-                throw new TransactionServerException(TransactionError.OpenOrderNotExists);
+                string errorDetail = string.Format("openOrderId = {0}, closeOrderId = {1}", command.OrderRelationData.OpenOrderId, command.OrderRelationData.CloseOrderId);
+                throw new TransactionServerException(TransactionError.OpenOrderNotExists, errorDetail);
             }
             bool isSameAccount = command.Account == openOrder.Owner.Owner;
             bool isSameInstrument = command.CloseOrder.Owner.SettingInstrument() == openOrder.Owner.SettingInstrument();

@@ -435,6 +435,14 @@ namespace Core.TransactionServer.Agent
 
         #endregion
 
+        internal bool CanDoReset(DateTime tradeDay)
+        {
+            lock (_mutex)
+            {
+                return _resetService.Value.CanDoReset(tradeDay);
+            }
+        }
+
         internal void UpdateState(AccountState state)
         {
             lock (_mutex)
@@ -535,11 +543,11 @@ namespace Core.TransactionServer.Agent
         }
 
 
-        internal void AddDeposit(Guid currencyId, DateTime effectiveDateTime, decimal balance, bool isDeposit)
+        internal void AddDeposit(Guid currencyId,  decimal balance, bool isDeposit)
         {
             lock (_mutex)
             {
-                _moneyManager.AddDeposit(currencyId, effectiveDateTime, balance, isDeposit);
+                _moneyManager.AddDeposit(currencyId,  balance, isDeposit);
             }
         }
 
