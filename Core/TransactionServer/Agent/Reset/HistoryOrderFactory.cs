@@ -202,6 +202,7 @@ namespace Core.TransactionServer.Agent.Reset
         private List<Guid> _affectedOrders;
         private List<Guid> _deletedOrders;
         private Settings.Setting _setting;
+        private InstrumentDayClosePriceFactory _InstrumentDayClosePriceFactory;
 
         internal HistoryOrderRecover(Account account, Guid instrumentId, List<Guid> affectedOrders, List<Guid> deletedOrders, Settings.Setting setting)
         {
@@ -210,6 +211,7 @@ namespace Core.TransactionServer.Agent.Reset
             _affectedOrders = affectedOrders;
             _deletedOrders = deletedOrders;
             _setting = setting;
+            _InstrumentDayClosePriceFactory = new InstrumentDayClosePriceFactory(_account);
         }
 
         /// <summary>
@@ -253,13 +255,14 @@ namespace Core.TransactionServer.Agent.Reset
 
         private decimal RecoverOrderDayHistory(DateTime tradeDay, List<Guid> affectedOrders)
         {
+            var settingInstrument = _setting.GetInstrument(_instrumentId, tradeDay);
             var instrumentTradeDaySetting = ResetManager.Default.LoadInstrumentHistorySettingAndData(_account.Id, _instrumentId, tradeDay);
             TradeDayInfo tradeDayInfo = new TradeDayInfo(_account, _instrumentId, tradeDay, instrumentTradeDaySetting, affectedOrders, _setting);
-            TradeDayCalculator tradeDayCalculator = new TradeDayCalculator(tradeDayInfo, false);
+            var closeQuotation = _InstrumentDayClosePriceFactory.GetQuotation(settingInstrument, tradeDay);
+            TradeDayCalculator tradeDayCalculator = TradeDayCalculatorFactory.CreateForHistoryOrder(tradeDayInfo, closeQuotation);
             tradeDayCalculator.Calculate();
             var resetResults = tradeDayCalculator.ResetResults;
             if (resetResults == null) return 0m;
-            var settingInstrument = _setting.GetInstrument(_instrumentId, tradeDay);
             OrderDayHistorySaver.Save(_account, _account.GetInstrument(_instrumentId), tradeDayCalculator, tradeDayInfo, settingInstrument);
             return tradeDayCalculator.ValuedPLForBook;
         }

@@ -131,6 +131,28 @@ namespace Core.TransactionServer.Agent.Reset
         internal bool IsStorageValued { get; set; }
     }
 
+    internal static class TradeDayCalculatorFactory
+    {
+        internal static TradeDayCalculator CreateForReset(TradeDayInfo tradeDayInfo, InstrumentCloseQuotation closeQuotation)
+        {
+            return CreateCommon(tradeDayInfo, closeQuotation, true);
+        }
+
+        internal static TradeDayCalculator CreateForHistoryOrder(TradeDayInfo tradeDayInfo, InstrumentCloseQuotation closeQuotation)
+        {
+            return CreateCommon(tradeDayInfo, closeQuotation, false);
+        }
+
+        private static TradeDayCalculator CreateCommon(TradeDayInfo tradeDayInfo, InstrumentCloseQuotation closeQuotation, bool isReset)
+        {
+            if (closeQuotation != null)
+            {
+                tradeDayInfo.UpdateInstrumentDayClosePrice(closeQuotation.BuyPrice, closeQuotation.SellPrice);
+            }
+            return new TradeDayCalculator(tradeDayInfo, isReset);
+        }
+    }
+
     internal sealed class TradeDayCalculator
     {
         private TradeDayInfo _info;
@@ -640,7 +662,7 @@ namespace Core.TransactionServer.Agent.Reset
         {
             foreach (var eachOrder in _orders)
             {
-                eachOrder.UpdateCloseOrderPhase( _tradeDay, _instrumentId, _resetTime);
+                eachOrder.UpdateCloseOrderPhase(_tradeDay, _instrumentId, _resetTime);
             }
         }
 

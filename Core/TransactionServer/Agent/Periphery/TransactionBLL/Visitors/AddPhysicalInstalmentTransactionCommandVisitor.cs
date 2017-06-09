@@ -56,7 +56,7 @@ namespace Core.TransactionServer.Agent.Periphery.TransactionBLL.Visitors
             constructParams.EndTime = baseTime.AddMinutes(5);
             constructParams.SubmitTime = baseTime;
             constructParams.ExecuteTime = baseTime.AddSeconds(1);
-            constructParams.SubmitorId = Guid.Empty;
+            constructParams.SubmitorId = command.OldTran.SubmitorId;
             constructParams.SourceOrderId = command.SourceOrderId;
         }
 

@@ -285,8 +285,7 @@ namespace Core.TransactionServer.Agent
             this.CallByRead(() =>
             {
                 TradingSetting.Default.DoParallelForAccounts(account => account.DoSystemReset(tradeDay));
-                ResetManager.Default.ClearInstrumentDailylosePrice();
-                ResetManager.Default.ClearHistorySettings();
+                ResetManager.Default.Clear();
             });
         }
 
@@ -823,8 +822,7 @@ namespace Core.TransactionServer.Agent
             ResetManager.Default.LoadOrderDayHistorys();
             InstrumentTradingStateManager.Default.UpdateLastResetDay(tradeDay);
             TradingSetting.Default.DoReset(tradeDay);
-            ResetManager.Default.ClearInstrumentDailylosePrice();
-            ResetManager.Default.ClearHistorySettings();
+            ResetManager.Default.Clear();
         }
 
     }

@@ -18,51 +18,19 @@ namespace Core.TransactionServer.Agent.Reset
 {
     internal sealed class InstrumentResetter
     {
-        private sealed class InstrumentCloseQuotation
-        {
-            internal InstrumentCloseQuotation(Settings.Instrument instrument, DB.DBMapping.InstrumentDayClosePrice quotation)
-            {
-                this.InstrumentId = instrument.Id;
-                this.QuotePolicyId = quotation.QuotePolicyID;
-                this.InitializePrice(instrument, quotation.Ask, quotation.Bid);
-            }
-
-            internal InstrumentCloseQuotation(Settings.Instrument instrument, iExchange.Common.TradingDailyQuotation quotation)
-            {
-                this.InstrumentId = instrument.Id;
-                this.QuotePolicyId = quotation.QuotePolicyId;
-                this.InitializePrice(instrument, quotation.Ask, quotation.Bid);
-            }
-
-            private void InitializePrice(Settings.Instrument instrument, string ask, string bid)
-            {
-                Price askPrice = ask.CreatePrice(instrument);
-                Price bidPirce = bid.CreatePrice(instrument);
-                this.BuyPrice = Quotation.GetBuyPriceForReset(instrument.IsNormal, askPrice, bidPirce);
-                this.SellPrice = Quotation.GetSellPriceForReset(instrument.IsNormal, askPrice, bidPirce);
-            }
-
-            internal Guid InstrumentId { get; private set; }
-            internal Guid QuotePolicyId { get; private set; }
-            internal Price BuyPrice { get; private set; }
-            internal Price SellPrice { get; private set; }
-
-            public override string ToString()
-            {
-                return string.Format("InstrumentId = {0} , QuotePolicyId = {1} , BuyPrice = {2} , SellPrice  = {3}", this.InstrumentId, this.QuotePolicyId, this.BuyPrice, this.SellPrice);
-            }
-
-        }
-
         private static readonly ILog Logger = LogManager.GetLogger(typeof(InstrumentResetter));
 
         private Account _account;
         private InstrumentManager _instrumentManager;
+        private InstrumentDayClosePriceFactory _instrumentDayClosePriceFactory;
+        private Lazy<InstalmentResetter> _instalmentResetter;
 
         internal InstrumentResetter(Account account, InstrumentManager instrumentManager)
         {
             _account = account;
             _instrumentManager = instrumentManager;
+            _instrumentDayClosePriceFactory = new InstrumentDayClosePriceFactory(account);
+            _instalmentResetter = new Lazy<InstalmentResetter>(() => new InstalmentResetter(_instrumentManager, _account));
         }
 
         internal void DoInstrumentReset(Guid instrumentId, DateTime tradeDay, List<TradingDailyQuotation> closeQuotations)
@@ -73,7 +41,7 @@ namespace Core.TransactionServer.Agent.Reset
             this.DoResetByClosePrice(instrument, tradeDay, closeQuotations, tradeDayInfo);
             if (settingInstrument.IsPhysical)
             {
-                this.PayoffInstalment(_account, instrumentId, tradeDay, tradeDayInfo);
+                _instalmentResetter.Value.PayoffInstalment(_account, instrumentId, tradeDay, tradeDayInfo);
             }
             if (instrument.LastResetDay == null || instrument.LastResetDay.Value < tradeDay)
             {
@@ -133,7 +101,7 @@ namespace Core.TransactionServer.Agent.Reset
                 var settingInstrument = Settings.Setting.Default.GetInstrument(instrument.Id, tradeDay);
                 if (settingInstrument.IsPhysical)
                 {
-                    this.PayoffInstalment(_account, instrument.Id, tradeDay, resetHistorySettingDict);
+                    _instalmentResetter.Value.PayoffInstalment(_account, instrument.Id, tradeDay, resetHistorySettingDict);
                 }
                 _instrumentManager.UpdateLastResetDay(instrument.Id, tradeDay);
                 Logger.InfoFormat("doInstrumentReset completed accountId = {0}, instrumentId = {1}, tradeDay = {2}", _account.Id, instrument.Id, tradeDay);
@@ -151,7 +119,7 @@ namespace Core.TransactionServer.Agent.Reset
             foreach (var eachResetHistorySetting in resetHistorySettingDict.Values)
             {
                 var settingInstrument = Settings.Setting.Default.GetInstrument(instrument.Id, eachResetHistorySetting.TradeDay);
-                var closeQuotation = this.GetQuotation(settingInstrument, eachResetHistorySetting.TradeDay);
+                var closeQuotation = _instrumentDayClosePriceFactory.GetQuotation(settingInstrument, eachResetHistorySetting.TradeDay);
                 this.DoResetPerTradeDay(instrument, eachResetHistorySetting, closeQuotation);
             }
         }
@@ -165,7 +133,7 @@ namespace Core.TransactionServer.Agent.Reset
                 Logger.InfoFormat("DoResetByClosePrice modifyClosePrice lastResetItem instrumentId = {0}, tradeDay = {1}, resetBalance = {2}", instrument.Id, tradeDay, resetItem.ResetBalance);
                 _account.AddBalance(settingInstrument.CurrencyId, -resetItem.ResetBalance, tradeDayInfo.Settings.ResetTime);
             }
-            var quotation = this.GetQuotation(settingInstrument, closeQuotations);
+            var quotation = _instrumentDayClosePriceFactory.GetQuotation(settingInstrument, closeQuotations);
             if (quotation == null)
             {
                 this.PrintErrorInfo(instrument, tradeDay, closeQuotations);
@@ -191,99 +159,10 @@ namespace Core.TransactionServer.Agent.Reset
         private void DoResetPerTradeDay(AccountClass.Instrument instrument, TradeDayInfo eachResetHistorySetting, InstrumentCloseQuotation closeQuotation)
         {
             var settingInstrument = Settings.Setting.Default.GetInstrument(instrument.Id, eachResetHistorySetting.TradeDay);
-            if (closeQuotation != null)
-            {
-                eachResetHistorySetting.UpdateInstrumentDayClosePrice(closeQuotation.BuyPrice, closeQuotation.SellPrice);
-            }
-            TradeDayCalculator calculator = new TradeDayCalculator(eachResetHistorySetting, true);
+            var calculator = TradeDayCalculatorFactory.CreateForReset(eachResetHistorySetting, closeQuotation);
             calculator.Calculate();
             _account.AddBalance(settingInstrument.CurrencyId, calculator.Balance, calculator.ResetTime);
             OrderDayHistorySaver.Save(_account, instrument, calculator, eachResetHistorySetting, settingInstrument);
-        }
-
-
-
-        private InstrumentCloseQuotation GetQuotation(Settings.Instrument instrument, DateTime tradeDay)
-        {
-            var closePrices = ResetManager.Default.GetInstrumentDayClosePrice(instrument.Id, tradeDay);
-            if (closePrices == null || closePrices.Count == 0) return null;
-            var quotations = new List<InstrumentCloseQuotation>(closePrices.Count);
-            foreach (var eachPrice in closePrices)
-            {
-                quotations.Add(new InstrumentCloseQuotation(instrument, eachPrice));
-            }
-            return this.GetQuotation(instrument, quotations);
-        }
-
-        private InstrumentCloseQuotation GetQuotation(Settings.Instrument instrument, List<TradingDailyQuotation> closeQuotations)
-        {
-            var quotations = new List<InstrumentCloseQuotation>(closeQuotations.Count);
-            foreach (var eachCloseQuotation in closeQuotations)
-            {
-                quotations.Add(new InstrumentCloseQuotation(instrument, eachCloseQuotation));
-            }
-            return this.GetQuotation(instrument, quotations);
-        }
-
-        private InstrumentCloseQuotation GetQuotation(Settings.Instrument instrument, List<InstrumentCloseQuotation> quotations)
-        {
-            if (quotations.Count == 0) return null;
-            Dictionary<Guid, InstrumentCloseQuotation> quotationPerQuotePolicy = new Dictionary<Guid, InstrumentCloseQuotation>();
-            foreach (var eachQuotation in quotations)
-            {
-                if (!quotationPerQuotePolicy.ContainsKey(eachQuotation.QuotePolicyId))
-                {
-                    quotationPerQuotePolicy.Add(eachQuotation.QuotePolicyId, eachQuotation);
-                }
-            }
-            InstrumentCloseQuotation result = ((IQuotePolicyProvider)_account).Get<InstrumentCloseQuotation>(delegate (Guid id, out InstrumentCloseQuotation q)
-            {
-                return quotationPerQuotePolicy.TryGetValue(id, out q);
-            });
-            return result;
-        }
-
-
-        private void PayoffInstalment(Account account, Guid instrumentId, DateTime tradeDay, Dictionary<DateTime, TradeDayInfo> tradeDayDataDict)
-        {
-            foreach (var eachInstalmentParam in this.GetInstalmentParams(account, instrumentId, tradeDay, tradeDayDataDict))
-            {
-                InstalmentManager instalmentManager = new InstalmentManager(eachInstalmentParam);
-                instalmentManager.Payoff();
-            }
-        }
-
-        private void PayoffInstalment(Account account, Guid instrumentId, DateTime tradeDay, TradeDayInfo tradeDayInfo)
-        {
-            InstalmentManager instalmentManager = new InstalmentManager(this.GetInstalmentParam(account, tradeDay, tradeDayInfo));
-            instalmentManager.Payoff();
-        }
-
-
-
-        private List<InstalmentPayOffParameter> GetInstalmentParams(Account account, Guid instrumentId, DateTime tradeDay, Dictionary<DateTime, TradeDayInfo> tradeDayDataDict)
-        {
-            List<InstalmentPayOffParameter> result = new List<InstalmentPayOffParameter>();
-            DateTime? lastResetTradeDay = _instrumentManager.GetLastResetDay(instrumentId);
-            if (lastResetTradeDay == null)
-            {
-                var tradeDayData = tradeDayDataDict[tradeDay];
-                result.Add(this.GetInstalmentParam(account, tradeDay, tradeDayData));
-            }
-            else
-            {
-                for (DateTime eachTradeDay = lastResetTradeDay.Value.AddDays(1); eachTradeDay <= tradeDay; eachTradeDay = eachTradeDay.AddDays(1))
-                {
-                    var eachTradeDayData = tradeDayDataDict[eachTradeDay];
-                    result.Add(this.GetInstalmentParam(account, eachTradeDay, eachTradeDayData));
-                }
-            }
-            return result;
-        }
-
-        private InstalmentPayOffParameter GetInstalmentParam(Account account, DateTime tradeDay, TradeDayInfo tradeDayInfo)
-        {
-            return new InstalmentPayOffParameter(_account.GetInstalmentOrders(), account, tradeDayInfo.Instrument, tradeDayInfo.Settings.BuyPrice, tradeDayInfo.Settings.SellPrice, tradeDay);
         }
 
         private bool IsAlreadyReseted(Guid instrumentId, DateTime tradeDay)
@@ -345,6 +224,61 @@ namespace Core.TransactionServer.Agent.Reset
         }
     }
 
+    internal sealed class InstalmentResetter
+    {
+        private InstrumentManager _instrumentManager;
+        private Account _account;
+
+        internal InstalmentResetter(InstrumentManager instrumentManager, Account account)
+        {
+            _instrumentManager = instrumentManager;
+            _account = account;
+        }
+
+        internal void PayoffInstalment(Account account, Guid instrumentId, DateTime tradeDay, Dictionary<DateTime, TradeDayInfo> tradeDayDataDict)
+        {
+            foreach (var eachInstalmentParam in this.GetInstalmentParams(account, instrumentId, tradeDay, tradeDayDataDict))
+            {
+                InstalmentManager instalmentManager = new InstalmentManager(eachInstalmentParam);
+                instalmentManager.Payoff();
+            }
+        }
+
+        internal void PayoffInstalment(Account account, Guid instrumentId, DateTime tradeDay, TradeDayInfo tradeDayInfo)
+        {
+            InstalmentManager instalmentManager = new InstalmentManager(this.GetInstalmentParam(account, tradeDay, tradeDayInfo));
+            instalmentManager.Payoff();
+        }
+
+
+        private List<InstalmentPayOffParameter> GetInstalmentParams(Account account, Guid instrumentId, DateTime tradeDay, Dictionary<DateTime, TradeDayInfo> tradeDayDataDict)
+        {
+            List<InstalmentPayOffParameter> result = new List<InstalmentPayOffParameter>();
+            DateTime? lastResetTradeDay = _instrumentManager.GetLastResetDay(instrumentId);
+            if (lastResetTradeDay == null)
+            {
+                var tradeDayData = tradeDayDataDict[tradeDay];
+                result.Add(this.GetInstalmentParam(account, tradeDay, tradeDayData));
+            }
+            else
+            {
+                for (DateTime eachTradeDay = lastResetTradeDay.Value.AddDays(1); eachTradeDay <= tradeDay; eachTradeDay = eachTradeDay.AddDays(1))
+                {
+                    var eachTradeDayData = tradeDayDataDict[eachTradeDay];
+                    result.Add(this.GetInstalmentParam(account, eachTradeDay, eachTradeDayData));
+                }
+            }
+            return result;
+        }
+
+        private InstalmentPayOffParameter GetInstalmentParam(Account account, DateTime tradeDay, TradeDayInfo tradeDayInfo)
+        {
+            return new InstalmentPayOffParameter(_account.GetInstalmentOrders(), account, tradeDayInfo.Instrument, tradeDayInfo.Settings.BuyPrice, tradeDayInfo.Settings.SellPrice, tradeDay);
+        }
+    }
+
+
+
     internal static class HistoryDataRepository
     {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(HistoryDataRepository));
@@ -382,5 +316,92 @@ namespace Core.TransactionServer.Agent.Reset
             var data = new TradeDayInfo(account, instrumentId, tradeDay, instrumentTradeDaySetting, null, Settings.Setting.Default);
             return data;
         }
+    }
+
+    internal sealed class InstrumentCloseQuotation
+    {
+        internal InstrumentCloseQuotation(Settings.Instrument instrument, DB.DBMapping.InstrumentDayClosePrice quotation)
+        {
+            this.InstrumentId = instrument.Id;
+            this.QuotePolicyId = quotation.QuotePolicyID;
+            this.InitializePrice(instrument, quotation.Ask, quotation.Bid);
+        }
+
+        internal InstrumentCloseQuotation(Settings.Instrument instrument, iExchange.Common.TradingDailyQuotation quotation)
+        {
+            this.InstrumentId = instrument.Id;
+            this.QuotePolicyId = quotation.QuotePolicyId;
+            this.InitializePrice(instrument, quotation.Ask, quotation.Bid);
+        }
+
+        private void InitializePrice(Settings.Instrument instrument, string ask, string bid)
+        {
+            Price askPrice = ask.CreatePrice(instrument);
+            Price bidPirce = bid.CreatePrice(instrument);
+            this.BuyPrice = Quotation.GetBuyPriceForReset(instrument.IsNormal, askPrice, bidPirce);
+            this.SellPrice = Quotation.GetSellPriceForReset(instrument.IsNormal, askPrice, bidPirce);
+        }
+
+        internal Guid InstrumentId { get; private set; }
+        internal Guid QuotePolicyId { get; private set; }
+        internal Price BuyPrice { get; private set; }
+        internal Price SellPrice { get; private set; }
+
+        public override string ToString()
+        {
+            return string.Format("InstrumentId = {0} , QuotePolicyId = {1} , BuyPrice = {2} , SellPrice  = {3}", this.InstrumentId, this.QuotePolicyId, this.BuyPrice, this.SellPrice);
+        }
+
+    }
+
+    internal sealed class InstrumentDayClosePriceFactory
+    {
+        private Account _account;
+
+        internal InstrumentDayClosePriceFactory(Account account)
+        {
+            _account = account;
+        }
+
+        internal InstrumentCloseQuotation GetQuotation(Settings.Instrument instrument, DateTime tradeDay)
+        {
+            var closePrices = ResetManager.Default.GetInstrumentDayClosePrice(instrument.Id, tradeDay);
+            if (closePrices == null || closePrices.Count == 0) return null;
+            var quotations = new List<InstrumentCloseQuotation>(closePrices.Count);
+            foreach (var eachPrice in closePrices)
+            {
+                quotations.Add(new InstrumentCloseQuotation(instrument, eachPrice));
+            }
+            return this.GetQuotation(instrument, quotations);
+        }
+
+        internal InstrumentCloseQuotation GetQuotation(Settings.Instrument instrument, List<TradingDailyQuotation> closeQuotations)
+        {
+            var quotations = new List<InstrumentCloseQuotation>(closeQuotations.Count);
+            foreach (var eachCloseQuotation in closeQuotations)
+            {
+                quotations.Add(new InstrumentCloseQuotation(instrument, eachCloseQuotation));
+            }
+            return this.GetQuotation(instrument, quotations);
+        }
+
+        private InstrumentCloseQuotation GetQuotation(Settings.Instrument instrument, List<InstrumentCloseQuotation> quotations)
+        {
+            if (quotations.Count == 0) return null;
+            Dictionary<Guid, InstrumentCloseQuotation> quotationPerQuotePolicy = new Dictionary<Guid, InstrumentCloseQuotation>();
+            foreach (var eachQuotation in quotations)
+            {
+                if (!quotationPerQuotePolicy.ContainsKey(eachQuotation.QuotePolicyId))
+                {
+                    quotationPerQuotePolicy.Add(eachQuotation.QuotePolicyId, eachQuotation);
+                }
+            }
+            InstrumentCloseQuotation result = ((IQuotePolicyProvider)_account).Get<InstrumentCloseQuotation>(delegate (Guid id, out InstrumentCloseQuotation q)
+            {
+                return quotationPerQuotePolicy.TryGetValue(id, out q);
+            });
+            return result;
+        }
+
     }
 }

@@ -245,16 +245,11 @@ namespace Core.TransactionServer.Agent.Reset
             _historySettingManager.LoadHistorySetting(tradeDay,msg);
         }
 
-        internal void RemoveHistroySetting(DateTime tradeDay)
-        {
-            _historySettingManager.RemoveHistroySetting(tradeDay);
-        }
-
-        internal void ClearHistorySettings()
+        internal void Clear()
         {
             _historySettingManager.ClearHistorySettings();
+            _dailyQuotationManager.Clear();
         }
-
 
 
         internal Tuple<Price, Price> LoadDailyClosePrice(Guid accountId, Guid instrumentId, DateTime tradeDay)
@@ -282,11 +277,6 @@ namespace Core.TransactionServer.Agent.Reset
         internal List<DB.DBMapping.InstrumentDayClosePrice> GetInstrumentDayClosePrice(Guid instrumentId, DateTime tradeDay)
         {
             return _dailyQuotationManager.GetDailyQuotation(instrumentId, tradeDay);
-        }
-
-        internal void ClearInstrumentDailylosePrice()
-        {
-            _dailyQuotationManager.Clear();
         }
 
 

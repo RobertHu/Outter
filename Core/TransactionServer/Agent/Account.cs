@@ -1008,6 +1008,7 @@ namespace Core.TransactionServer.Agent
                 var instrument = this.GetOrCreateInstrument(instrumentId.Value);
                 instrument.ClearResetItems();
             }
+            ResetManager.Default.Clear();
         }
 
 
@@ -1055,7 +1056,6 @@ namespace Core.TransactionServer.Agent
                     this.CheckState();
                     if (this.GetTran(tranData.Id) != null) return TransactionError.TransactionAlreadyExists;
                     tranData.TradeDay = DB.DBRepository.Default.GetTradeDay(tranData.ExecuteTime);
-                    ResetManager.Default.RemoveHistroySetting(tranData.TradeDay);
                     if (Booker.Book(this, token, tranData))
                     {
                         HistoryOrderFactory.Process(this.GetTran(tranData.Id), Settings.Setting.Default, tranData.TradeDay); // recover interest and strage
@@ -1087,7 +1087,6 @@ namespace Core.TransactionServer.Agent
                 finally
                 {
                     this.ClearHistoryItems(tranData.InstrumentId);
-                    ResetManager.Default.RemoveHistroySetting(tranData.TradeDay);
                 }
             }
         }
