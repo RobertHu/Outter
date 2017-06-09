@@ -103,7 +103,10 @@ namespace Core.TransactionServer.Agent.BLL.OrderBusiness.Calculator
         internal void CalculateTradePL(Quotation quotation)
         {
             this.TradePLFloat = TradePLCalculator.Calculate(_owner, quotation, null);
-            this.CalculateLivePrice(quotation);
+            if (_calculateParams.ChangedItem.HasFlag(ChangedItem.Quotation))
+            {
+                this.CalculateLivePrice(quotation);
+            }
         }
 
         protected void CalculateNecessary(Quotation quotation)
